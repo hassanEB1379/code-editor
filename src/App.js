@@ -1,9 +1,7 @@
-function App() {
-  return (
-    <div className="App">
+import MainLayout from './MainLayout';
 
-    </div>
-  );
+function App() {
+   return <MainLayout>sallam hassan</MainLayout>;
 }
 
 export default App;
