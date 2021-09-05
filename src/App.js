@@ -1,7 +1,7 @@
-import MainLayout from './MainLayout';
+import Pen from './Pen';
 
 function App() {
-   return <MainLayout>sallam hassan</MainLayout>;
+   return <Pen />;
 }
 
 export default App;
