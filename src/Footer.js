@@ -1,10 +1,9 @@
 import styled from 'styled-components';
-import Flex from './Flex';
-import Button from './Button';
+import Flex from './ui/Flex';
+import Button from './ui/Button';
 
 const FooterWrapper = styled(Flex)`
    padding: 0.3rem;
-   background-color: var(--dark-bg);
 `;
 
 const Footer = () => {
