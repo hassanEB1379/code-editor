@@ -4,7 +4,7 @@ import Flex from './ui/Flex';
 import Footer from './Footer';
 import Editor from './Editor';
 import OutputView from './OutputView';
-import Resizable from './ui/Resizable';
+import Resizable from './ui/Resizable/Resizable';
 
 const MainWrapper = styled(Flex).attrs(() => ({
    direction: 'column',
