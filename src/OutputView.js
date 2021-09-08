@@ -21,6 +21,7 @@ const OutputView = () => {
             style={{ backgroundColor: '#fff', border: 'none' }}
             width="100%"
             height="100%"
+            title="output-window"
          />
       </OutputWrapper>
    );
