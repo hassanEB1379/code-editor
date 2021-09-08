@@ -8,7 +8,7 @@ const GlobalStyle = createGlobalStyle`
     --dark-border: #2f2f2f;
     --contrast-text: #fff;
   }
-
+  
   html {
     box-sizing: border-box;
     font-size: calc(60% + 0.8vmin);
@@ -19,8 +19,9 @@ const GlobalStyle = createGlobalStyle`
     background-color: var(--dark-bg);
     font-family: 'Open Sans', sans-serif;
     letter-spacing: 1px;
+    user-select: none;
   }
-
+  
   *, *:after, *:before {
     box-sizing: inherit;
     padding: 0;
