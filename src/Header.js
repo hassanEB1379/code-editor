@@ -6,7 +6,6 @@ import ButtonGroup from './ui/ButtonGroup';
 
 // icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ViewIcon } from './icons/ViewIcon';
 import {
    faChevronDown,
    faCloud,
@@ -47,7 +46,11 @@ const Header = () => {
             </Button>
 
             <Button>
-               <ViewIcon />
+               <img
+                  alt="layout-icon"
+                  width={15}
+                  src="static/images/layout.svg"
+               />
             </Button>
          </Flex>
       </HeaderWrapper>
