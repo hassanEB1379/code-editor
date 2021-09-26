@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 const OutputWrapper = styled.div`
    flex-grow: 1;
-   width: 1px;
+   height: 100%;
    position: relative;
 `;
 
