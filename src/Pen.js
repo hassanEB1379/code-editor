@@ -10,16 +10,7 @@ const MainWrapper = styled(Flex).attrs(() => ({
    direction: 'column',
    justifyContent: 'space-between',
 }))`
-   min-height: 100vh;
-`;
-
-const ContentWrapper = styled(Flex)`
-   flex-grow: 1;
-   border-bottom: 1px solid var(--dark-border);
-`;
-
-const EditorsWrapper = styled(Flex).attrs(() => ({ direction: 'column' }))`
-   border-right: 1px solid var(--dark-border);
+   height: 100vh;
 `;
 
 const Pen = () => {
@@ -27,17 +18,20 @@ const Pen = () => {
       <MainWrapper>
          <Header />
 
-         <ContentWrapper>
-            <Resizable initialWidth={500}>
-               <EditorsWrapper>
-                  <Editor mode="html" />
-                  <Editor mode="css" />
-                  <Editor mode="javascript" />
-               </EditorsWrapper>
+         <Resizable minSize={38}>
+            <Resizable orientation="vertical" minSize={38}>
+               <Editor mode="html" iconSrc="static/images/html-5.svg" />
+
+               <Editor mode="css" iconSrc="static/images/css-3.svg" />
+
+               <Editor
+                  mode="javascript"
+                  iconSrc="static/images/javascript.svg"
+               />
             </Resizable>
 
             <OutputView />
-         </ContentWrapper>
+         </Resizable>
 
          <Footer />
       </MainWrapper>
