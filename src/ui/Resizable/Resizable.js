@@ -1,50 +1,32 @@
-import { useEffect, useState } from 'react';
-import { ResizableWrapper, ResizerX, ShowSize } from './Resizable.styled';
+import { ResizableWrapper } from './Resizable.styled';
+import { Children, useMemo } from 'react';
+import { Resizer } from './Resizer';
 
-const Resizable = ({
-   children,
-   initialWidth = 100,
-   enableShowSize = false,
-}) => {
-   const [width, setWidth] = useState(initialWidth);
-   const [resize, setResize] = useState(false);
-   const [showSize, setShowSize] = useState(false);
+const Resizable = ({ children, orientation = 'horizontal', minSize }) => {
+   // calculate initial size
+   const initialSize = useMemo(() => {
+      const coefficient = 1 / children.length;
 
-   const resizeStart = () => setResize(true);
-   const resizeEnd = () => setResize(false);
+      const dimension = orientation === 'horizontal' ? 'width' : 'height';
 
-   const handleResize = e => {
-      if (resize) {
-         setWidth(e.clientX);
-
-         if (enableShowSize) setShowSize(true);
-      }
-   };
-
-   useEffect(() => {
-      window.addEventListener('mousemove', handleResize);
-      window.addEventListener('mouseup', resizeEnd);
-
-      return () => {
-         window.removeEventListener('mousemove', handleResize);
-         window.removeEventListener('mouseup', resizeEnd);
+      return {
+         [dimension]: `calc((100% - 0px) * ${coefficient})`,
       };
-   });
-
-   // hidden ShowSize component after a few seconds
-   useEffect(() => {
-      const timer = setTimeout(() => setShowSize(false), 2000);
-
-      return () => clearTimeout(timer);
-   }, [width]);
+   }, [children.length]);
 
    return (
-      <ResizableWrapper style={{ width }}>
-         <ResizerX onMouseDown={resizeStart} onMouseUp={resizeEnd} />
+      <ResizableWrapper direction={orientation === 'vertical' && 'column'}>
+         {Children.map(children, (child, index) => {
+            return (
+               <>
+                  <div style={{ ...initialSize }}>{child}</div>
 
-         {children}
-
-         {enableShowSize && <ShowSize hidden={!showSize}>{width}px</ShowSize>}
+                  {index !== children.length - 1 && (
+                     <Resizer orientation={orientation} minSize={minSize} />
+                  )}
+               </>
+            );
+         })}
       </ResizableWrapper>
    );
 };

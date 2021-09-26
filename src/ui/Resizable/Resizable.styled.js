@@ -1,7 +1,11 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+import Flex from '../Flex';
 
-const ResizableWrapper = styled.div`
+const ResizableWrapper = styled(Flex)`
    position: relative;
+   width: 100%;
+   height: 100%;
+   flex-grow: 1;
 `;
 
 const ShowSize = styled.span`
@@ -28,4 +32,26 @@ const ResizerX = styled.div`
    border-left: 1px solid var(--dark-border);
 `;
 
-export { ResizerX, ShowSize, ResizableWrapper };
+const StyledResizer = styled.div`
+   z-index: 999;
+   ${({ orientation }) => {
+      if (orientation === 'horizontal') {
+         return css`
+            cursor: col-resize;
+            width: 0.5rem;
+            height: 100%;
+            border-right: 1px solid var(--dark-border);
+         `;
+      } else {
+         return css`
+            cursor: row-resize;
+            width: 100%;
+            height: 0.5rem;
+            margin-bottom: -0.5rem;
+            border-top: 1px solid var(--dark-border);
+         `;
+      }
+   }}
+`;
+
+export { ResizerX, StyledResizer, ShowSize, ResizableWrapper };
