@@ -1,7 +1,7 @@
 import { ResizableWrapper, StyledResizer } from './Resizable.styled';
 import { Children, useMemo, useRef } from 'react';
 
-const Resizer = () => {
+const Resizer = ({ minHeight }) => {
    const ref = useRef();
 
    function resize(ref, movement) {
@@ -17,13 +17,24 @@ const Resizer = () => {
       const nextElmSize = +nextElm.style.height.match(/([0-9]*[.])[0-9]+/)[0];
 
       // update elements size
-      nextElm.style.height = `calc((100% - 0px) * ${
-         nextElmSize - changedSize
-      })`;
+      let newPrevElmSize;
+      let newNextElmSize;
 
-      prevElm.style.height = `calc((100% - 0px) * ${
-         prevElmSize + changedSize
-      })`;
+      if (
+         (prevElm.offsetHeight < minHeight && movement < 0) ||
+         (nextElm.offsetHeight < minHeight && movement > 0)
+      ) {
+         // The height remains unchanged
+         newPrevElmSize = `calc((100% - 0px) * ${prevElmSize})`;
+         newNextElmSize = `calc((100% - 0px) * ${nextElmSize})`;
+      } else {
+         // calculate new sizes
+         newPrevElmSize = `calc((100% - 0px) * ${prevElmSize + changedSize})`;
+         newNextElmSize = `calc((100% - 0px) * ${nextElmSize - changedSize})`;
+      }
+
+      nextElm.style.height = newNextElmSize;
+      prevElm.style.height = newPrevElmSize;
    }
 
    function handleResize(e) {
