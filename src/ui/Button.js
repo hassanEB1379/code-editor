@@ -3,7 +3,7 @@ import Flex from './Flex';
 
 const Button = styled(Flex).attrs(() => ({
    inline: true,
-   alignItems: 'center',
+   items: 'center',
    gap: '.5rem',
 }))`
    background-color: var(--dark-btn);

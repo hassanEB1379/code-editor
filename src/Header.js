@@ -21,7 +21,7 @@ const HeaderWrapper = styled(Flex)`
 
 const Header = () => {
    return (
-      <HeaderWrapper alignItems="center" justifyContent="space-between">
+      <HeaderWrapper items="center" justify="space-between">
          <p>sallam i am hassan</p>
 
          <Flex gap=".7rem">
