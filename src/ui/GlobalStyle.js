@@ -7,6 +7,9 @@ const GlobalStyle = createGlobalStyle`
     --dark-bth-hover: #5a5f73;
     --dark-border: #2f2f2f;
     --contrast-text: #fff;
+    --text-disabled : #aaaebc;
+    --tab-bg: #1d1e22;
+    --tab-indicator : #34363e;
   }
   
   html {
