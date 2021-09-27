@@ -7,7 +7,7 @@ import 'ace-builds/src-noconflict/mode-css';
 import 'ace-builds/src-noconflict/mode-html';
 import 'ace-builds/src-noconflict/theme-twilight';
 
-const EditorWrapper = styled(Flex).attrs(() => ({ direction: 'column' }))`
+const EditorWrapper = styled(Flex).attrs(() => ({ flexDir: 'column' }))`
    height: 100%;
 
    &:not(:last-of-type) {
@@ -18,6 +18,10 @@ const EditorWrapper = styled(Flex).attrs(() => ({ direction: 'column' }))`
 const EditorHeader = styled(Flex)`
    background-color: var(--dark-bg);
    padding: 0.5rem 1rem;
+
+   & > h4 {
+      color: var(--text-disabled);
+   }
 `;
 
 const Editor = ({ iconSrc, ...rest }) => {
