@@ -5,15 +5,19 @@ import Footer from './Footer';
 import Editor from './Editor';
 import OutputView from './OutputView';
 import Resizable from './ui/Resizable/Resizable';
+import Console from './Console';
+import { useToggleConsole } from './context/Console.context';
 
 const MainWrapper = styled(Flex).attrs(() => ({
-   direction: 'column',
+   flexDir: 'column',
    justifyContent: 'space-between',
 }))`
    height: 100vh;
 `;
 
 const Pen = () => {
+   const { isOpen } = useToggleConsole();
+
    return (
       <MainWrapper>
          <Header />
@@ -30,7 +34,10 @@ const Pen = () => {
                />
             </Resizable>
 
-            <OutputView />
+            <Resizable orientation="vertical">
+               <OutputView />
+               {isOpen && <Console />}
+            </Resizable>
          </Resizable>
 
          <Footer />
