@@ -1,12 +1,13 @@
 import styled from 'styled-components';
-import Header from './Header';
-import Flex from './ui/Flex';
-import Footer from './Footer';
-import Editor from './Editor';
+import Header from '../../Header';
+import Flex from '../../ui/Flex';
+import Footer from '../../Footer';
+import Editor from '../../Editor';
 import OutputView from './OutputView';
-import Resizable from './ui/Resizable/Resizable';
+import Resizable from '../../ui/Resizable/Resizable';
 import Console from './Console';
-import { useToggleConsole } from './context/Console.context';
+import { useToggleConsole } from './Console.context';
+import { useViewLayout } from './ViewLayout.context';
 
 const MainWrapper = styled(Flex).attrs(() => ({
    flexDir: 'column',
@@ -18,12 +19,14 @@ const MainWrapper = styled(Flex).attrs(() => ({
 const Pen = () => {
    const { isOpen } = useToggleConsole();
 
+   const { wrapper, editors } = useViewLayout();
+
    return (
       <MainWrapper>
          <Header />
 
-         <Resizable minSize={38}>
-            <Resizable orientation="vertical" minSize={38}>
+         <Resizable orientation={wrapper.orientation} minSize={38}>
+            <Resizable orientation={editors.orientation} minSize={38}>
                <Editor mode="html" iconSrc="static/images/html-5.svg" />
 
                <Editor mode="css" iconSrc="static/images/css-3.svg" />

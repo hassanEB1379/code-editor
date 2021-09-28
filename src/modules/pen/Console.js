@@ -1,11 +1,11 @@
 import styled from 'styled-components';
-import Flex from './ui/Flex';
-import Button from './ui/Button';
+import Flex from '../../ui/Flex';
+import Button from '../../ui/Button';
 
 // icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import { useToggleConsole } from './context/Console.context';
+import { useToggleConsole } from './Console.context';
 
 const ConsoleTitle = styled.p`
    background-color: var(--tab-bg);
