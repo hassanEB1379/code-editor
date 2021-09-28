@@ -7,7 +7,6 @@ const Button = styled(Flex).attrs(() => ({
    gap: '.5rem',
 }))`
    background-color: var(--dark-btn);
-   padding: ${props => (props.dense || props.sm ? '.4rem' : '.8rem 1.2rem')};
    border: none;
    border-radius: 0.3rem;
    cursor: pointer;
@@ -15,6 +14,16 @@ const Button = styled(Flex).attrs(() => ({
    &:hover {
       background-color: var(--dark-bth-hover);
    }
+
+   padding: ${props => {
+      if (props.dense || props.sm) {
+         return '.4rem';
+      } else if (props.wide) {
+         return '.8rem 1.8rem';
+      } else {
+         return '.8rem 1.2rem';
+      }
+   }};
 `;
 
 export default Button;
