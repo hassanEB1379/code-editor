@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import Button from './ui/Button';
 import Flex from './ui/Flex';
 import ButtonGroup from './ui/ButtonGroup';
+import Dropdown from './ui/Dropdown';
+import Icon from './ui/Icon';
 
 // icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -12,12 +14,47 @@ import {
    faCog,
    faHeart,
 } from '@fortawesome/free-solid-svg-icons';
+import {
+   useViewLayout,
+   useViewLayoutDispatch,
+} from './modules/pen/ViewLayout.context';
 
 const HeaderWrapper = styled(Flex)`
    height: 4rem;
    padding: 0.5rem;
    border-bottom: 1px solid var(--dark-border);
 `;
+
+function ChangeViewDropdown() {
+   const dispatch = useViewLayoutDispatch();
+
+   const { icon } = useViewLayout();
+
+   function changeLayout(type) {
+      dispatch({ type });
+   }
+
+   return (
+      <Dropdown action={<Button>{icon}</Button>}>
+         <Flex gap=".7rem" p=".5rem" flexDir="column">
+            <h4>Change view</h4>
+            <ButtonGroup>
+               <Button wide onClick={() => changeLayout('default')}>
+                  <Icon
+                     alt="layout-icon"
+                     src="static/images/layout.svg"
+                     rotate={-90}
+                  />
+               </Button>
+
+               <Button wide onClick={() => changeLayout('vertical')}>
+                  <Icon alt="layout-icon" src="static/images/layout.svg" />
+               </Button>
+            </ButtonGroup>
+         </Flex>
+      </Dropdown>
+   );
+}
 
 const Header = () => {
    return (
@@ -45,13 +82,7 @@ const Header = () => {
                Settings
             </Button>
 
-            <Button>
-               <img
-                  alt="layout-icon"
-                  width={15}
-                  src="static/images/layout.svg"
-               />
-            </Button>
+            <ChangeViewDropdown />
          </Flex>
       </HeaderWrapper>
    );
