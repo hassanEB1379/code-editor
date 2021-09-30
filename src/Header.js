@@ -4,7 +4,6 @@ import Button from './ui/Button';
 import Flex from './ui/Flex';
 import ButtonGroup from './ui/ButtonGroup';
 import Dropdown from './ui/Dropdown';
-import Icon from './ui/Icon';
 
 // icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -18,6 +17,7 @@ import {
    useViewLayout,
    useViewLayoutDispatch,
 } from './modules/pen/ViewLayout.context';
+import ViewLayoutIcon from './modules/pen/ViewLayout.icon';
 
 const HeaderWrapper = styled(Flex)`
    height: 4rem;
@@ -40,15 +40,11 @@ function ChangeViewDropdown() {
             <h4>Change view</h4>
             <ButtonGroup>
                <Button wide onClick={() => changeLayout('default')}>
-                  <Icon
-                     alt="layout-icon"
-                     src="static/images/layout.svg"
-                     rotate={-90}
-                  />
+                  <ViewLayoutIcon rotate={-90} />
                </Button>
 
                <Button wide onClick={() => changeLayout('vertical')}>
-                  <Icon alt="layout-icon" src="static/images/layout.svg" />
+                  <ViewLayoutIcon />
                </Button>
             </ButtonGroup>
          </Flex>

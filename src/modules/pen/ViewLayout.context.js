@@ -1,5 +1,5 @@
 import { createContext, useContext, useReducer } from 'react';
-import Icon from '../../ui/Icon';
+import ViewLayoutIcon from './ViewLayout.icon';
 
 const ViewLayoutContext = createContext();
 const ViewLayoutContextDispatch = createContext();
@@ -15,7 +15,7 @@ const initialLayout = {
    editors: {
       orientation: 'vertical',
    },
-   icon: <Icon alt="layout-icon" src="static/images/layout.svg" rotate={-90} />,
+   icon: <ViewLayoutIcon rotate={-90} />,
 };
 
 function viewLayoutReducer(state, action) {
@@ -32,7 +32,7 @@ function viewLayoutReducer(state, action) {
             editors: {
                orientation: 'horizontal',
             },
-            icon: <Icon alt="layout-icon" src="static/images/layout.svg" />,
+            icon: <ViewLayoutIcon />,
          };
 
       default:
