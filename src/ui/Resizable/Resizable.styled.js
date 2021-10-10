@@ -5,6 +5,7 @@ const ResizableWrapper = styled(Flex)`
    position: relative;
    width: 100%;
    height: 100%;
+   overflow: hidden;
    flex-grow: 1;
 `;
 

@@ -16,6 +16,8 @@ const ConsoleBody = styled(Flex).attrs(() => ({
 }))`
    background-color: var(--tab-bg);
    flex-grow: 1;
+   overflow-y: auto;
+   height: 100%;
 `;
 
 const ConsoleLog = styled.p`
