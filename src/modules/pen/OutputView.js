@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 import useDebounceEffect from '../../useDebouncEffect';
 import { useConsoleLogsDispatch } from './ConsoleLogs.context';
+import { useSourceCode } from './source-code.context';
 
 const OutputWrapper = styled.div`
    flex-grow: 1;
@@ -89,17 +90,19 @@ const getGeneratedPageURL = ({ html, css, js }) => {
    return getBlobURL(source, 'text/html');
 };
 
-const OutputView = ({ code }) => {
+const OutputView = () => {
+   const source = useSourceCode();
+
    const dispatch = useConsoleLogsDispatch();
 
-   const [src, setSrc] = useState('');
+   const [sourceUrl, setSourceUrl] = useState('');
 
    useDebounceEffect(
       () => {
-         setSrc(getGeneratedPageURL(code));
+         setSourceUrl(getGeneratedPageURL(source));
       },
       1000,
-      [code]
+      [source]
    );
 
    useEffect(() => {
@@ -122,7 +125,7 @@ const OutputView = ({ code }) => {
 
          <iframe
             style={{ backgroundColor: '#fff', border: 'none' }}
-            src={src}
+            src={sourceUrl}
             width="100%"
             height="100%"
             title="output-window"

@@ -1,18 +1,18 @@
 import Flex from '../../ui/Flex';
 import Button from '../../ui/Button';
 import { ConsoleTitle, ConsoleLog, ConsoleBody } from './Console.styled';
+import { useToggleConsole } from './Console.context';
+import { useConsoleLogs, useConsoleLogsDispatch } from './ConsoleLogs.context';
 
 // icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import { useToggleConsole } from './Console.context';
-import { useConsoleLogs, useConsoleLogsDispatch } from './ConsoleLogs.context';
 
 function Console() {
    const dispatch = useConsoleLogsDispatch();
 
    const { toggle } = useToggleConsole();
-
+   console.log('console');
    const logs = useConsoleLogs();
 
    function clearConsole() {

@@ -9,6 +9,7 @@ import Console from './Console';
 import { useToggleConsole } from './Console.context';
 import { useViewLayout } from './ViewLayout.context';
 import { useState } from 'react';
+import { useSourceCode } from './source-code.context';
 
 const MainWrapper = styled(Flex).attrs(() => ({
    flexDir: 'column',
@@ -18,12 +19,9 @@ const MainWrapper = styled(Flex).attrs(() => ({
 `;
 
 const Pen = () => {
-   const [html, setHtml] = useState('');
-   const [css, setCss] = useState('');
-   const [js, setJs] = useState('');
-
    const { isOpen } = useToggleConsole();
 
+   console.log('pen');
    const { wrapper, editors } = useViewLayout();
 
    return (
@@ -33,29 +31,29 @@ const Pen = () => {
          <Resizable orientation={wrapper.orientation} minSize={38}>
             <Resizable orientation={editors.orientation} minSize={38}>
                <Editor
-                  onChange={code => setHtml(code)}
                   mode="html"
                   name="html-editor"
+                  type="html"
                   iconSrc="static/images/html-5.svg"
                />
 
                <Editor
-                  onChange={code => setCss(code)}
                   mode="css"
                   name="css-editor"
+                  type="css"
                   iconSrc="static/images/css-3.svg"
                />
 
                <Editor
-                  onChange={code => setJs(code)}
                   mode="javascript"
                   name="js-editor"
+                  type="js"
                   iconSrc="static/images/javascript.svg"
                />
             </Resizable>
 
             <Resizable orientation="vertical">
-               <OutputView code={{ html, css, js }} />
+               <OutputView />
                {isOpen && <Console />}
             </Resizable>
          </Resizable>

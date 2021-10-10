@@ -6,6 +6,7 @@ import 'ace-builds/src-noconflict/mode-javascript';
 import 'ace-builds/src-noconflict/mode-css';
 import 'ace-builds/src-noconflict/mode-html';
 import 'ace-builds/src-noconflict/theme-twilight';
+import { useSourceCodeDispatch } from './source-code.context';
 
 const EditorWrapper = styled(Flex).attrs(() => ({ flexDir: 'column' }))`
    height: 100%;
@@ -24,7 +25,13 @@ const EditorHeader = styled(Flex)`
    }
 `;
 
-const Editor = ({ iconSrc, ...rest }) => {
+const Editor = ({ iconSrc, type, ...rest }) => {
+   const dispatch = useSourceCodeDispatch();
+
+   function handleChangeSource(code) {
+      dispatch({ type, payload: code });
+   }
+
    return (
       <EditorWrapper>
          <EditorHeader gap="1rem" alignItems="center">
@@ -33,6 +40,7 @@ const Editor = ({ iconSrc, ...rest }) => {
          </EditorHeader>
 
          <AceEditor
+            onChange={handleChangeSource}
             theme="twilight"
             fontSize="1rem"
             width="100%"
