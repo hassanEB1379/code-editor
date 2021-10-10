@@ -4,7 +4,7 @@ const toggleConsoleContext = createContext(null);
 
 export const useToggleConsole = () => useContext(toggleConsoleContext);
 
-export function ToggleConsoleProvider(props) {
+export function ToggleConsoleProvider({ children }) {
    const [isOpen, setIsOpen] = useState(false);
 
    function toggle() {
@@ -13,7 +13,7 @@ export function ToggleConsoleProvider(props) {
 
    return (
       <toggleConsoleContext.Provider value={{ isOpen, toggle }}>
-         {props.children}
+         {children}
       </toggleConsoleContext.Provider>
    );
 }

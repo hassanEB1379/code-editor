@@ -1,7 +1,7 @@
-import Flex from '../../ui/Flex';
-import Button from '../../ui/Button';
+import Flex from '../../../ui/Flex';
+import Button from '../../../ui/Button';
 import { ConsoleTitle, ConsoleLog, ConsoleBody } from './Console.styled';
-import { useToggleConsole } from './Console.context';
+import { useToggleConsole } from './ConsoleToggle.context';
 import { useConsoleLogs, useConsoleLogsDispatch } from './ConsoleLogs.context';
 
 // icons
@@ -12,7 +12,7 @@ function Console() {
    const dispatch = useConsoleLogsDispatch();
 
    const { toggle } = useToggleConsole();
-   console.log('console');
+
    const logs = useConsoleLogs();
 
    function clearConsole() {
