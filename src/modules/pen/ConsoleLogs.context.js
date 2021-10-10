@@ -12,11 +12,11 @@ const initialLogs = [];
 function consoleLogsReducer(state, action) {
    switch (action.type) {
       case 'error':
-         return [...state, { ...action }];
+         return [...state, { ...action.payload }];
       case 'warning':
-         return initialLogs;
+         return [...state, { ...action.payload }];
       case 'log':
-         return initialLogs;
+         return [...state, { ...action.payload }];
       case 'clear':
          return initialLogs;
 
