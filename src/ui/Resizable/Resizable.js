@@ -14,7 +14,7 @@ const Resizable = ({ children, orientation = 'horizontal', minSize = 20 }) => {
       return {
          [dimension]: `calc((100% - 0px) * ${coefficient})`,
       };
-   }, [validElements]);
+   }, [validElements, orientation]);
 
    return (
       <ResizableWrapper flexDir={orientation === 'vertical' && 'column'}>
