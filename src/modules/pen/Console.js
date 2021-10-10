@@ -1,31 +1,23 @@
-import styled from 'styled-components';
 import Flex from '../../ui/Flex';
 import Button from '../../ui/Button';
+import { ConsoleTitle, ConsoleLog, ConsoleBody } from './Console.styled';
 
 // icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { useToggleConsole } from './Console.context';
-
-const ConsoleTitle = styled.p`
-   background-color: var(--tab-bg);
-   height: 100%;
-   font-size: 0.9rem;
-   font-weight: 600;
-   color: var(--text-disabled);
-   padding: 0.3rem 1rem 0.6rem;
-   border-top: 0.3rem solid var(--tab-indicator);
-`;
-
-const ConsoleBody = styled(Flex).attrs(() => ({
-   flexDir: 'column',
-}))`
-   background-color: var(--tab-bg);
-   flex-grow: 1;
-`;
+import { useConsoleLogs, useConsoleLogsDispatch } from './ConsoleLogs.context';
 
 function Console() {
+   const dispatch = useConsoleLogsDispatch();
+
    const { toggle } = useToggleConsole();
+
+   const logs = useConsoleLogs();
+
+   function clearConsole() {
+      dispatch({ type: 'clear' });
+   }
 
    return (
       <Flex style={{ height: '100%' }} flexDir="column">
@@ -34,7 +26,9 @@ function Console() {
             <ConsoleTitle>Console</ConsoleTitle>
 
             <Flex inline gap=".3rem" mr=".5rem">
-               <Button sm>Clear</Button>
+               <Button sm onClick={clearConsole}>
+                  Clear
+               </Button>
 
                <Button sm onClick={toggle}>
                   <FontAwesomeIcon icon={faTimes} />
@@ -42,7 +36,27 @@ function Console() {
             </Flex>
          </Flex>
 
-         <ConsoleBody />
+         <ConsoleBody>
+            {logs.map((log, index) => {
+               if (log.type === 'error') {
+                  return (
+                     <ConsoleLog logType="error" key={index}>
+                        {log.payload.message}
+                     </ConsoleLog>
+                  );
+               } else if (log.type === 'log') {
+                  return (
+                     <ConsoleLog key={index}>{log.payload.data}</ConsoleLog>
+                  );
+               } else if (log.type === 'warning') {
+                  return (
+                     <ConsoleLog logType="warning" key={index}>
+                        {log.payload.message}
+                     </ConsoleLog>
+                  );
+               }
+            })}
+         </ConsoleBody>
       </Flex>
    );
 }
