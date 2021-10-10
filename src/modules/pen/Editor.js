@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import AceEditor from 'react-ace';
-import Flex from './ui/Flex';
+import Flex from '../../ui/Flex';
 
 import 'ace-builds/src-noconflict/mode-javascript';
 import 'ace-builds/src-noconflict/mode-css';
@@ -34,7 +34,7 @@ const Editor = ({ iconSrc, ...rest }) => {
 
          <AceEditor
             theme="twilight"
-            fontSize="1.2rem"
+            fontSize="1rem"
             width="100%"
             height="100%"
             {...rest}
