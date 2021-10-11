@@ -13,48 +13,76 @@ export const getGeneratedPageURL = ({ html, css, js }) => {
       <head>
         <title>Output pen</title>
         <meta charset="utf-8">      
-        <script >
-          window.onerror = (message, source, lineno, colno, error) => {
-            window.parent.postMessage(
-              {
-                type : 'error',
-                source : 'output-view-iframe',
-                payload : {message ,source ,lineno ,colno ,error} 
-              },
-              '*'   
-            )
-          }
-          const customConsole = {
-            warn : (message) => {
-              window.parent.postMessage({
-                type : 'warning',
-                source : 'output-view-iframe',
-                payload : { message }
-              } , '*')
-            },
-            log : (data) => {
-              window.parent.postMessage({
-                type : 'log',
-                source : 'output-view-iframe',
-                payload : { data }
-              } , '*')
-            },
-            error : (message) => {
-              window.parent.postMessage({
-                type : 'error',
-                source : 'output-view-iframe',
-                payload : { message }
-              } , '*')
-            },
-            clear : () => {
-               window.parent.postMessage({
-                type : 'clear',
-                source : 'output-view-iframe',
-              } , '*')
-            }
-          }
-          window.console = {...window.console ,...customConsole }
-        </script>  
+        
+        <script>
+              window.onerror = (message, source, lineno, colno, error) => {
+                   window.parent.postMessage(
+                      {
+                         type: 'error',
+                         source: 'output-view-iframe',
+                         payload: { message, source, lineno, colno, error }
+                      },
+                      '*'
+                   );
+              };
+
+              const customConsole = {
+                 warn: message => {
+                    window.parent.postMessage(
+                       {
+                          type: 'warning',
+                          source: 'output-view-iframe',
+                          payload: { message },
+                       },
+                       '*'
+                    );
+                 },
+                 log: data => {
+                    window.parent.postMessage(
+                       {
+                          type: 'log',
+                          source: 'output-view-iframe',
+                          payload: { data },
+                       },
+                       '*'
+                    );
+                 },
+                 error: message => {
+                    window.parent.postMessage(
+                       {
+                          type: 'error',
+                          source: 'output-view-iframe',
+                          payload: { message },
+                       },
+                       '*'
+                    );
+                 },
+                 clear: () => {
+                    window.parent.postMessage(
+                       {
+                          type: 'clear',
+                          source: 'output-view-iframe',
+                       },
+                       '*'
+                    );
+                 },
+              };
+              
+              window.console = { ...window.console, ...customConsole };
+              
+              // handle command line
+              
+              function runCommand(text) {
+                 try {
+                   const returnedValue = Function('"use strict";return (' + text + ')')();
+                   
+                   console.log(returnedValue)
+                 }catch(err) {
+                   console.error(err.message)
+                 }
+              }
+        </script>
+        
         ${css && `<link rel="stylesheet" type="text/css" href="${cssURL}" />`}
         ${js && `<script src="${jsURL}"></script>`}    
       </head>
