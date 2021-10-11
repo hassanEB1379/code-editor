@@ -18,9 +18,10 @@ const ConsoleBody = styled(Flex).attrs(() => ({
    flex-grow: 1;
    overflow-y: auto;
    height: 100%;
+   font-size: 0.9rem;
 `;
 
-const ConsoleLog = styled.p`
+const StyledConsoleMessage = styled.code`
    ${({ logType }) => {
       switch (logType) {
          case 'error':
@@ -42,4 +43,26 @@ const ConsoleLog = styled.p`
    padding: 0.5rem 0.8rem;
 `;
 
-export { ConsoleTitle, ConsoleBody, ConsoleLog };
+const CommandLine = styled.code`
+   min-height: 2.2rem;
+   line-height: 2.2rem;
+   background-color: var(--command-line-bg);
+   padding: 0 0.5rem 0 2rem;
+   position: relative;
+
+   &:focus {
+      outline: none;
+   }
+
+   &::before {
+      position: absolute;
+      left: 0.5rem;
+      top: 0;
+      bottom: 0;
+      content: '>';
+      font-weight: 700;
+      color: #5c5cff;
+   }
+`;
+
+export { ConsoleTitle, ConsoleBody, StyledConsoleMessage, CommandLine };

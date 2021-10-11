@@ -1,8 +1,10 @@
 import Flex from '../../../ui/Flex';
 import Button from '../../../ui/Button';
-import { ConsoleTitle, ConsoleLog, ConsoleBody } from './Console.styled';
 import { useToggleConsole } from './ConsoleToggle.context';
 import { useConsoleLogs, useConsoleLogsDispatch } from './ConsoleLogs.context';
+import ConsoleMessage from './ConsoleMessage';
+
+import { ConsoleTitle, ConsoleBody, CommandLine } from './Console.styled';
 
 // icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -17,6 +19,17 @@ function Console() {
 
    function clearConsole() {
       dispatch({ type: 'clear' });
+   }
+
+   function executeRunCommand(e) {
+      // execute run command function when click on Enter button
+      if (e.keyCode === 13) {
+         e.preventDefault();
+
+         window.frames[0].frameElement.contentWindow.runCommand(
+            e.target.innerText
+         );
+      }
    }
 
    return (
@@ -40,23 +53,32 @@ function Console() {
             {logs.map((log, index) => {
                if (log.type === 'error') {
                   return (
-                     <ConsoleLog logType="error" key={index}>
-                        {log.payload.message}
-                     </ConsoleLog>
+                     <ConsoleMessage
+                        type="error"
+                        key={index}
+                        data={log.payload.message}
+                     />
                   );
                } else if (log.type === 'log') {
-                  return (
-                     <ConsoleLog key={index}>{log.payload.data}</ConsoleLog>
-                  );
+                  return <ConsoleMessage key={index} data={log.payload.data} />;
                } else if (log.type === 'warning') {
                   return (
-                     <ConsoleLog logType="warning" key={index}>
-                        {log.payload.message}
-                     </ConsoleLog>
+                     <ConsoleMessage
+                        type="warning"
+                        key={index}
+                        data={log.payload.message}
+                     />
                   );
                }
             })}
          </ConsoleBody>
+
+         <CommandLine
+            id="console-command-line"
+            spellCheck="false"
+            contentEditable
+            onKeyDown={executeRunCommand}
+         />
       </Flex>
    );
 }
