@@ -11,6 +11,7 @@ const GlobalStyle = createGlobalStyle`
     --tab-bg: #1d1e22;
     --tab-indicator : #34363e;
     --dropdown-bg: #1e1f26;
+    --command-line-bg: #ffffff2e;
     --z-999 : 999;
     --z-100 : 100;
     --z-50 : 50;
