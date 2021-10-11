@@ -16,8 +16,8 @@ import {
 import {
    useViewLayout,
    useViewLayoutDispatch,
-} from './modules/pen/ViewLayout.context';
-import ViewLayoutIcon from './modules/pen/ViewLayout.icon';
+} from './modules/pen/view-layout/ViewLayout.context';
+import ViewLayoutIcon from './modules/pen/view-layout/ViewLayout.icon';
 
 const HeaderWrapper = styled(Flex)`
    height: 4rem;
