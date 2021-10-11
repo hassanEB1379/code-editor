@@ -2,14 +2,7 @@ import styled from 'styled-components';
 import Header from '../../Header';
 import Flex from '../../ui/Flex';
 import Footer from '../../Footer';
-import Editor from './Editor';
-import OutputView from './OutputView';
-import Resizable from '../../ui/Resizable/Resizable';
-import Console from './Console';
-import { useToggleConsole } from './Console.context';
-import { useViewLayout } from './ViewLayout.context';
-import { useState } from 'react';
-import { useSourceCode } from './source-code.context';
+import ViewLayout from './view-layout/ViewLayout';
 
 const MainWrapper = styled(Flex).attrs(() => ({
    flexDir: 'column',
@@ -19,44 +12,11 @@ const MainWrapper = styled(Flex).attrs(() => ({
 `;
 
 const Pen = () => {
-   const { isOpen } = useToggleConsole();
-
-   console.log('pen');
-   const { wrapper, editors } = useViewLayout();
-
    return (
       <MainWrapper>
          <Header />
 
-         <Resizable orientation={wrapper.orientation} minSize={38}>
-            <Resizable orientation={editors.orientation} minSize={38}>
-               <Editor
-                  mode="html"
-                  name="html-editor"
-                  type="html"
-                  iconSrc="static/images/html-5.svg"
-               />
-
-               <Editor
-                  mode="css"
-                  name="css-editor"
-                  type="css"
-                  iconSrc="static/images/css-3.svg"
-               />
-
-               <Editor
-                  mode="javascript"
-                  name="js-editor"
-                  type="js"
-                  iconSrc="static/images/javascript.svg"
-               />
-            </Resizable>
-
-            <Resizable orientation="vertical">
-               <OutputView />
-               {isOpen && <Console />}
-            </Resizable>
-         </Resizable>
+         <ViewLayout />
 
          <Footer />
       </MainWrapper>
