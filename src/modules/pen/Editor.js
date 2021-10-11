@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 import AceEditor from 'react-ace';
 import Flex from '../../ui/Flex';
+import { useSourceCodeDispatch } from './source-code.context';
 
 import 'ace-builds/src-noconflict/mode-javascript';
 import 'ace-builds/src-noconflict/mode-css';
 import 'ace-builds/src-noconflict/mode-html';
 import 'ace-builds/src-noconflict/theme-twilight';
-import { useSourceCodeDispatch } from './source-code.context';
 
 const EditorWrapper = styled(Flex).attrs(() => ({ flexDir: 'column' }))`
    height: 100%;
