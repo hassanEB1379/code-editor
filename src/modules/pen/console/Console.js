@@ -3,12 +3,14 @@ import Button from '../../../ui/Button';
 import { useToggleConsole } from './ConsoleToggle.context';
 import { useConsoleLogs, useConsoleLogsDispatch } from './ConsoleLogs.context';
 import ConsoleMessage from './ConsoleMessage';
+import CommandLine from './CommandLine';
 
-import { ConsoleTitle, ConsoleBody, CommandLine } from './Console.styled';
+import { ConsoleTitle, ConsoleBody } from './Console.styled';
 
 // icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { Fragment } from 'react';
 
 function Console() {
    const dispatch = useConsoleLogsDispatch();
@@ -19,17 +21,6 @@ function Console() {
 
    function clearConsole() {
       dispatch({ type: 'clear' });
-   }
-
-   function executeRunCommand(e) {
-      // execute run command function when click on Enter button
-      if (e.keyCode === 13) {
-         e.preventDefault();
-
-         window.frames[0].frameElement.contentWindow.runCommand(
-            e.target.innerText
-         );
-      }
    }
 
    return (
@@ -50,35 +41,32 @@ function Console() {
          </Flex>
 
          <ConsoleBody>
-            {logs.map((log, index) => {
-               if (log.type === 'error') {
-                  return (
+            {logs.map((log, index) => (
+               <Fragment key={index}>
+                  {log.type === 'error' && (
                      <ConsoleMessage
                         type="error"
                         key={index}
                         data={log.payload.message}
                      />
-                  );
-               } else if (log.type === 'log') {
-                  return <ConsoleMessage key={index} data={log.payload.data} />;
-               } else if (log.type === 'warning') {
-                  return (
+                  )}
+
+                  {log.type === 'warning' && (
                      <ConsoleMessage
                         type="warning"
                         key={index}
                         data={log.payload.message}
                      />
-                  );
-               }
-            })}
+                  )}
+
+                  {log.type === 'log' && (
+                     <ConsoleMessage key={index} data={log.payload.data} />
+                  )}
+               </Fragment>
+            ))}
          </ConsoleBody>
 
-         <CommandLine
-            id="console-command-line"
-            spellCheck="false"
-            contentEditable
-            onKeyDown={executeRunCommand}
-         />
+         <CommandLine />
       </Flex>
    );
 }
