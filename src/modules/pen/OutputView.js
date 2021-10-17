@@ -1,9 +1,7 @@
 import styled from 'styled-components';
-import { useEffect, useState } from 'react';
-import useDebounceEffect from '../../useDebouncEffect';
+import { useEffect } from 'react';
 import { useConsoleLogsDispatch } from './console/ConsoleLogs.context';
-import { useSourceCode } from './source-code.context';
-import { getGeneratedPageURL } from './utils/generatePageUrl';
+import { useSourceUrl } from './source-url.context';
 
 const OutputWrapper = styled.div`
    flex-grow: 1;
@@ -11,26 +9,16 @@ const OutputWrapper = styled.div`
    position: relative;
 `;
 
-const OutputOverlay = styled.div`
-   position: absolute;
-   inset: 0;
-   z-index: 10;
-`;
+// const OutputOverlay = styled.div`
+//    position: absolute;
+//    inset: 0;
+//    z-index: 10;
+// `;
 
 const OutputView = () => {
-   const source = useSourceCode();
-
    const dispatch = useConsoleLogsDispatch();
 
-   const [sourceUrl, setSourceUrl] = useState('');
-
-   useDebounceEffect(
-      () => {
-         setSourceUrl(getGeneratedPageURL(source));
-      },
-      1000,
-      [source]
-   );
+   const url = useSourceUrl();
 
    useEffect(() => {
       function handleIframeError(e) {
@@ -48,16 +36,18 @@ const OutputView = () => {
 
    return (
       <OutputWrapper>
-         <OutputOverlay />
+         {/*<OutputOverlay />*/}
 
          <iframe
-            style={{ backgroundColor: '#fff', border: 'none' }}
-            src={sourceUrl}
+            style={{
+               backgroundColor: '#fff',
+               border: 'none',
+            }}
+            src={url}
             width="100%"
             height="100%"
             title="output-window"
             sandbox="allow-downloads allow-forms allow-modals allow-pointer-lock allow-popups allow-presentation allow-same-origin allow-scripts allow-top-navigation-by-user-activation"
-            scrolling="auto"
          />
       </OutputWrapper>
    );
