@@ -5,6 +5,7 @@ import { ToggleConsoleProvider } from './modules/pen/console/ConsoleToggle.conte
 import { ViewLayoutProvider } from './modules/pen/view-layout/ViewLayout.context';
 import { ConsoleLogsProvider } from './modules/pen/console/ConsoleLogs.context';
 import { SourceCodeProvider } from './modules/pen/source-code.context';
+import { SourceUrlProvider } from './modules/pen/source-url.context';
 
 function App() {
    return (
@@ -12,7 +13,9 @@ function App() {
          <ToggleConsoleProvider>
             <ConsoleLogsProvider>
                <SourceCodeProvider>
-                  <Pen />
+                  <SourceUrlProvider>
+                     <Pen />
+                  </SourceUrlProvider>
                </SourceCodeProvider>
             </ConsoleLogsProvider>
          </ToggleConsoleProvider>
