@@ -43,13 +43,12 @@ const StyledConsoleMessage = styled.code`
    padding: 0.5rem 0.8rem;
 `;
 
-const CommandLine = styled.code`
+const StyledCommandLine = styled.code`
    min-height: 2.2rem;
    line-height: 2.2rem;
    background-color: var(--command-line-bg);
    padding: 0 0.5rem 0 2rem;
    position: relative;
-
    &:focus {
       outline: none;
    }
@@ -65,4 +64,36 @@ const CommandLine = styled.code`
    }
 `;
 
-export { ConsoleTitle, ConsoleBody, StyledConsoleMessage, CommandLine };
+const ReturnedValue = styled.code`
+   min-height: 1.5rem;
+   line-height: 1.5rem;
+   background-color: var(--command-line-return-bg);
+   padding: 0 0.5rem 0 2rem;
+   position: relative;
+   font-size: 0.75rem;
+   font-style: italic;
+   white-space: nowrap;
+   text-overflow: ellipsis;
+   overflow: hidden;
+
+   &:focus {
+      outline: none;
+   }
+
+   &::before {
+      position: absolute;
+      left: 0.5rem;
+      top: 0;
+      bottom: 0;
+      content: '<';
+      font-weight: 700;
+   }
+`;
+
+export {
+   ConsoleTitle,
+   ConsoleBody,
+   StyledConsoleMessage,
+   StyledCommandLine,
+   ReturnedValue,
+};
