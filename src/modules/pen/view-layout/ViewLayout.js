@@ -1,6 +1,6 @@
 import Resizable from '../../../ui/Resizable/Resizable';
-import Editor from '../Editor';
-import OutputView from '../OutputView';
+import Editor from '../components/Editor';
+import OutputView from '../components/OutputView';
 import Console from '../console/Console';
 import { useViewLayout } from './ViewLayout.context';
 import { useToggleConsole } from '../console/ConsoleToggle.context';
