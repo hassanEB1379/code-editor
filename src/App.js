@@ -1,25 +1,23 @@
-import Pen from './modules/pen/Pen';
-
-// context providers
-import { ToggleConsoleProvider } from './modules/pen/console/ConsoleToggle.context';
-import { ViewLayoutProvider } from './modules/pen/view-layout/ViewLayout.context';
-import { ConsoleLogsProvider } from './modules/pen/console/ConsoleLogs.context';
-import { SourceCodeProvider } from './modules/pen/source-code.context';
-import { SourceUrlProvider } from './modules/pen/source-url.context';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import HomePage from './HomePage';
+import Pen from './modules/pen/components/Pen';
+import {
+   PrivateRoute,
+   PublicRoute,
+   Login,
+   Register,
+} from './modules/authentication/components';
 
 function App() {
    return (
-      <ViewLayoutProvider>
-         <ToggleConsoleProvider>
-            <ConsoleLogsProvider>
-               <SourceCodeProvider>
-                  <SourceUrlProvider>
-                     <Pen />
-                  </SourceUrlProvider>
-               </SourceCodeProvider>
-            </ConsoleLogsProvider>
-         </ToggleConsoleProvider>
-      </ViewLayoutProvider>
+      <BrowserRouter>
+         <Switch>
+            <PublicRoute restricted path="/login" component={Login} />
+            <PublicRoute restricted path="/register" component={Register} />
+            <PrivateRoute path="/pen" component={Pen} />
+            <PublicRoute path="/" component={HomePage} />
+         </Switch>
+      </BrowserRouter>
    );
 }
 
