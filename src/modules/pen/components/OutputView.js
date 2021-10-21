@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { useEffect } from 'react';
-import { useConsoleLogsDispatch } from './console/ConsoleLogs.context';
-import { useSourceUrl } from './source-url.context';
+import { useConsoleLogsDispatch } from '../console/ConsoleLogs.context';
+import { useSourceUrl } from '../contexts/source-url.context';
 
 const OutputWrapper = styled.div`
    flex-grow: 1;

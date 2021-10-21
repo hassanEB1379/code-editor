@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import AceEditor from 'react-ace';
-import Flex from '../../ui/Flex';
-import { useSourceCodeDispatch } from './source-code.context';
+import Flex from '../../../ui/Flex';
+import { useSourceCodeDispatch } from '../contexts/source-code.context';
 
 import 'ace-builds/src-noconflict/mode-javascript';
 import 'ace-builds/src-noconflict/mode-css';
