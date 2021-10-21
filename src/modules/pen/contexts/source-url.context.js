@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from 'react';
-import { getGeneratedPageURL } from './utils/generatePageUrl';
+import { getGeneratedPageURL } from '../utils/generatePageUrl';
 
 const SourceUrlContext = createContext(null);
 const SourceUrlContextDispatch = createContext(null);
