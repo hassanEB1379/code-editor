@@ -1,12 +1,13 @@
 import { Redirect, Route } from 'react-router-dom';
+import { useAuthData } from '../contexts/auth-context';
 
 export const PublicRoute = props => {
    const { component: Component, restricted = false, ...rest } = props;
 
-   const authenticated = true;
+   const { isAuthenticated } = useAuthData();
 
    const render = renderProps => {
-      if (authenticated && restricted) {
+      if (isAuthenticated && restricted) {
          // return user to editor if user authenticated
          return <Redirect to="/pen" />;
       } else {
