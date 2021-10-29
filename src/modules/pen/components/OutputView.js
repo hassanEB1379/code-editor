@@ -9,12 +9,6 @@ const OutputWrapper = styled.div`
    position: relative;
 `;
 
-// const OutputOverlay = styled.div`
-//    position: absolute;
-//    inset: 0;
-//    z-index: 10;
-// `;
-
 const OutputView = () => {
    const dispatch = useConsoleLogsDispatch();
 
@@ -36,8 +30,6 @@ const OutputView = () => {
 
    return (
       <OutputWrapper>
-         {/*<OutputOverlay />*/}
-
          <iframe
             style={{
                backgroundColor: '#fff',
