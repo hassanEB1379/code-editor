@@ -60,7 +60,7 @@ function Console() {
                   )}
 
                   {log.type === 'log' && (
-                     <ConsoleMessage key={index} data={log.payload.data} />
+                     <ConsoleMessage key={index} data={log.payload.message} />
                   )}
                </Fragment>
             ))}
