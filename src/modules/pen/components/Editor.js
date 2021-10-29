@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import AceEditor from 'react-ace';
 import Flex from '../../../ui/Flex';
-import { useSourceCodeDispatch } from '../contexts/source-code.context';
+import { usePenDispatch } from '../contexts/pen-context';
 
 import 'ace-builds/src-noconflict/mode-javascript';
 import 'ace-builds/src-noconflict/mode-css';
@@ -26,7 +26,7 @@ const EditorHeader = styled(Flex)`
 `;
 
 const Editor = ({ iconSrc, type, ...rest }) => {
-   const dispatch = useSourceCodeDispatch();
+   const dispatch = usePenDispatch();
 
    function handleChangeSource(code) {
       dispatch({ type, payload: code });
