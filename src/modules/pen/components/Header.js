@@ -1,11 +1,7 @@
 import styled from 'styled-components';
 import { useState } from 'react';
 
-import Button from '../../../ui/Button';
-import Flex from '../../../ui/Flex';
-import ButtonGroup from '../../../ui/ButtonGroup';
-import Dropdown from '../../../ui/Dropdown';
-import { Divider } from '../../../ui/Divider';
+import { Button, Flex, ButtonGroup, Dropdown, Divider } from '../../../ui';
 
 import {
    useViewLayout,

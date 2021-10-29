@@ -1,19 +1,10 @@
-import styled from 'styled-components';
 import Header from './Header';
-import Flex from '../../../ui/Flex';
+import { Flex } from '../../../ui';
 import Footer from './Footer';
 import ViewLayout from '../view-layout/ViewLayout';
 import { useEffect } from 'react';
 import { useRun } from '../hooks/useRun';
 import { useSave } from '../hooks/useSave';
-
-const MainWrapper = styled(Flex).attrs(() => ({
-   flexDir: 'column',
-   justifyContent: 'space-between',
-}))`
-   height: 100vh;
-   background-color: var(--dark-bg);
-`;
 
 const Pen = () => {
    const run = useRun();
@@ -40,13 +31,13 @@ const Pen = () => {
    }, [run, save]);
 
    return (
-      <MainWrapper>
+      <Flex flexDir="column">
          <Header />
 
          <ViewLayout />
 
          <Footer />
-      </MainWrapper>
+      </Flex>
    );
 };
 

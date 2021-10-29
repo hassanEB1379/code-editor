@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const Button = styled.button`
+export const Button = styled.button`
    display: inline-flex;
    align-items: center;
    gap: 0.5rem;
@@ -23,5 +23,3 @@ const Button = styled.button`
       }
    }};
 `;
-
-export default Button;

@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 
-const Divider = styled.hr`
+export const Divider = styled.hr`
    ${({ orientation = 'horizontal' }) => {
       if (orientation === 'vertical') {
          return css`
@@ -18,5 +18,3 @@ const Divider = styled.hr`
    margin: 0.3rem 0;
    background-color: var(--divider-bg);
 `;
-
-export { Divider };

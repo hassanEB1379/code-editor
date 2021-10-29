@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import Flex from '../../../ui/Flex';
+import { Flex } from '../../../ui';
 
 const ConsoleTitle = styled.p`
    background-color: var(--tab-bg);

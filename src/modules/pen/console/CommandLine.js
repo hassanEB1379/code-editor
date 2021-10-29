@@ -1,5 +1,5 @@
 import { ReturnedValue, StyledCommandLine } from './Console.styled';
-import Flex from '../../../ui/Flex';
+import { Flex } from '../../../ui';
 import { useEffect, useState } from 'react';
 
 function CommandLine() {

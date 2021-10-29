@@ -1,7 +1,6 @@
 import { Container } from '../../../ui/Container';
-import Flex from '../../../ui/Flex';
 import { Divider } from '../../../ui/Divider';
-import { Field, Form, Submit, ErrorMessage } from '../../../ui/Form';
+import { Field, Form, Submit, ErrorMessage, Flex } from '../../../ui';
 import { useForm } from 'react-hook-form';
 import { useAuthentication } from '../hooks/useAuthentication';
 

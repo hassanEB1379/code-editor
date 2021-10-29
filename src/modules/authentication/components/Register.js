@@ -1,6 +1,5 @@
-import { ErrorMessage, Field, Form, Submit } from '../../../ui/Form';
+import { ErrorMessage, Field, Form, Submit, Flex } from '../../../ui';
 import { Divider } from '../../../ui/Divider';
-import Flex from '../../../ui/Flex';
 import { Container } from '../../../ui/Container';
 import { useForm } from 'react-hook-form';
 

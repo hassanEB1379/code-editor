@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import Flex from './Flex';
+import { Flex } from './Flex';
 import { cloneElement, useEffect, useRef, useState } from 'react';
 
 const DropdownWrapper = styled(Flex)`
@@ -16,7 +16,7 @@ const DropdownContent = styled.div`
    border-radius: 0.5rem;
 `;
 
-function Dropdown({ children, action }) {
+export function Dropdown({ children, action }) {
    const nodeRef = useRef();
 
    const [open, setOpen] = useState(false);
@@ -46,5 +46,3 @@ function Dropdown({ children, action }) {
       </DropdownWrapper>
    );
 }
-
-export default Dropdown;

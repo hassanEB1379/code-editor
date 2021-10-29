@@ -1,6 +1,5 @@
 import styled from 'styled-components';
-import Flex from '../../../ui/Flex';
-import Button from '../../../ui/Button';
+import { Button, Flex } from '../../../ui';
 import { useToggleConsole } from '../console/ConsoleToggle.context';
 import { useLogout } from '../../authentication/hooks/useLogout';
 

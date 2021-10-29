@@ -2,7 +2,11 @@ import { ResizableWrapper } from './Resizable.styled';
 import { Children, Fragment, useMemo } from 'react';
 import { Resizer } from './Resizer';
 
-const Resizable = ({ children, orientation = 'horizontal', minSize = 20 }) => {
+export const Resizable = ({
+   children,
+   orientation = 'horizontal',
+   minSize = 20,
+}) => {
    const validElements = Children.toArray(children);
 
    // calculate initial size
@@ -30,5 +34,3 @@ const Resizable = ({ children, orientation = 'horizontal', minSize = 20 }) => {
       </ResizableWrapper>
    );
 };
-
-export default Resizable;

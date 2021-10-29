@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import Flex from '../Flex';
+import { Flex } from '../Flex';
 
 const ResizableWrapper = styled(Flex)`
    position: relative;

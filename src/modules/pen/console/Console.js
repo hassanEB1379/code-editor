@@ -1,5 +1,4 @@
-import Flex from '../../../ui/Flex';
-import Button from '../../../ui/Button';
+import { Button, Flex } from '../../../ui';
 import { useToggleConsole } from './ConsoleToggle.context';
 import { useConsoleLogs, useConsoleLogsDispatch } from './ConsoleLogs.context';
 import ConsoleMessage from './ConsoleMessage';

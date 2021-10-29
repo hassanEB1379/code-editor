@@ -1,4 +1,4 @@
-import Resizable from '../../../ui/Resizable/Resizable';
+import { Resizable } from '../../../ui';
 import Editor from '../components/Editor';
 import OutputView from '../components/OutputView';
 import Console from '../console/Console';

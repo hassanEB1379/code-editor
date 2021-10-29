@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import AceEditor from 'react-ace';
-import Flex from '../../../ui/Flex';
+import { Flex } from '../../../ui';
 import { usePenDispatch } from '../contexts/pen-context';
 
 import 'ace-builds/src-noconflict/mode-javascript';

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import Flex from './Flex';
+import { Flex } from './Flex';
 
 const ButtonGroupWrapper = styled(Flex)`
    & > * {
@@ -14,8 +14,6 @@ const ButtonGroupWrapper = styled(Flex)`
    }
 `;
 
-const ButtonGroup = ({ children }) => {
+export const ButtonGroup = ({ children }) => {
    return <ButtonGroupWrapper>{children}</ButtonGroupWrapper>;
 };
-
-export default ButtonGroup;
