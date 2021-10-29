@@ -3,7 +3,6 @@ import { createGlobalStyle } from 'styled-components';
 const GlobalStyle = createGlobalStyle`
   :root {
     --dark-bg: #060606;
-    --dark-gradient: linear-gradient(0deg, #141e30 0%, #243b55 100%);
     --dark-btn: #444857;
     --dark-bth-hover: #5a5f73;
     --dark-border: #2f2f2f;
@@ -32,22 +31,26 @@ const GlobalStyle = createGlobalStyle`
     font-size: calc(60% + 0.8vmin);
   }
 
-  body {
-    color: var(--contrast-text);
-    background-color: var(--dark-bg);
-    background-image: var(--dark-gradient);
-    font-family: 'Open Sans', sans-serif;
-    letter-spacing: 1px;
-    user-select: none;
-    min-height: 100vh;
-  }
-
   *, *:after, *:before {
     box-sizing: inherit;
     padding: 0;
     margin: 0;
   }
 
+  body {
+    color: var(--contrast-text);
+    background-color: var(--dark-bg);
+    font-family: 'Open Sans', sans-serif;
+    letter-spacing: 1px;
+    user-select: none;
+    overflow-y: auto;
+    height: 100vh;
+  }
+  
+  body > div {
+    height: 100%;
+  }
+  
   ul {
     list-style: none;
   }
