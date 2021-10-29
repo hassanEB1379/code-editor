@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Button, Flex } from './ui';
+import { Button, Flex } from '../ui';
 import { Link } from 'react-router-dom';
 
 const HomeWrapper = styled(Flex)`

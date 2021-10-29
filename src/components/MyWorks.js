@@ -1,4 +1,4 @@
-import { Container, Divider } from './ui';
+import { Container, Divider } from '../ui';
 
 function MyWorks() {
    return (

@@ -1,12 +1,12 @@
 import { BrowserRouter, Switch } from 'react-router-dom';
 import HomePage from './HomePage';
-import Pen from './modules/pen/components/Pen';
+import Pen from '../modules/pen/components/Pen';
 import {
    PrivateRoute,
    PublicRoute,
    Login,
    Register,
-} from './modules/authentication/components';
+} from '../modules/authentication/components';
 import MyWorks from './MyWorks';
 
 function App() {

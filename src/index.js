@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
+import App from './components/App';
 import GlobalStyle from './ui/GlobalStyle';
-import Providers from './Providers';
+import Providers from './components/Providers';
 
 // create indexedDB database
 import { openDB } from './indexedDB';
