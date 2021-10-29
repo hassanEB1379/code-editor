@@ -4,11 +4,14 @@ import OutputView from '../components/OutputView';
 import Console from '../console/Console';
 import { useViewLayout } from './ViewLayout.context';
 import { useToggleConsole } from '../console/ConsoleToggle.context';
+import { usePen } from '../contexts/pen-context';
 
 function ViewLayout() {
    const { wrapper, editors } = useViewLayout();
 
    const { isOpen } = useToggleConsole();
+
+   const { code } = usePen();
 
    return (
       <Resizable orientation={wrapper.orientation} minSize={38}>
@@ -17,6 +20,7 @@ function ViewLayout() {
                mode="html"
                name="html-editor"
                type="html"
+               defaultValue={code.html}
                iconSrc="static/images/html-5.svg"
             />
 
@@ -24,6 +28,7 @@ function ViewLayout() {
                mode="css"
                name="css-editor"
                type="css"
+               defaultValue={code.css}
                iconSrc="static/images/css-3.svg"
             />
 
@@ -31,6 +36,7 @@ function ViewLayout() {
                mode="javascript"
                name="js-editor"
                type="js"
+               defaultValue={code.js}
                iconSrc="static/images/javascript.svg"
             />
          </Resizable>
