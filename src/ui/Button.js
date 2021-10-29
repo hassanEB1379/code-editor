@@ -1,11 +1,9 @@
 import styled from 'styled-components';
-import Flex from './Flex';
 
-const Button = styled(Flex).attrs(() => ({
-   inline: true,
-   items: 'center',
-   gap: '.5rem',
-}))`
+const Button = styled.button`
+   display: inline-flex;
+   align-items: center;
+   gap: 0.5rem;
    background-color: var(--dark-btn);
    border: none;
    border-radius: 0.3rem;
