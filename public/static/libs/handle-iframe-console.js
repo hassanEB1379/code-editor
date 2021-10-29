@@ -9,77 +9,80 @@ window.onerror = (message, source, lineno, colno, error) => {
    );
 };
 
-const customConsole = {
-   warn: message => {
-      window.parent.postMessage(
-         {
-            type: 'warning',
-            source: 'output-view-iframe',
-            payload: { message },
-         },
-         '*'
-      );
+function sendToCustomConsole(type, message) {
+   window.parent.postMessage(
+      {
+         type,
+         source: 'output-view-iframe',
+         payload: { message },
+      },
+      '*'
+   );
+}
+
+const originalConsole = window.console;
+
+const console = {
+   warn: function (message) {
+      originalConsole.warn(message);
+      sendToCustomConsole('warning', message);
    },
-   log: data => {
-      window.parent.postMessage(
-         {
-            type: 'log',
-            source: 'output-view-iframe',
-            payload: { data },
-         },
-         '*'
-      );
+   log: function (message) {
+      originalConsole.log(message);
+      sendToCustomConsole('log', message);
    },
-   error: message => {
-      window.parent.postMessage(
-         {
-            type: 'error',
-            source: 'output-view-iframe',
-            payload: { message },
-         },
-         '*'
-      );
+   error: function (message) {
+      originalConsole.error(message);
+      sendToCustomConsole('error', message);
    },
-   clear: () => {
-      window.parent.postMessage(
-         {
-            type: 'clear',
-            source: 'output-view-iframe',
-         },
-         '*'
-      );
+   clear: function () {
+      originalConsole.clear();
+      sendToCustomConsole('clear');
    },
 };
 
-window.console = { ...window.console, ...customConsole };
-
 // handle command line
+
+function sendReturnedCommandValue(returnedValue) {
+   const obj = JSON.parse(
+      JSON.stringify({
+         type: 'command-line-return-value',
+         payload:
+            typeof returnedValue === 'function'
+               ? returnedValue.toString()
+               : returnedValue,
+      })
+   );
+
+   window.parent.postMessage(obj, '*');
+}
 
 let totalCommandCode = '';
 function runCommand(text) {
    // add semicolon to end of text if is not exist
-   let textWithSemicolon = text;
    if (text.search(';') === -1) {
-      textWithSemicolon = text.concat(';');
+      text = text.concat(';');
    }
 
    try {
-      let returnedValue = Function(
-         totalCommandCode + 'return ' + textWithSemicolon
-      )();
+      let commandString;
 
-      const obj = JSON.parse(
-         JSON.stringify({
-            type: 'command-line-return-value',
-            payload: returnedValue,
-         })
-      );
-      window.parent.postMessage(obj, '*');
+      if (
+         text.search('let') !== -1 ||
+         text.search('const') !== -1 ||
+         text.search('var') !== -1
+      ) {
+         commandString = totalCommandCode + text;
+      } else {
+         commandString = totalCommandCode + 'return ' + text;
+      }
 
-      totalCommandCode += textWithSemicolon;
+      sendReturnedCommandValue(Function(commandString)());
+
+      if (text.search('console') === -1) {
+         totalCommandCode += text;
+      }
    } catch (err) {
       console.error(err.message);
-      // remove wrong code
-      totalCommandCode = totalCommandCode.replace(text, '');
    }
 }
