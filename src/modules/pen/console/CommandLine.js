@@ -43,7 +43,9 @@ function CommandLine() {
             onKeyDown={executeRunCommand}
          />
 
-         <ReturnedValue>{String(commandReturnedValue)}</ReturnedValue>
+         <ReturnedValue>
+            {JSON.stringify(commandReturnedValue) || 'undefined'}
+         </ReturnedValue>
       </Flex>
    );
 }
