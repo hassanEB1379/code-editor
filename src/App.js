@@ -7,11 +7,13 @@ import {
    Login,
    Register,
 } from './modules/authentication/components';
+import MyWorks from './MyWorks';
 
 function App() {
    return (
       <BrowserRouter>
          <Switch>
+            <PrivateRoute path="/my-works" component={MyWorks} />
             <PublicRoute restricted path="/login" component={Login} />
             <PublicRoute restricted path="/register" component={Register} />
             <PrivateRoute path="/pen" component={Pen} />
