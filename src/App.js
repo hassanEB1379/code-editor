@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Switch } from 'react-router-dom';
 import HomePage from './HomePage';
 import Pen from './modules/pen/components/Pen';
 import {
