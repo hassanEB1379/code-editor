@@ -5,6 +5,7 @@ import Footer from './Footer';
 import ViewLayout from '../view-layout/ViewLayout';
 import { useEffect } from 'react';
 import { useRun } from '../hooks/useRun';
+import { useSave } from '../hooks/useSave';
 
 const MainWrapper = styled(Flex).attrs(() => ({
    flexDir: 'column',
@@ -16,12 +17,14 @@ const MainWrapper = styled(Flex).attrs(() => ({
 
 const Pen = () => {
    const run = useRun();
+   const save = useSave();
 
    useEffect(() => {
       function handleShortcuts(e) {
          if (e.ctrlKey && e.keyCode === 83) {
             e.preventDefault();
             // save
+            save();
          } else if (e.shiftKey && e.keyCode === 121) {
             e.preventDefault();
             // run
@@ -34,7 +37,7 @@ const Pen = () => {
       return () => {
          window.removeEventListener('keydown', handleShortcuts);
       };
-   }, [run]);
+   }, [run, save]);
 
    return (
       <MainWrapper>

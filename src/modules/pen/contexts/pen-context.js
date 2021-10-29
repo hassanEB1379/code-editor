@@ -8,6 +8,18 @@ export const usePenDispatch = () => useContext(PenContextDispatch);
 
 const initialPen = { title: 'Untitled', code: { html: '', css: '', js: '' } };
 
+function initializer(initialState) {
+   let state;
+
+   try {
+      state = JSON.parse(localStorage.getItem('pen')) || initialState;
+   } catch (err) {
+      console.log(err);
+   }
+
+   return state;
+}
+
 function penReducer(state, action) {
    switch (action.type) {
       case 'html':
@@ -24,11 +36,7 @@ function penReducer(state, action) {
 }
 
 export function PenProvider({ children }) {
-   const [pen, dispatch] = useReducer(
-      penReducer,
-      initialPen,
-      initial => initial
-   );
+   const [pen, dispatch] = useReducer(penReducer, initialPen, initializer);
 
    return (
       <PenContext.Provider value={pen}>
