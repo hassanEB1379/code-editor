@@ -13,6 +13,8 @@ import {
 } from '../view-layout/ViewLayout.context';
 import { useRun } from '../hooks/useRun';
 import { useFullscreen } from '../../../hooks/useFullscreen';
+import { usePen, usePenDispatch } from '../contexts/pen-context';
+import { useSave } from '../hooks/useSave';
 
 // icons
 import ViewLayoutIcon from '../view-layout/ViewLayout.icon';
@@ -26,7 +28,6 @@ import {
    faSave,
    faShareAlt,
 } from '@fortawesome/free-solid-svg-icons';
-import { usePen, usePenDispatch } from '../contexts/pen-context';
 
 const HeaderWrapper = styled(Flex)`
    height: 4rem;
@@ -122,6 +123,7 @@ function ChangeViewDropdown() {
 
 const Header = () => {
    const run = useRun();
+   const save = useSave();
 
    const { toggleFullScreen, isFullscreen } = useFullscreen();
 
@@ -138,7 +140,7 @@ const Header = () => {
          </Flex>
 
          <Flex gap=".7rem">
-            <Button data-title="Save Ctrl+S">
+            <Button onClick={save} data-title="Save Ctrl+S">
                <FontAwesomeIcon icon={faSave} />
             </Button>
 
