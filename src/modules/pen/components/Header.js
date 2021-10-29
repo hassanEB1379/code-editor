@@ -1,17 +1,21 @@
 import styled from 'styled-components';
 import { useState } from 'react';
 
-import Button from './ui/Button';
-import Flex from './ui/Flex';
-import ButtonGroup from './ui/ButtonGroup';
-import Dropdown from './ui/Dropdown';
+import Button from '../../../ui/Button';
+import Flex from '../../../ui/Flex';
+import ButtonGroup from '../../../ui/ButtonGroup';
+import Dropdown from '../../../ui/Dropdown';
+import { Divider } from '../../../ui/Divider';
+
 import {
    useViewLayout,
    useViewLayoutDispatch,
-} from './modules/pen/view-layout/ViewLayout.context';
-import ViewLayoutIcon from './modules/pen/view-layout/ViewLayout.icon';
+} from '../view-layout/ViewLayout.context';
+import { useRun } from '../hooks/useRun';
+import { useFullscreen } from '../../../hooks/useFullscreen';
 
 // icons
+import ViewLayoutIcon from '../view-layout/ViewLayout.icon';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
    faCompress,
@@ -22,8 +26,7 @@ import {
    faSave,
    faShareAlt,
 } from '@fortawesome/free-solid-svg-icons';
-import { useRun } from './modules/pen/useRun';
-import { useFullscreen } from './useFullscreen';
+import { usePen, usePenDispatch } from '../contexts/pen-context';
 
 const HeaderWrapper = styled(Flex)`
    height: 4rem;
@@ -38,14 +41,6 @@ const ChangeTitle = styled.input`
    width: 150px;
 `;
 
-const Divider = styled.hr`
-   transform: rotate(180deg);
-   border: none;
-   margin: 0.3rem 0;
-   width: 1px;
-   background-color: var(--divider-bg);
-`;
-
 const StyledTitle = styled.h1`
    font-size: 1rem;
 
@@ -57,18 +52,22 @@ const StyledTitle = styled.h1`
 `;
 
 function Title() {
-   const [changeTitle, setChangeTitle] = useState();
+   const dispatch = usePenDispatch();
+   const { title } = usePen();
+
+   const [changeTitle, setChangeTitle] = useState(); // if changeTitle true ==> display form
+   const [newTitle, setNewTitle] = useState(title); // handle title input
 
    function activeChangeTitleInput() {
       setChangeTitle(true);
    }
-
    function disableChangeTitleInput() {
       setChangeTitle(false);
    }
-
    function handleChangeTitle(e) {
       e.preventDefault();
+      dispatch({ type: 'name', payload: newTitle });
+      disableChangeTitleInput();
    }
 
    if (changeTitle) {
@@ -78,6 +77,9 @@ function Title() {
                autoFocus
                onBlur={disableChangeTitleInput}
                type="text"
+               value={newTitle}
+               onChange={e => setNewTitle(e.target.value)}
+               spellCheck="false"
             />
          </form>
       );
@@ -85,7 +87,7 @@ function Title() {
 
    return (
       <StyledTitle>
-         Untitled
+         {title}
          <FontAwesomeIcon onClick={activeChangeTitleInput} icon={faEdit} />
       </StyledTitle>
    );
@@ -144,7 +146,7 @@ const Header = () => {
                <FontAwesomeIcon color="#37F900" icon={faPlay} />
             </Button>
 
-            <Divider />
+            <Divider orientation="vertical" />
 
             <Button onClick={toggleFullScreen} data-title="Full screen F11">
                <FontAwesomeIcon icon={isFullscreen ? faCompress : faExpand} />
@@ -152,7 +154,7 @@ const Header = () => {
 
             <ChangeViewDropdown />
 
-            <Divider />
+            <Divider orientation="vertical" />
 
             <Button data-title="Share">
                <FontAwesomeIcon icon={faShareAlt} />

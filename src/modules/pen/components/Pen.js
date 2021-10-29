@@ -5,13 +5,13 @@ import Footer from './Footer';
 import ViewLayout from '../view-layout/ViewLayout';
 import { useEffect } from 'react';
 import { useRun } from '../hooks/useRun';
-import Providers from './Providers';
 
 const MainWrapper = styled(Flex).attrs(() => ({
    flexDir: 'column',
    justifyContent: 'space-between',
 }))`
    height: 100vh;
+   background-color: var(--dark-bg);
 `;
 
 const Pen = () => {
@@ -37,15 +37,13 @@ const Pen = () => {
    }, [run]);
 
    return (
-      <Providers>
-         <MainWrapper>
-            <Header />
+      <MainWrapper>
+         <Header />
 
-            <ViewLayout />
+         <ViewLayout />
 
-            <Footer />
-         </MainWrapper>
-      </Providers>
+         <Footer />
+      </MainWrapper>
    );
 };
 
