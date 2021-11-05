@@ -1,5 +1,6 @@
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 import { Button, Flex, ButtonGroup, Dropdown, Divider } from '../../../ui';
 
@@ -16,6 +17,7 @@ import { useSave } from '../hooks/useSave';
 import ViewLayoutIcon from '../view-layout/ViewLayout.icon';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
+   faArrowRight,
    faCompress,
    faEdit,
    faExpand,
@@ -72,7 +74,7 @@ function Title() {
          <form onSubmit={handleChangeTitle}>
             <ChangeTitle
                autoFocus
-               onBlur={disableChangeTitleInput}
+               onBlur={handleChangeTitle}
                type="text"
                value={newTitle}
                onChange={e => setNewTitle(e.target.value)}
@@ -123,6 +125,24 @@ const Header = () => {
 
    const { toggleFullScreen, isFullscreen } = useFullscreen();
 
+   useEffect(() => {
+      function handleShortcuts(e) {
+         if (e.ctrlKey && e.keyCode === 83) {
+            // Ctrl + S ==> pen saved
+            e.preventDefault();
+            save();
+         } else if (e.shiftKey && e.keyCode === 121) {
+            // Shift + F10 ==> run code
+            e.preventDefault();
+            run();
+         }
+      }
+      window.addEventListener('keydown', handleShortcuts);
+      return () => {
+         window.removeEventListener('keydown', handleShortcuts);
+      };
+   }, [run, save]);
+
    return (
       <HeaderWrapper items="center" justify="space-between">
          <Flex items="center" gap="1rem">
@@ -135,6 +155,7 @@ const Header = () => {
             <Title />
          </Flex>
 
+         {/* Action buttons bar*/}
          <Flex gap=".7rem">
             <Button onClick={save} data-title="Save Ctrl+S">
                <FontAwesomeIcon icon={faSave} />
@@ -161,6 +182,14 @@ const Header = () => {
             <Button data-title="Like">
                <FontAwesomeIcon icon={faHeart} />
             </Button>
+
+            <Divider orientation="vertical" />
+
+            <Link to="/my-works">
+               <Button data-title="Back to my works">
+                  <FontAwesomeIcon icon={faArrowRight} />
+               </Button>
+            </Link>
          </Flex>
       </HeaderWrapper>
    );
