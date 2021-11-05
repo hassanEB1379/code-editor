@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { Flex } from './Flex';
 import { cloneElement, useEffect, useRef, useState } from 'react';
 
@@ -7,16 +7,44 @@ const DropdownWrapper = styled(Flex)`
 `;
 
 const DropdownContent = styled.div`
-   margin-top: 0.3rem;
+   --space: 0.3rem;
+
    position: absolute;
-   right: 0;
-   top: 100%;
    z-index: var(--z-999);
    background-color: var(--dropdown-bg);
    border-radius: 0.5rem;
+
+   ${({ openFrom }) => {
+      switch (openFrom) {
+         case 'top':
+            return css`
+               bottom: 100%;
+               right: 0;
+               margin-bottom: var(--space);
+            `;
+         case 'left':
+            return css`
+               right: 100%;
+               bottom: 0;
+               margin-right: var(--space);
+            `;
+         case 'right':
+            return css`
+               left: 100%;
+               bottom: 0;
+               margin-left: var(--space);
+            `;
+         default:
+            return css`
+               top: 100%;
+               right: 0;
+               margin-top: var(--space);
+            `;
+      }
+   }}
 `;
 
-export function Dropdown({ children, action }) {
+export function Dropdown({ children, action, openFrom }) {
    const nodeRef = useRef();
 
    const [open, setOpen] = useState(false);
@@ -42,7 +70,9 @@ export function Dropdown({ children, action }) {
    return (
       <DropdownWrapper ref={nodeRef}>
          {cloneElement(action, { onClick: toggle })}
-         <DropdownContent hidden={!open}>{children}</DropdownContent>
+         <DropdownContent openFrom={openFrom} hidden={!open}>
+            {children}
+         </DropdownContent>
       </DropdownWrapper>
    );
 }
