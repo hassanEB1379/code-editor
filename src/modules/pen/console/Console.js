@@ -1,6 +1,10 @@
+import { Fragment } from 'react';
 import { Button, Flex } from '../../../ui';
 import { useToggleConsole } from './ConsoleToggle.context';
-import { useConsoleLogs, useConsoleLogsDispatch } from './ConsoleLogs.context';
+import {
+   useConsoleMessages,
+   useConsoleMessagesDispatch,
+} from './ConsoleMessages-context';
 import ConsoleMessage from './ConsoleMessage';
 import CommandLine from './CommandLine';
 
@@ -9,14 +13,12 @@ import { ConsoleTitle, ConsoleBody } from './Console.styled';
 // icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import { Fragment } from 'react';
 
 function Console() {
-   const dispatch = useConsoleLogsDispatch();
+   const dispatch = useConsoleMessagesDispatch();
+   const messages = useConsoleMessages();
 
    const { toggle } = useToggleConsole();
-
-   const logs = useConsoleLogs();
 
    function clearConsole() {
       dispatch({ type: 'clear' });
@@ -40,26 +42,26 @@ function Console() {
          </Flex>
 
          <ConsoleBody>
-            {logs.map((log, index) => (
+            {messages.map((message, index) => (
                <Fragment key={index}>
-                  {log.type === 'error' && (
+                  {message.type === 'error' && (
                      <ConsoleMessage
                         type="error"
                         key={index}
-                        data={log.payload.message}
+                        data={message.payload.text}
                      />
                   )}
 
-                  {log.type === 'warning' && (
+                  {message.type === 'warning' && (
                      <ConsoleMessage
                         type="warning"
                         key={index}
-                        data={log.payload.message}
+                        data={message.payload.text}
                      />
                   )}
 
-                  {log.type === 'log' && (
-                     <ConsoleMessage key={index} data={log.payload.message} />
+                  {message.type === 'log' && (
+                     <ConsoleMessage key={index} data={message.payload.text} />
                   )}
                </Fragment>
             ))}
