@@ -9,7 +9,7 @@ export const PublicRoute = props => {
    const render = renderProps => {
       if (isAuthenticated && restricted) {
          // return user to editor if user authenticated
-         return <Redirect to="/pen" />;
+         return <Redirect to="/my-works" />;
       } else {
          return <Component {...renderProps} />;
       }
