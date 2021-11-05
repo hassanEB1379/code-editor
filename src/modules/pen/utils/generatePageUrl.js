@@ -7,7 +7,7 @@ export const getGeneratedPageURL = ({ html = '', css = '', js = '' } = {}) => {
    const cssURL = getBlobURL(css, 'text/css');
    const jsURL = getBlobURL(js, 'text/javascript');
 
-   // create document of output iframe and handle custom console in first script
+   // create document of output iframe
    const source = `
     <html lang="en">
       <head>
@@ -15,11 +15,13 @@ export const getGeneratedPageURL = ({ html = '', css = '', js = '' } = {}) => {
         <meta charset="utf-8">      
         <script src='http://localhost:3000/static/libs/handle-iframe-console.js'></script>
         
-        ${css && `<link rel="stylesheet" type="text/css" href="${cssURL}" />`}
-        ${js && `<script src="${jsURL}"></script>`}    
+        ${
+           css && `<link rel="stylesheet" type="text/css" href="${cssURL}" />`
+        }   
       </head>
       <body >
         ${html}
+        ${js && `<script src="${jsURL}"></script>`} 
       </body>
     </html>
   `;
