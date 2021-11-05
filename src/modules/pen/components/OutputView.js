@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 import { useEffect } from 'react';
-import { useConsoleLogsDispatch } from '../console/ConsoleLogs.context';
+import { useConsoleMessagesDispatch } from '../console/ConsoleMessages-context';
 import { useSourceUrl } from '../contexts/source-url.context';
+import { useCLReturnedValueDispatch } from '../console/CommandLine-context';
 
 const OutputWrapper = styled.div`
    flex-grow: 1;
@@ -10,23 +11,32 @@ const OutputWrapper = styled.div`
 `;
 
 const OutputView = () => {
-   const dispatch = useConsoleLogsDispatch();
+   const consoleDispatch = useConsoleMessagesDispatch();
+   const setCommandReturnedValue = useCLReturnedValueDispatch();
 
+   // generated document url ( using in src attribute )
    const url = useSourceUrl();
 
    useEffect(() => {
-      function handleIframeError(e) {
-         if (e.data.source === 'output-view-iframe') {
-            dispatch({ type: e.data.type, payload: e.data });
+      function handleIframeMessages({ data: messageData }) {
+         if (messageData.source === 'output-view-iframe') {
+            // The message was sent from our iframe
+
+            if (messageData.type === 'console-message') {
+               let type = messageData.data.type;
+               // Send a new message to Context and display in the custom console
+               consoleDispatch({ type, payload: messageData.data });
+            } else if (messageData.type === 'command-line-return-value') {
+               setCommandReturnedValue(messageData.data);
+            }
          }
       }
 
-      window.addEventListener('message', handleIframeError);
-
+      window.addEventListener('message', handleIframeMessages);
       return () => {
-         window.removeEventListener('message', handleIframeError);
+         window.removeEventListener('message', handleIframeMessages);
       };
-   }, [dispatch]);
+   }, [consoleDispatch, setCommandReturnedValue]);
 
    return (
       <OutputWrapper>

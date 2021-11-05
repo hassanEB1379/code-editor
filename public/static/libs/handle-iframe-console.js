@@ -1,20 +1,26 @@
 window.onerror = (message, source, lineno, colno, error) => {
    window.parent.postMessage(
       {
-         type: 'error',
+         type: 'console-message',
          source: 'output-view-iframe',
-         payload: { message, source, lineno, colno, error },
+         data: {
+            type: 'error',
+            payload: { text: message, source, lineno, colno, error },
+         },
       },
       '*'
    );
 };
 
-function sendToCustomConsole(type, message) {
+function sendToCustomConsole(type, text) {
    window.parent.postMessage(
       {
-         type,
+         type: 'console-message',
          source: 'output-view-iframe',
-         payload: { message },
+         data: {
+            type,
+            payload: { text },
+         },
       },
       '*'
    );
@@ -47,7 +53,8 @@ function sendReturnedCommandValue(returnedValue) {
    const obj = JSON.parse(
       JSON.stringify({
          type: 'command-line-return-value',
-         payload:
+         source: 'output-view-iframe',
+         data:
             typeof returnedValue === 'function'
                ? returnedValue.toString()
                : returnedValue,
