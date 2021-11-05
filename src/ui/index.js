@@ -1,6 +1,7 @@
 export * from './Button';
 export * from './Flex';
 export * from './ButtonGroup';
+export * from './Menu';
 export * from './Dropdown';
 export * from './Divider';
 export * from './Container';
