@@ -1,9 +1,9 @@
 import { ReturnedValue, StyledCommandLine } from './Console.styled';
 import { Flex } from '../../../ui';
-import { useEffect, useState } from 'react';
+import { useCLReturnedValue } from './CommandLine-context';
 
 function CommandLine() {
-   const [commandReturnedValue, setCommandReturnedValue] = useState('');
+   const commandReturnedValue = useCLReturnedValue();
 
    function executeRunCommand(e) {
       // execute run command function when click on Enter button
@@ -19,20 +19,6 @@ function CommandLine() {
          e.target.innerText = '';
       }
    }
-
-   useEffect(() => {
-      function handleCommandReturnValue(e) {
-         if (e.data.type === 'command-line-return-value') {
-            setCommandReturnedValue(e.data.payload);
-         }
-      }
-
-      window.addEventListener('message', handleCommandReturnValue);
-
-      return () => {
-         window.removeEventListener('message', handleCommandReturnValue);
-      };
-   }, []);
 
    return (
       <Flex flexDir="column">
