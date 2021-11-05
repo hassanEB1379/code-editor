@@ -6,13 +6,22 @@ const PenContextDispatch = createContext();
 export const usePen = () => useContext(PenContext);
 export const usePenDispatch = () => useContext(PenContextDispatch);
 
-const initialPen = { title: 'Untitled', code: { html: '', css: '', js: '' } };
+const initialPen = {
+   title: 'Untitled',
+   image: 'https://cdn.pixabay.com/photo/2021/10/18/08/39/pumpkin-6720424_960_720.jpg',
+   code: { html: '', css: '', js: '' },
+};
 
-function initializer(initialState) {
+function initializer(initialState, id) {
    let state;
 
    try {
-      state = JSON.parse(localStorage.getItem('pen')) || initialState;
+      let pens = JSON.parse(localStorage.getItem('pens'));
+      let pen = pens.find(pen => pen.id.toString() === id);
+
+      if (pen) {
+         state = pen;
+      }
    } catch (err) {
       console.log(err);
    }
@@ -35,8 +44,10 @@ function penReducer(state, action) {
    }
 }
 
-export function PenProvider({ children }) {
-   const [pen, dispatch] = useReducer(penReducer, initialPen, initializer);
+export function PenProvider({ children, id }) {
+   const [pen, dispatch] = useReducer(penReducer, initialPen, initialState =>
+      initializer(initialState, id)
+   );
 
    return (
       <PenContext.Provider value={pen}>
