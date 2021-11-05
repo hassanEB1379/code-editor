@@ -2,18 +2,16 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/App';
 import GlobalStyle from './ui/GlobalStyle';
-import Providers from './components/Providers';
 
-// create indexedDB database
-import { openDB } from './indexedDB';
-openDB();
+// context providers
+import { AuthDataProvider } from './modules/authentication/contexts/auth-context';
 
 ReactDOM.render(
    <React.StrictMode>
       <GlobalStyle />
-      <Providers>
+      <AuthDataProvider>
          <App />
-      </Providers>
+      </AuthDataProvider>
    </React.StrictMode>,
-   document.body
+   document.getElementById('root')
 );
