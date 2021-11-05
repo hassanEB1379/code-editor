@@ -24,6 +24,10 @@ const GlobalStyle = createGlobalStyle`
     --field-border: #cccccc;
     --field-border-focus: #b190ff;
     --form-error-text: #ff4949;
+    --work-body-bg: #1e1f26;
+    --menu-bg: #fff;
+    --menu-text: #000;
+    --menu-item-hover: #cfd2d7;
   }
 
   html {
@@ -43,14 +47,17 @@ const GlobalStyle = createGlobalStyle`
     font-family: 'Open Sans', sans-serif;
     letter-spacing: 1px;
     user-select: none;
+  }
+
+  #root {
     overflow-y: auto;
     height: 100vh;
   }
-  
-  body > div {
-    height: 100%;
+
+  #root > div {
+    min-height: 100%;
   }
-  
+
   ul {
     list-style: none;
   }
@@ -79,6 +86,12 @@ const GlobalStyle = createGlobalStyle`
 
   button {
     color: inherit;
+    border: none;
+    cursor: pointer;
+    background-color: inherit;
+    &:focus {
+      outline: 0;
+    }
   }
 
   // create custom title tooltip (using data-title attribute)
@@ -97,7 +110,7 @@ const GlobalStyle = createGlobalStyle`
     font-size: .75rem;
     position: absolute;
     top: 110%;
-    left: 0;
+    right: 0;
     padding: 4px;
     border: 2px solid #727272;
     white-space: nowrap;
