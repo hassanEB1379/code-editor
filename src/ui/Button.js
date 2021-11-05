@@ -5,12 +5,14 @@ export const Button = styled.button`
    align-items: center;
    gap: 0.5rem;
    background-color: var(--dark-btn);
-   border: none;
    border-radius: 0.3rem;
-   cursor: pointer;
    font-size: ${props => (props.sm ? '.7rem' : 'inherit')};
    &:hover {
       background-color: var(--dark-bth-hover);
+   }
+
+   &:focus {
+      outline: 0;
    }
 
    padding: ${props => {
