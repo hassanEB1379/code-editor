@@ -2,42 +2,38 @@ import Header from './Header';
 import { Flex } from '../../../ui';
 import Footer from './Footer';
 import ViewLayout from '../view-layout/ViewLayout';
-import { useEffect } from 'react';
-import { useRun } from '../hooks/useRun';
-import { useSave } from '../hooks/useSave';
 
-const Pen = () => {
-   const run = useRun();
-   const save = useSave();
+// context providers
+import { PenProvider } from '../contexts/pen-context';
+import { ViewLayoutProvider } from '../view-layout/ViewLayout.context';
+import { ToggleConsoleProvider } from '../console/ConsoleToggle.context';
+import { ConsoleLogsProvider } from '../console/ConsoleMessages-context';
+import { SourceUrlProvider } from '../contexts/source-url.context';
+import { CommandLineProvider } from '../console/CommandLine-context';
+import MultiProvider from '../../../utils/MultiProvider';
 
-   useEffect(() => {
-      function handleShortcuts(e) {
-         if (e.ctrlKey && e.keyCode === 83) {
-            e.preventDefault();
-            // save
-            save();
-         } else if (e.shiftKey && e.keyCode === 121) {
-            e.preventDefault();
-            // run
-            run();
-         }
-      }
-
-      window.addEventListener('keydown', handleShortcuts);
-
-      return () => {
-         window.removeEventListener('keydown', handleShortcuts);
-      };
-   }, [run, save]);
+const Pen = ({ match }) => {
+   const id = match.params.id;
 
    return (
-      <Flex flexDir="column">
-         <Header />
+      <MultiProvider
+         providers={[
+            <PenProvider id={id} />,
+            <ViewLayoutProvider />,
+            <ToggleConsoleProvider />,
+            <ConsoleLogsProvider />,
+            <SourceUrlProvider />,
+            <CommandLineProvider />,
+         ]}
+      >
+         <Flex flexDir="column">
+            <Header />
 
-         <ViewLayout />
+            <ViewLayout />
 
-         <Footer />
-      </Flex>
+            <Footer />
+         </Flex>
+      </MultiProvider>
    );
 };
 
