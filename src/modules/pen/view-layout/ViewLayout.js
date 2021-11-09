@@ -1,6 +1,6 @@
 import { Resizable } from '../../../ui';
 import Editor from '../components/Editor';
-import OutputView from '../components/OutputView';
+import Output from '../components/Output';
 import Console from '../console/Console';
 import { useViewLayout } from './ViewLayout.context';
 import { useToggleConsole } from '../console/ConsoleToggle.context';
@@ -14,7 +14,7 @@ function ViewLayout() {
    const { code } = usePen();
 
    return (
-      <Resizable orientation={wrapper.orientation} minSize={38}>
+      <Resizable orientation={wrapper.orientation} minSize={200}>
          <Resizable orientation={editors.orientation} minSize={38}>
             <Editor
                mode="html"
@@ -42,7 +42,7 @@ function ViewLayout() {
          </Resizable>
 
          <Resizable orientation="vertical">
-            <OutputView />
+            <Output />
             {isOpen && <Console />}
          </Resizable>
       </Resizable>

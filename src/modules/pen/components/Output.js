@@ -10,7 +10,7 @@ const OutputWrapper = styled.div`
    position: relative;
 `;
 
-const OutputView = () => {
+const Output = () => {
    const consoleDispatch = useConsoleMessagesDispatch();
    const setCommandReturnedValue = useCLReturnedValueDispatch();
 
@@ -55,4 +55,4 @@ const OutputView = () => {
    );
 };
 
-export default OutputView;
+export default Output;
