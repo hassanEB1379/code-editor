@@ -55,7 +55,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   #root > div {
-    min-height: 100%;
+    height: 100%;
   }
 
   ul {
