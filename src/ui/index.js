@@ -7,4 +7,4 @@ export * from './Divider';
 export * from './Container';
 export * from './Form';
 export * from './Spacing';
-export * from './Resizable/Resizable';
+export * from './Resizable';
