@@ -20,6 +20,12 @@ import {
    faTrash,
 } from '@fortawesome/free-solid-svg-icons';
 
+// dexie
+import { db } from '../indexedDB';
+import { useLiveQuery } from 'dexie-react-hooks';
+import { initialPen } from '../modules/pen/contexts/pen-context';
+
+// styles
 const WorksWrapper = styled(Spacing)`
    display: grid;
    grid-template-columns: 1fr 1fr 1fr;
@@ -126,25 +132,12 @@ function Work({ title, imageSrc, id }) {
 function AddNewWork() {
    const history = useHistory();
 
-   function handleAddNewWork() {
+   async function handleAddNewWork() {
       // create new id
       const id = Math.floor(Math.random() * 1000000);
 
-      // create new pen and store it
-      let prevPens = JSON.parse(localStorage.getItem('pens')) || [];
-
-      localStorage.setItem(
-         'pens',
-         JSON.stringify([
-            ...prevPens,
-            {
-               id,
-               title: 'Untitled',
-               image: 'https://cdn.pixabay.com/photo/2021/10/18/08/39/pumpkin-6720424_960_720.jpg',
-               code: { html: '', css: '', js: '' },
-            },
-         ])
-      );
+      // add new pen
+      await db.pens.add({ id, ...initialPen });
 
       // redirect to new pen
       return history.push(`/pen/${id}`);
@@ -163,7 +156,8 @@ function AddNewWork() {
 }
 
 function MyWorks() {
-   const works = JSON.parse(localStorage.getItem('pens'));
+   // Get all work from indexedDB
+   const works = useLiveQuery(() => db.pens.toArray(), []);
 
    return (
       <Container maxWidth="70rem" p="4rem 1rem">
