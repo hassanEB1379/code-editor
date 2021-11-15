@@ -1,4 +1,5 @@
-import { createContext, useContext, useReducer } from 'react';
+import { createContext, useContext, useEffect, useReducer } from 'react';
+import { db } from '../../../indexedDB';
 
 const PenContext = createContext();
 const PenContextDispatch = createContext();
@@ -6,31 +7,16 @@ const PenContextDispatch = createContext();
 export const usePen = () => useContext(PenContext);
 export const usePenDispatch = () => useContext(PenContextDispatch);
 
-const initialPen = {
+export const initialPen = {
    title: 'Untitled',
-   image: 'https://cdn.pixabay.com/photo/2021/10/18/08/39/pumpkin-6720424_960_720.jpg',
+   image: '/static/images/pumpkin.webp',
    code: { html: '', css: '', js: '' },
 };
 
-function initializer(initialState, id) {
-   let state;
-
-   try {
-      let pens = JSON.parse(localStorage.getItem('pens'));
-      let pen = pens.find(pen => pen.id.toString() === id);
-
-      if (pen) {
-         state = pen;
-      }
-   } catch (err) {
-      console.log(err);
-   }
-
-   return state;
-}
-
 function penReducer(state, action) {
    switch (action.type) {
+      case 'initialize':
+         return action.payload;
       case 'html':
          return { ...state, code: { ...state.code, html: action.payload } };
       case 'css':
@@ -45,9 +31,15 @@ function penReducer(state, action) {
 }
 
 export function PenProvider({ children, id }) {
-   const [pen, dispatch] = useReducer(penReducer, initialPen, initialState =>
-      initializer(initialState, id)
-   );
+   const [pen, dispatch] = useReducer(penReducer, initialPen);
+
+   // get initial state from indexedDB
+   useEffect(() => {
+      (async function () {
+         const pen = await db.pens.get(Number(id));
+         dispatch({ type: 'initialize', payload: pen });
+      })();
+   }, []);
 
    return (
       <PenContext.Provider value={pen}>
