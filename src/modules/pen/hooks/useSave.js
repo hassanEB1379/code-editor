@@ -1,20 +1,32 @@
+import { db } from '../../../indexedDB';
 import { usePen } from '../contexts/pen-context';
+import { useShowAlert } from '../../alerts/AlertsProvider';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 
 export function useSave() {
    const pen = usePen();
+   const showAlert = useShowAlert();
 
    return function () {
-      try {
-         // get previous items and remove old pen
-         let prevItems = JSON.parse(localStorage.getItem('pens'));
-         let newItems = prevItems.filter(prevItem => prevItem.id !== pen.id);
-
-         // push new pen to items
-         newItems.push(pen);
-         // store new items
-         localStorage.setItem('pens', JSON.stringify(newItems));
-      } catch (err) {
-         console.log(err);
-      }
+      // update pen
+      db.pens
+         .update(pen.id, pen)
+         .then(() => {
+            // show success alert
+            showAlert('success', 'Pen saved', {
+               icon: (
+                  <FontAwesomeIcon
+                     size="lg"
+                     color="#37F900"
+                     icon={faCheckCircle}
+                  />
+               ),
+            });
+         })
+         .catch(err => {
+            console.log(err);
+         });
    };
 }
