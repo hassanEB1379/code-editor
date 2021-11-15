@@ -20,7 +20,7 @@ function ViewLayout() {
                mode="html"
                name="html-editor"
                type="html"
-               defaultValue={code.html}
+               value={code.html}
                iconSrc="/static/images/html-5.svg"
             />
 
@@ -28,7 +28,7 @@ function ViewLayout() {
                mode="css"
                name="css-editor"
                type="css"
-               defaultValue={code.css}
+               value={code.css}
                iconSrc="/static/images/css-3.svg"
             />
 
@@ -36,7 +36,7 @@ function ViewLayout() {
                mode="javascript"
                name="js-editor"
                type="js"
-               defaultValue={code.js}
+               value={code.js}
                iconSrc="/static/images/javascript.svg"
             />
          </Resizable>
