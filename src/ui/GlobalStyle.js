@@ -28,6 +28,10 @@ const GlobalStyle = createGlobalStyle`
     --menu-bg: #fff;
     --menu-text: #000;
     --menu-item-hover: #cfd2d7;
+    --error: #ff3f3f;
+    --warning: #fbc803;
+    --info: #6d6dff;
+    --success: #37F900;
   }
 
   html {
