@@ -1,4 +1,4 @@
-import { Fragment, Children } from 'react';
+import { Fragment, Children, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 
 // Styles that are necessary for Resizable to work
@@ -21,10 +21,29 @@ const Resizer = styled.div`
       orientation === 'vertical' ? 'row-resize' : 'col-resize'};
 `;
 
-const ResizableItem = styled.div`
+const StyledResizableItem = styled.div`
    overflow: auto;
    flex-shrink: 1;
 `;
+
+function ResizableItem({ children, initialSize, dimension }) {
+   const ref = useRef();
+
+   let itemWrapperStyle = {
+      [dimension]: `calc(${initialSize}% + var(--changed-size ,0px))`,
+   };
+
+   // reset css variable when validElements change
+   useEffect(() => {
+      ref.current?.style.setProperty('--changed-size', '0px');
+   }, [initialSize]);
+
+   return (
+      <StyledResizableItem ref={ref} style={itemWrapperStyle}>
+         {children}
+      </StyledResizableItem>
+   );
+}
 
 export function Resizable({
    children,
@@ -36,12 +55,6 @@ export function Resizable({
    // This function returns attribute names based on orientation.
    let ifVertical = (ifTrue, ifFalse) =>
       orientation === 'vertical' ? ifTrue : ifFalse;
-
-   let initialSize = 100 / validElements.length;
-   let dimension = ifVertical('height', 'width');
-   let itemWrapperStyle = {
-      [dimension]: `calc(${initialSize}% + 0px)`,
-   };
 
    function resize(startPoint, currentPoint, prevElm, nextElm) {
       // total mouse movement
@@ -55,24 +68,22 @@ export function Resizable({
             (prevElmSize > minSize && movement < 0) ||
             (nextElmSize > minSize && movement > 0)
          ) {
-            prevElm.style[dimension] = newPrevElmSize;
-            nextElm.style[dimension] = newNextElmSize;
+            prevElm.style.setProperty('--changed-size', newPrevElmSize + 'px');
+            nextElm.style.setProperty('--changed-size', newNextElmSize + 'px');
          }
       }
 
       function calcNewSizes() {
-         // regex for find "px" section of size
-         let regex = /[+-]?([0-9]*[.])?[0-9]+px/;
-
          // calculate new size
-         let newPrevElmSize = prevElm.style[dimension].replace(
-            regex,
-            t => `${+t.slice(0, -2) + movement}px`
-         );
-         let newNextElmSize = nextElm.style[dimension].replace(
-            regex,
-            t => `${+t.slice(0, -2) - movement}px`
-         );
+         let newPrevElmSize =
+            +getComputedStyle(prevElm)
+               .getPropertyValue('--changed-size')
+               .slice(0, -2) + movement;
+
+         let newNextElmSize =
+            +getComputedStyle(nextElm)
+               .getPropertyValue('--changed-size')
+               .slice(0, -2) - movement;
 
          return { newPrevElmSize, newNextElmSize };
       }
@@ -145,7 +156,12 @@ export function Resizable({
       <ResizableContainer orientation={orientation}>
          {validElements.map((element, index) => (
             <Fragment key={index}>
-               <ResizableItem style={itemWrapperStyle}>{element}</ResizableItem>
+               <ResizableItem
+                  dimension={ifVertical('height', 'width')}
+                  initialSize={100 / validElements.length}
+               >
+                  {element}
+               </ResizableItem>
 
                {index !== validElements.length - 1 && (
                   <Resizer
