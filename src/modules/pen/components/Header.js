@@ -12,6 +12,7 @@ import { useRun } from '../hooks/useRun';
 import { useFullscreen } from '../../../hooks/useFullscreen';
 import { usePen, usePenDispatch } from '../contexts/pen-context';
 import { useSave } from '../hooks/useSave';
+import { useUnsavedChangesCount } from '../contexts/unsaved-changes-context';
 
 // icons
 import ViewLayoutIcon from '../view-layout/ViewLayout.icon';
@@ -21,11 +22,10 @@ import {
    faCompress,
    faEdit,
    faExpand,
-   faHeart,
    faPlay,
    faSave,
-   faShareAlt,
 } from '@fortawesome/free-solid-svg-icons';
+import { Transition } from 'react-transition-group';
 
 const HeaderWrapper = styled(Flex)`
    height: 4rem;
@@ -49,6 +49,38 @@ const StyledTitle = styled.h1`
       cursor: pointer;
    }
 `;
+
+const Indicator = styled.span`
+   position: absolute;
+   top: 0;
+   left: 0;
+   height: 0.3rem;
+   background-color: var(--warning);
+   transition: width 0.2s ease-out;
+
+   // transition effect
+   width: ${({ state }) =>
+      state === 'exiting' || state === 'exited' || state === 'entering'
+         ? 0
+         : '100%'};
+`;
+
+function SaveButton(props) {
+   const unsavedChanges = useUnsavedChangesCount();
+
+   return (
+      <Button {...props}>
+         <Transition in={unsavedChanges > 10} timeout={200}>
+            {state => (
+               // state change: exited -> entering -> entered -> exiting -> exited
+               <Indicator state={state} />
+            )}
+         </Transition>
+
+         <FontAwesomeIcon icon={faSave} />
+      </Button>
+   );
+}
 
 function Title() {
    const dispatch = usePenDispatch();
@@ -157,9 +189,7 @@ const Header = () => {
 
          {/* Action buttons bar*/}
          <Flex gap=".7rem">
-            <Button onClick={save} data-title="Save Ctrl+S">
-               <FontAwesomeIcon icon={faSave} />
-            </Button>
+            <SaveButton onClick={save} data-title="Save Ctrl+S" />
 
             <Button onClick={run} data-title="Run Shift+F10">
                <FontAwesomeIcon color="#37F900" icon={faPlay} />
@@ -172,16 +202,6 @@ const Header = () => {
             </Button>
 
             <ChangeViewDropdown />
-
-            <Divider orientation="vertical" />
-
-            <Button data-title="Share">
-               <FontAwesomeIcon icon={faShareAlt} />
-            </Button>
-
-            <Button data-title="Like">
-               <FontAwesomeIcon icon={faHeart} />
-            </Button>
 
             <Divider orientation="vertical" />
 
