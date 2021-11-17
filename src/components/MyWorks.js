@@ -10,6 +10,7 @@ import {
 } from '../ui';
 import styled from 'styled-components';
 import { Link, useHistory } from 'react-router-dom';
+import { useCustomAlert } from '../modules/alerts/useCustomAlert';
 
 // icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -22,13 +23,14 @@ import {
 
 // dexie
 import { db } from '../indexedDB';
-import { useLiveQuery } from 'dexie-react-hooks';
 import { initialPen } from '../modules/pen/contexts/pen-context';
+import { useLiveQuery } from 'dexie-react-hooks';
 
 // styles
 const WorksWrapper = styled(Spacing)`
    display: grid;
    grid-template-columns: 1fr 1fr 1fr;
+   grid-auto-rows: 15rem;
    grid-gap: 2.5rem 1.5rem;
 `;
 
@@ -93,6 +95,13 @@ const AddNewWorkBtn = styled(Flex)`
 `;
 
 function Work({ title, imageSrc, id }) {
+   const { showSuccessAlert } = useCustomAlert();
+
+   async function deleteWork() {
+      await db.pens.delete(id);
+      showSuccessAlert('Pen successfully deleted');
+   }
+
    const DropdownToggleButton = (
       <Button sm title="Actions">
          <FontAwesomeIcon icon={faEllipsisH} />
@@ -101,11 +110,17 @@ function Work({ title, imageSrc, id }) {
 
    const DropdownContent = (
       <Menu>
-         <MenuItem>
-            <FontAwesomeIcon style={{ marginRight: '.75rem' }} icon={faCode} />
-            Edit
-         </MenuItem>
-         <MenuItem>
+         <Link to={`/pen/${id}`}>
+            <MenuItem>
+               <FontAwesomeIcon
+                  style={{ marginRight: '.75rem' }}
+                  icon={faCode}
+               />
+               Edit
+            </MenuItem>
+         </Link>
+
+         <MenuItem onClick={deleteWork}>
             <FontAwesomeIcon style={{ marginRight: '.75rem' }} icon={faTrash} />
             Delete
          </MenuItem>
@@ -156,7 +171,7 @@ function AddNewWork() {
 }
 
 function MyWorks() {
-   // Get all work from indexedDB
+   // Get all works from IDB
    const works = useLiveQuery(() => db.pens.toArray(), []);
 
    return (
