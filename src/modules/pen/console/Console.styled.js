@@ -21,7 +21,7 @@ const ConsoleBody = styled(Flex).attrs(() => ({
    font-size: 0.9rem;
 `;
 
-const StyledConsoleMessage = styled.code`
+const StyledConsoleMessage = styled.pre`
    ${({ logType }) => {
       switch (logType) {
          case 'error':
@@ -64,7 +64,7 @@ const StyledCommandLine = styled.code`
    }
 `;
 
-const ReturnedValue = styled.code`
+const ReturnedValue = styled.pre`
    min-height: 1.5rem;
    line-height: 1.5rem;
    background-color: var(--command-line-return-bg);
