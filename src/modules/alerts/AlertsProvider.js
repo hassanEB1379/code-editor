@@ -1,7 +1,7 @@
 import { createContext, useContext, useState } from 'react';
 import { AlertsView } from './AlertsView';
 
-const showAlertDispatch = createContext();
+const showAlertDispatch = createContext(null);
 export const useShowAlert = () => useContext(showAlertDispatch);
 
 export function AlertsProvider({ children }) {

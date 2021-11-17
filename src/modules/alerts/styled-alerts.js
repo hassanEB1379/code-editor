@@ -19,6 +19,7 @@ const StyledAlert = styled.li`
    align-items: center;
    justify-content: space-between;
    gap: 1rem;
+   font-size: 0.9rem;
 
    & > svg:last-of-type {
       cursor: pointer;
@@ -49,13 +50,14 @@ const AlertsContainer = styled.div`
    position: fixed;
    left: 50%;
    transform: translateX(-50%);
-   width: 12rem;
+   width: 25rem;
    margin: 0.5rem;
    height: 0 !important;
    z-index: var(--z-999);
    & > ul {
       display: flex;
       flex-flow: wrap column;
+      align-items: center;
       gap: 0.5rem;
    }
 `;
