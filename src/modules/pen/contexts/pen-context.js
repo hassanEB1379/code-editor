@@ -1,5 +1,4 @@
-import { createContext, useContext, useEffect, useReducer } from 'react';
-import { db } from '../../../indexedDB';
+import { createContext, useContext, useReducer } from 'react';
 
 const PenContext = createContext();
 const PenContextDispatch = createContext();
@@ -30,16 +29,8 @@ function penReducer(state, action) {
    }
 }
 
-export function PenProvider({ children, id }) {
+export function PenProvider({ children }) {
    const [pen, dispatch] = useReducer(penReducer, initialPen);
-
-   // get initial state from indexedDB
-   useEffect(() => {
-      (async function () {
-         const pen = await db.pens.get(Number(id));
-         dispatch({ type: 'initialize', payload: pen });
-      })();
-   }, []);
 
    return (
       <PenContext.Provider value={pen}>
