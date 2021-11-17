@@ -1,13 +1,12 @@
 import { db } from '../../../indexedDB';
 import { usePen } from '../contexts/pen-context';
-import { useShowAlert } from '../../alerts/AlertsProvider';
-
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
+import { useCustomAlert } from '../../alerts/useCustomAlert';
+import { useUnsavedChangesDispatch } from '../contexts/unsaved-changes-context';
 
 export function useSave() {
    const pen = usePen();
-   const showAlert = useShowAlert();
+   const { showSuccessAlert } = useCustomAlert();
+   const unsavedChangesDispatch = useUnsavedChangesDispatch();
 
    return function () {
       // update pen
@@ -15,15 +14,9 @@ export function useSave() {
          .update(pen.id, pen)
          .then(() => {
             // show success alert
-            showAlert('success', 'Pen saved', {
-               icon: (
-                  <FontAwesomeIcon
-                     size="lg"
-                     color="#37F900"
-                     icon={faCheckCircle}
-                  />
-               ),
-            });
+            showSuccessAlert('Pen saved');
+            // set unsaved changes to 0 after save
+            unsavedChangesDispatch(0);
          })
          .catch(err => {
             console.log(err);
