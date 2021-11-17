@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 
 export const Button = styled.button`
+   position: relative;
+   overflow: hidden;
    display: inline-flex;
    align-items: center;
    gap: 0.5rem;
