@@ -1,30 +1,30 @@
-window.onerror = (message, source, lineno, colno, error) => {
-   window.parent.postMessage(
-      {
-         type: 'console-message',
-         source: 'output-view-iframe',
-         data: {
-            type: 'error',
-            payload: { text: message, source, lineno, colno, error },
-         },
-      },
-      '*'
-   );
+// console message posted to parent
+let post = (msg, type) => ({
+   type: 'console-message',
+   source: 'output-view-iframe',
+   data: {
+      type,
+      array: msg,
+   },
+});
+
+// handle rendered js error
+window.onerror = message => {
+   window.parent.postMessage(post([message], 'error'), '*');
 };
 
 function sendToCustomConsole(type, ...messages) {
-   let text = messages.join(' ');
-   window.parent.postMessage(
-      {
-         type: 'console-message',
-         source: 'output-view-iframe',
-         data: {
-            type,
-            payload: { text },
-         },
-      },
-      '*'
-   );
+   try {
+      window.parent.postMessage(post(messages, type), '*');
+   } catch (err) {
+      window.parent.postMessage(
+         post(
+            ['Sorry , this log cannot be shown. using browser console instead'],
+            'log'
+         ),
+         '*'
+      );
+   }
 }
 
 const originalConsole = window.console;
