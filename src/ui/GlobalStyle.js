@@ -32,6 +32,8 @@ const GlobalStyle = createGlobalStyle`
     --warning: #fbc803;
     --info: #6d6dff;
     --success: #37F900;
+    --console-number: #8080ff;
+    --console-str: #4bffdb;
   }
 
   html {
@@ -93,6 +95,7 @@ const GlobalStyle = createGlobalStyle`
     border: none;
     cursor: pointer;
     background-color: inherit;
+
     &:focus {
       outline: 0;
     }
