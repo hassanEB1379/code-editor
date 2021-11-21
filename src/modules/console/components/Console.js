@@ -1,14 +1,14 @@
 import { Fragment } from 'react';
 import { Button, Flex } from '../../../ui';
-import { useToggleConsole } from './ConsoleToggle.context';
+import { useToggleConsole } from '../contexts/ConsoleToggle-context';
 import {
    useConsoleMessages,
    useConsoleMessagesDispatch,
-} from './ConsoleMessages-context';
+} from '../contexts/ConsoleMessages-context';
 import ConsoleMessage from './ConsoleMessage';
 import CommandLine from './CommandLine';
 
-import { ConsoleTitle, ConsoleBody } from './Console.styled';
+import { ConsoleTitle, ConsoleBody } from '../styled/styled-Console';
 
 // icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -48,7 +48,7 @@ function Console() {
                      <ConsoleMessage
                         type="error"
                         key={index}
-                        data={message.payload.text}
+                        dataArray={message.array}
                      />
                   )}
 
@@ -56,12 +56,12 @@ function Console() {
                      <ConsoleMessage
                         type="warning"
                         key={index}
-                        data={message.payload.text}
+                        dataArray={message.array}
                      />
                   )}
 
                   {message.type === 'log' && (
-                     <ConsoleMessage key={index} data={message.payload.text} />
+                     <ConsoleMessage key={index} dataArray={message.array} />
                   )}
                </Fragment>
             ))}

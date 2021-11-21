@@ -41,6 +41,9 @@ const StyledConsoleMessage = styled.pre`
       }
    }};
    padding: 0.5rem 0.8rem;
+   display: flex;
+   gap: 0.5rem;
+   white-space: normal;
 `;
 
 const StyledCommandLine = styled.code`

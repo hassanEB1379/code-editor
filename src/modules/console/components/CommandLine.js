@@ -1,6 +1,6 @@
-import { ReturnedValue, StyledCommandLine } from './Console.styled';
+import { ReturnedValue, StyledCommandLine } from '../styled/styled-Console';
 import { Flex } from '../../../ui';
-import { useCLReturnedValue } from './CommandLine-context';
+import { useCLReturnedValue } from '../contexts/CommandLine-context';
 
 function CommandLine() {
    const commandReturnedValue = useCLReturnedValue();
