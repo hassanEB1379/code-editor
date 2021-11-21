@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Button, Flex } from '../../../ui';
-import { useToggleConsole } from '../console/ConsoleToggle.context';
+import { useToggleConsole } from '../../console/contexts/ConsoleToggle-context';
 import { useLogout } from '../../authentication/hooks/useLogout';
 
 const FooterWrapper = styled(Flex)`

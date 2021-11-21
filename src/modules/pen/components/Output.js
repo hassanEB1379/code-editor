@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import { useEffect } from 'react';
-import { useConsoleMessagesDispatch } from '../console/ConsoleMessages-context';
+import { useConsoleMessagesDispatch } from '../../console/contexts/ConsoleMessages-context';
 import { useSourceUrl } from '../contexts/source-url.context';
-import { useCLReturnedValueDispatch } from '../console/CommandLine-context';
+import { useCLReturnedValueDispatch } from '../../console/contexts/CommandLine-context';
 
 const OutputWrapper = styled.div`
    flex-grow: 1;
@@ -18,14 +18,21 @@ const Output = () => {
    const url = useSourceUrl();
 
    useEffect(() => {
-      function handleIframeMessages({ data: messageData }) {
+      function handleIframeMessages(e) {
+         // get postMessage data property
+         let messageData = e.data;
+
          if (messageData.source === 'output-view-iframe') {
             // The message was sent from our iframe
 
             if (messageData.type === 'console-message') {
-               let type = messageData.data.type;
+               // type of console message. "log" , "warning", "error" and ...
+               let messageType = messageData.data.type;
                // Send a new message to Context and display in the custom console
-               consoleDispatch({ type, payload: messageData.data });
+               consoleDispatch({
+                  type: messageType,
+                  payload: messageData.data,
+               });
             } else if (messageData.type === 'command-line-return-value') {
                setCommandReturnedValue(messageData.data);
             }

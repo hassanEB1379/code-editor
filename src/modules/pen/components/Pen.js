@@ -10,10 +10,10 @@ import Page404 from '../../../components/404';
 // context providers
 import { PenProvider, usePenDispatch } from '../contexts/pen-context';
 import { ViewLayoutProvider } from '../view-layout/ViewLayout.context';
-import { ToggleConsoleProvider } from '../console/ConsoleToggle.context';
-import { ConsoleLogsProvider } from '../console/ConsoleMessages-context';
+import { ToggleConsoleProvider } from '../../console/contexts/ConsoleToggle-context';
+import { ConsoleLogsProvider } from '../../console/contexts/ConsoleMessages-context';
 import { SourceUrlProvider } from '../contexts/source-url.context';
-import { CommandLineProvider } from '../console/CommandLine-context';
+import { CommandLineProvider } from '../../console/contexts/CommandLine-context';
 import { UnsavedChangesProvider } from '../contexts/unsaved-changes-context';
 import MultiProvider from '../../../utils/MultiProvider';
 

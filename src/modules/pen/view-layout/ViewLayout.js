@@ -1,9 +1,9 @@
 import { Resizable } from '../../../ui';
 import Editor from '../components/Editor';
 import Output from '../components/Output';
-import Console from '../console/Console';
+import Console from '../../console/components/Console';
 import { useViewLayout } from './ViewLayout.context';
-import { useToggleConsole } from '../console/ConsoleToggle.context';
+import { useToggleConsole } from '../../console/contexts/ConsoleToggle-context';
 import { usePen } from '../contexts/pen-context';
 
 function ViewLayout() {
