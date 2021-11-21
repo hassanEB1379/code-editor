@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Button, Flex } from '../ui';
+import { Button, Flex, Spacing } from '../ui';
 import { Link } from 'react-router-dom';
 
 const HomeWrapper = styled(Flex)`
@@ -26,7 +26,13 @@ function HomePage() {
                </Link>
             </Flex>
          </Flex>
-         <img alt="home-page-img" src="/static/images/home-img.png" />
+         <Spacing mx="auto">
+            <img
+               width="1000px"
+               alt="home-page-img"
+               src="/static/images/home-img.png"
+            />
+         </Spacing>
       </HomeWrapper>
    );
 }
