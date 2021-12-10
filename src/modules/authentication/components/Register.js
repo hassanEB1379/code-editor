@@ -1,11 +1,18 @@
-import { ErrorMessage, Field, Form, Submit, Flex } from '../../../ui';
-import { Divider } from '../../../ui/Divider';
-import { Container } from '../../../ui/Container';
+import {
+   ErrorMessage,
+   Field,
+   Form,
+   Submit,
+   Divider,
+   Container,
+   FieldGroup,
+} from '../../../ui';
+
 import { useForm } from 'react-hook-form';
+import { useAuthentication } from '../hooks/useAuthentication';
 
 // messages
 import { REQUIRED_FIELD, SAFE_PASSWORD, VALID_EMAIL } from '../utils/constants';
-import { useAuthentication } from '../hooks/useAuthentication';
 
 export function Register() {
    const {
@@ -27,7 +34,7 @@ export function Register() {
 
             <Divider />
 
-            <Flex flexDir="column" gap=".5rem">
+            <FieldGroup>
                <label htmlFor="username-field">Username</label>
 
                <Field
@@ -39,9 +46,9 @@ export function Register() {
                <ErrorMessage>
                   {errors.username?.type === 'required' && REQUIRED_FIELD}
                </ErrorMessage>
-            </Flex>
+            </FieldGroup>
 
-            <Flex flexDir="column" gap=".5rem">
+            <FieldGroup>
                <label htmlFor="email-field">Email</label>
 
                <Field
@@ -57,9 +64,9 @@ export function Register() {
                   {errors.email?.type === 'required' && REQUIRED_FIELD}
                   {errors.email?.type === 'pattern' && VALID_EMAIL}
                </ErrorMessage>
-            </Flex>
+            </FieldGroup>
 
-            <Flex flexDir="column" gap=".5rem">
+            <FieldGroup>
                <label htmlFor="password-field">Password</label>
 
                <Field
@@ -76,7 +83,7 @@ export function Register() {
                   {errors.password?.type === 'required' && REQUIRED_FIELD}
                   {errors.password?.type === 'pattern' && SAFE_PASSWORD}
                </ErrorMessage>
-            </Flex>
+            </FieldGroup>
 
             <Submit value="Submit" />
          </Form>
