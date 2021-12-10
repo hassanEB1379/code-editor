@@ -10,6 +10,13 @@ const OutputWrapper = styled.div`
    position: relative;
 `;
 
+const Iframe = styled.iframe`
+   background-color: white;
+   border: none;
+   width: 100%;
+   height: 100%;
+`;
+
 const Output = () => {
    const consoleDispatch = useConsoleMessagesDispatch();
    const setCommandReturnedValue = useCLReturnedValueDispatch();
@@ -17,6 +24,7 @@ const Output = () => {
    // generated document url ( using in src attribute )
    const url = useSourceUrl();
 
+   // This effect get messages from output iframe
    useEffect(() => {
       function handleIframeMessages(e) {
          // get postMessage data property
@@ -47,14 +55,8 @@ const Output = () => {
 
    return (
       <OutputWrapper>
-         <iframe
-            style={{
-               backgroundColor: '#fff',
-               border: 'none',
-            }}
+         <Iframe
             src={url}
-            width="100%"
-            height="100%"
             title="output-window"
             sandbox="allow-downloads allow-forms allow-modals allow-pointer-lock allow-popups allow-presentation allow-same-origin allow-scripts allow-top-navigation-by-user-activation"
          />

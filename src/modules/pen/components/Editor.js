@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import AceEditor from 'react-ace';
-import { Flex } from '../../../ui';
 import {
    useUnsavedChangesCount,
    useUnsavedChangesDispatch,
@@ -13,7 +12,7 @@ import 'ace-builds/src-noconflict/mode-css';
 import 'ace-builds/src-noconflict/mode-html';
 import 'ace-builds/src-noconflict/theme-twilight';
 
-const EditorWrapper = styled(Flex).attrs(() => ({ flexDir: 'column' }))`
+const EditorWrapper = styled.div.attrs(() => ({ className: 'flex dir-c' }))`
    height: 100%;
 
    &:not(:last-of-type) {
@@ -21,7 +20,10 @@ const EditorWrapper = styled(Flex).attrs(() => ({ flexDir: 'column' }))`
    }
 `;
 
-const EditorHeader = styled(Flex)`
+const EditorHeader = styled.div.attrs(() => ({
+   className: 'flex items-center',
+}))`
+   gap: 1rem;
    background-color: var(--dark-bg);
    padding: 0.5rem 1rem;
 
@@ -30,7 +32,7 @@ const EditorHeader = styled(Flex)`
    }
 `;
 
-const Editor = ({ iconSrc, type, ...rest }) => {
+const Editor = ({ iconSrc, ...rest }) => {
    const unsavedChanges = useUnsavedChangesCount();
    const PenDispatch = usePenDispatch();
    const unsavedChangesDispatch = useUnsavedChangesDispatch();
@@ -44,12 +46,12 @@ const Editor = ({ iconSrc, type, ...rest }) => {
          showWarningAlert(`There is ${unsavedChanges} unsaved changes`);
       }
       // update pen context with new code
-      PenDispatch({ type, payload: code });
+      PenDispatch({ type: rest.mode, payload: code });
    }
 
    return (
       <EditorWrapper>
-         <EditorHeader gap="1rem" alignItems="center">
+         <EditorHeader>
             <img alt="lang-icon" width={20} src={iconSrc} />
             <h4>{rest.mode.toUpperCase()}</h4>
          </EditorHeader>

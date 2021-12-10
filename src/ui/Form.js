@@ -11,6 +11,10 @@ const Form = styled.form`
    gap: 1.2rem;
 `;
 
+export const FieldGroup = styled.div.attrs(() => ({
+   className: 'flex dir-c gap-2',
+}))``;
+
 const Field = styled.input`
    padding: 0.3rem;
    border-radius: 0.3rem;

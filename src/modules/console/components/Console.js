@@ -1,5 +1,5 @@
 import { Fragment } from 'react';
-import { Button, Flex } from '../../../ui';
+import { Button, Spacing } from '../../../ui';
 import { useToggleConsole } from '../contexts/ConsoleToggle-context';
 import {
    useConsoleMessages,
@@ -25,12 +25,12 @@ function Console() {
    }
 
    return (
-      <Flex style={{ height: '100%' }} flexDir="column">
+      <div className="flex dir-c" style={{ height: '100%' }}>
          {/* Console header */}
-         <Flex justify="space-between" items="center">
+         <div className="flex items-center justify-between">
             <ConsoleTitle>Console</ConsoleTitle>
 
-            <Flex inline gap=".3rem" mr=".5rem">
+            <Spacing className="flex inline gap-1" mr=".5rem">
                <Button sm onClick={clearConsole}>
                   Clear
                </Button>
@@ -38,8 +38,8 @@ function Console() {
                <Button sm onClick={toggle}>
                   <FontAwesomeIcon icon={faTimes} />
                </Button>
-            </Flex>
-         </Flex>
+            </Spacing>
+         </div>
 
          <ConsoleBody>
             {messages.map((message, index) => (
@@ -68,7 +68,7 @@ function Console() {
          </ConsoleBody>
 
          <CommandLine />
-      </Flex>
+      </div>
    );
 }
 

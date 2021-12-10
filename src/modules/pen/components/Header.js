@@ -1,13 +1,10 @@
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-
-import { Button, Flex, ButtonGroup, Dropdown, Divider } from '../../../ui';
-
-import {
-   useViewLayout,
-   useViewLayoutDispatch,
-} from '../view-layout/ViewLayout.context';
+import { Transition } from 'react-transition-group';
+import { ChangeViewDropdown } from '../view-layout/ChangeViewDropdown';
+import { isDesktop, isMobile } from 'react-device-detect';
+import { Button, Divider, Dropdown, Menu, MenuItem } from '../../../ui';
 import { useRun } from '../hooks/useRun';
 import { useFullscreen } from '../../../hooks/useFullscreen';
 import { usePen, usePenDispatch } from '../contexts/pen-context';
@@ -15,9 +12,9 @@ import { useSave } from '../hooks/useSave';
 import { useUnsavedChangesCount } from '../contexts/unsaved-changes-context';
 
 // icons
-import ViewLayoutIcon from '../view-layout/ViewLayout.icon';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
+   faAlignJustify,
    faArrowRight,
    faCompress,
    faEdit,
@@ -25,9 +22,10 @@ import {
    faPlay,
    faSave,
 } from '@fortawesome/free-solid-svg-icons';
-import { Transition } from 'react-transition-group';
 
-const HeaderWrapper = styled(Flex)`
+const HeaderWrapper = styled.div.attrs(() => ({
+   className: 'flex items-center justify-between',
+}))`
    height: 4rem;
    padding: 0.5rem 0.75rem;
    border-bottom: 1px solid var(--dark-border);
@@ -124,71 +122,48 @@ function Title() {
    );
 }
 
-function ChangeViewDropdown() {
-   const dispatch = useViewLayoutDispatch();
-
-   const { icon } = useViewLayout();
-
-   function changeLayout(type) {
-      dispatch({ type });
-   }
-
-   return (
-      <Dropdown action={<Button>{icon}</Button>}>
-         <Flex gap=".7rem" p=".5rem" flexDir="column">
-            <h4>Change view</h4>
-            <ButtonGroup>
-               <Button wide onClick={() => changeLayout('default')}>
-                  <ViewLayoutIcon rotate={-90} />
-               </Button>
-
-               <Button wide onClick={() => changeLayout('vertical')}>
-                  <ViewLayoutIcon />
-               </Button>
-            </ButtonGroup>
-         </Flex>
-      </Dropdown>
-   );
-}
-
-const Header = () => {
+function ActionButtons() {
    const run = useRun();
    const save = useSave();
 
    const { toggleFullScreen, isFullscreen } = useFullscreen();
 
-   useEffect(() => {
-      function handleShortcuts(e) {
-         if (e.ctrlKey && e.keyCode === 83) {
-            // Ctrl + S ==> pen saved
-            e.preventDefault();
-            save();
-         } else if (e.shiftKey && e.keyCode === 121) {
-            // Shift + F10 ==> run code
-            e.preventDefault();
-            run();
-         }
-      }
-      window.addEventListener('keydown', handleShortcuts);
-      return () => {
-         window.removeEventListener('keydown', handleShortcuts);
-      };
-   }, [run, save]);
+   if (isMobile) {
+      // Action buttons in mobile
+      const DropdownToggleButton = (
+         <Button title="Actions">
+            <FontAwesomeIcon icon={faAlignJustify} />
+         </Button>
+      );
 
-   return (
-      <HeaderWrapper items="center" justify="space-between">
-         <Flex items="center" gap="1rem">
-            <img
-               src="/static/images/logo.png"
-               width="28px"
-               height="28px"
-               alt="website-logo"
-            />
-            <Title />
-         </Flex>
+      const DropdownContent = (
+         <Menu>
+            <MenuItem icon={faSave} onClick={save}>
+               Save Ctrl+S
+            </MenuItem>
+            <MenuItem icon={faPlay} onClick={run}>
+               Run Shift+F10
+            </MenuItem>
+            <MenuItem
+               icon={isFullscreen ? faCompress : faExpand}
+               onClick={toggleFullScreen}
+            >
+               Full screen
+            </MenuItem>
+            <MenuItem icon={faArrowRight} component={Link} to="/my-works">
+               Go to works
+            </MenuItem>
+         </Menu>
+      );
+      return (
+         <Dropdown action={DropdownToggleButton}>{DropdownContent}</Dropdown>
+      );
+   }
 
-         {/* Action buttons bar*/}
-         <Flex gap=".7rem">
+   if (isDesktop) {
+      // Action buttons in desktop
+      return (
+         <div className="flex gap-2">
             <SaveButton onClick={save} data-title="Save Ctrl+S" />
 
             <Button onClick={run} data-title="Run Shift+F10">
@@ -210,7 +185,48 @@ const Header = () => {
                   <FontAwesomeIcon icon={faArrowRight} />
                </Button>
             </Link>
-         </Flex>
+         </div>
+      );
+   }
+}
+
+const Header = () => {
+   const run = useRun();
+   const save = useSave();
+
+   // This effect handle editor shortcuts
+   useEffect(() => {
+      function handleShortcuts(e) {
+         if (e.ctrlKey && e.keyCode === 83) {
+            // Ctrl + S ==> pen saved
+            e.preventDefault();
+            save();
+         } else if (e.shiftKey && e.keyCode === 121) {
+            // Shift + F10 ==> run code
+            e.preventDefault();
+            run();
+         }
+      }
+      window.addEventListener('keydown', handleShortcuts);
+      return () => {
+         window.removeEventListener('keydown', handleShortcuts);
+      };
+   }, [run, save]);
+
+   return (
+      <HeaderWrapper>
+         <div className="flex items-center gap-2">
+            <img
+               src="/static/images/logo.png"
+               width="28px"
+               height="28px"
+               alt="website-logo"
+            />
+            <Title />
+         </div>
+
+         {/* Action buttons bar*/}
+         <ActionButtons />
       </HeaderWrapper>
    );
 };

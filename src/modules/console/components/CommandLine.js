@@ -1,5 +1,4 @@
 import { ReturnedValue, StyledCommandLine } from '../styled/styled-Console';
-import { Flex } from '../../../ui';
 import { useCLReturnedValue } from '../contexts/CommandLine-context';
 
 function CommandLine() {
@@ -21,7 +20,7 @@ function CommandLine() {
    }
 
    return (
-      <Flex flexDir="column">
+      <div className="flex dir-c">
          <StyledCommandLine
             id="console-command-line"
             spellCheck="false"
@@ -32,7 +31,7 @@ function CommandLine() {
          <ReturnedValue>
             {JSON.stringify(commandReturnedValue) || 'undefined'}
          </ReturnedValue>
-      </Flex>
+      </div>
    );
 }
 

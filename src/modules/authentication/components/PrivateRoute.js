@@ -10,7 +10,7 @@ export const PrivateRoute = props => {
       if (isAuthenticated) {
          return <Component {...renderProps} />;
       } else {
-         // redirect to login page if user not loged in
+         // redirect to login page if user not logged in
          return <Redirect to="/login" />;
       }
    };

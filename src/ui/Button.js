@@ -3,9 +3,6 @@ import styled from 'styled-components';
 export const Button = styled.button`
    position: relative;
    overflow: hidden;
-   display: inline-flex;
-   align-items: center;
-   gap: 0.5rem;
    background-color: var(--dark-btn);
    border-radius: 0.3rem;
    font-size: ${props => (props.sm ? '.7rem' : 'inherit')};

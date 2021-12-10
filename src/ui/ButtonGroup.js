@@ -1,7 +1,9 @@
 import styled from 'styled-components';
-import { Flex } from './Flex';
+import { Spacing } from './Spacing';
 
-const ButtonGroupWrapper = styled(Flex)`
+const ButtonGroupWrapper = styled(Spacing).attrs(() => ({
+   className: 'flex',
+}))`
    & > * {
       border-radius: 0;
       margin: 0 0.8px;

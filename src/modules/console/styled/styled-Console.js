@@ -1,5 +1,4 @@
 import styled, { css } from 'styled-components';
-import { Flex } from '../../../ui';
 
 const ConsoleTitle = styled.p`
    background-color: var(--tab-bg);
@@ -11,8 +10,8 @@ const ConsoleTitle = styled.p`
    border-top: 0.3rem solid var(--tab-indicator);
 `;
 
-const ConsoleBody = styled(Flex).attrs(() => ({
-   flexDir: 'column',
+const ConsoleBody = styled.div.attrs(() => ({
+   className: 'flex dir-c',
 }))`
    background-color: var(--tab-bg);
    flex-grow: 1;

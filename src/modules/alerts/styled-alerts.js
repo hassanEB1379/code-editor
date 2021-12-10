@@ -1,6 +1,11 @@
 import styled from 'styled-components';
+import { Spacing } from '../../ui';
 
-const StyledAlert = styled.li`
+const StyledAlert = styled(Spacing).attrs(() => ({
+   className: 'flex items-center justify-between gap-3',
+   p: '.5rem .7rem',
+   as: 'li', // render component as li tag
+}))`
    --selected-color: ${({ variant }) =>
       variant === 'success'
          ? 'var(--success)'
@@ -14,11 +19,6 @@ const StyledAlert = styled.li`
    background-color: var(--dark-btn);
    color: var(--contrast-text);
    border-radius: 0.3rem;
-   padding: 0.5rem 0.7rem;
-   display: flex;
-   align-items: center;
-   justify-content: space-between;
-   gap: 1rem;
    font-size: 0.9rem;
 
    & > svg:last-of-type {
@@ -53,7 +53,7 @@ const AlertsContainer = styled.div`
    width: 25rem;
    margin: 0.5rem;
    height: 0 !important;
-   z-index: var(--z-999);
+   z-index: var(--z-alerts);
    & > ul {
       display: flex;
       flex-flow: wrap column;

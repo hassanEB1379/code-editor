@@ -1,5 +1,4 @@
 export * from './Button';
-export * from './Flex';
 export * from './ButtonGroup';
 export * from './Menu';
 export * from './Dropdown';
@@ -8,3 +7,5 @@ export * from './Container';
 export * from './Form';
 export * from './Spacing';
 export * from './Resizable';
+export * from './Group';
+export * from './Box';

@@ -1,6 +1,5 @@
 import { useCallback, useEffect } from 'react';
 import Header from './Header';
-import { Flex } from '../../../ui';
 import Footer from './Footer';
 import ViewLayout from '../view-layout/ViewLayout';
 import { db } from '../../../indexedDB';
@@ -16,6 +15,7 @@ import { SourceUrlProvider } from '../contexts/source-url.context';
 import { CommandLineProvider } from '../../console/contexts/CommandLine-context';
 import { UnsavedChangesProvider } from '../contexts/unsaved-changes-context';
 import MultiProvider from '../../../utils/MultiProvider';
+import { ToggleOutputProvider } from '../contexts/toggle-output-context';
 
 const providers = [
    <PenProvider />,
@@ -25,6 +25,7 @@ const providers = [
    <ConsoleLogsProvider />,
    <SourceUrlProvider />,
    <CommandLineProvider />,
+   <ToggleOutputProvider />,
 ];
 
 // This component receives information from IDB and renders the appropriate response
@@ -46,13 +47,13 @@ function PenContent({ id }) {
    if (error) return <Page404 />;
 
    return (
-      <Flex flexDir="column">
+      <div className="flex dir-c">
          <Header />
 
          <ViewLayout />
 
          <Footer />
-      </Flex>
+      </div>
    );
 }
 

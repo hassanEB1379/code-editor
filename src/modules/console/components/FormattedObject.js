@@ -6,7 +6,6 @@ import {
    FOItemCount,
    FOItemsList,
 } from '../styled/styled-StyleByDataType';
-import { Flex } from '../../../ui';
 
 // icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -28,8 +27,8 @@ export function FormattedObject({ object, array = false }) {
    ));
 
    return (
-      <Flex flexDir="column" inline>
-         <Flex gap=".5rem" items="center">
+      <div className="flex inline dir-c">
+         <div className="flex items-center gap-2">
             {/* Toggle items list button (show if item exist) */}
             {objectKeys.length !== 0 && (
                <FOExpandButton onClick={toggleList}>
@@ -43,9 +42,9 @@ export function FormattedObject({ object, array = false }) {
             {array ? '[' : '{'}
             <FOItemCount>{objectKeys.length} item</FOItemCount>
             {array ? ']' : '}'}
-         </Flex>
+         </div>
          {/* object items list */}
          {showItems && <FOItemsList>{ObjectItemsList}</FOItemsList>}
-      </Flex>
+      </div>
    );
 }

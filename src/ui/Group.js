@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const Group = styled.div.attrs(props => ({
+export const Group = styled.div.attrs(props => ({
    spaceY: props.spaceY || 0,
    spaceX: props.spaceX || 0,
 }))`
@@ -9,5 +9,3 @@ const Group = styled.div.attrs(props => ({
    }
    margin: -${props => props.spaceY}rem -${props => props.spaceX}rem;
 `;
-
-export default Group;

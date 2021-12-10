@@ -1,8 +1,7 @@
 import styled, { css } from 'styled-components';
-import { Flex } from './Flex';
 import { cloneElement, useEffect, useRef, useState } from 'react';
 
-const DropdownWrapper = styled(Flex)`
+const DropdownWrapper = styled.div`
    position: relative;
 `;
 
@@ -68,7 +67,7 @@ export function Dropdown({ children, action, openFrom }) {
    }, []);
 
    return (
-      <DropdownWrapper ref={nodeRef}>
+      <DropdownWrapper className="flex" ref={nodeRef}>
          {cloneElement(action, { onClick: toggle })}
          <DropdownContent openFrom={openFrom} hidden={!open}>
             {children}

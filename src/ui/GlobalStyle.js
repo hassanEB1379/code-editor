@@ -3,6 +3,9 @@ import { createGlobalStyle } from 'styled-components';
 const GlobalStyle = createGlobalStyle`
   :root {
     --dark-bg: #060606;
+    --dark-bg-transparent: #0606067F;
+    --paper: #131417;
+    --paper-border: #252830;
     --dark-btn: #444857;
     --dark-bth-hover: #5a5f73;
     --dark-border: #2f2f2f;
@@ -14,6 +17,7 @@ const GlobalStyle = createGlobalStyle`
     --command-line-bg: #ffffff2e;
     --command-line-return-bg: #ffffff21;
     --divider-bg: #4b4b4b;
+    --z-alerts: 1100;
     --z-999: 999;
     --z-100: 100;
     --z-50: 50;

@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export const Menu = styled.ul`
    background-color: var(--menu-bg);
@@ -10,7 +11,9 @@ export const Menu = styled.ul`
    box-shadow: 0 0 20px -5px #000;
 `;
 
-export const MenuItem = styled.li`
+const StyledMenuItem = styled.li`
+   display: inline-block;
+   width: 100%;
    padding: 0.5rem;
    cursor: pointer;
 
@@ -18,3 +21,14 @@ export const MenuItem = styled.li`
       background-color: var(--menu-item-hover);
    }
 `;
+
+export function MenuItem({ as, icon, children, ...rest }) {
+   return (
+      <StyledMenuItem as={as} {...rest}>
+         {icon && (
+            <FontAwesomeIcon style={{ marginRight: '.75rem' }} icon={icon} />
+         )}
+         {children}
+      </StyledMenuItem>
+   );
+}

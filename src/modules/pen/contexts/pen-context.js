@@ -9,7 +9,7 @@ export const usePenDispatch = () => useContext(PenContextDispatch);
 export const initialPen = {
    title: 'Untitled',
    image: '/static/images/pumpkin.webp',
-   code: { html: '', css: '', js: '' },
+   code: { html: '', css: '', javascript: '' },
 };
 
 function penReducer(state, action) {
@@ -20,8 +20,11 @@ function penReducer(state, action) {
          return { ...state, code: { ...state.code, html: action.payload } };
       case 'css':
          return { ...state, code: { ...state.code, css: action.payload } };
-      case 'js':
-         return { ...state, code: { ...state.code, js: action.payload } };
+      case 'javascript':
+         return {
+            ...state,
+            code: { ...state.code, javascript: action.payload },
+         };
       case 'name':
          return { ...state, title: action.payload };
       default:

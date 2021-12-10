@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useReducer } from 'react';
 
-const AuthContext = createContext();
-const AuthContextDispatch = createContext();
+const AuthContext = createContext(null);
+const AuthContextDispatch = createContext(null);
 
 export const useAuthData = () => useContext(AuthContext);
 export const useAuthDataDispatch = () => useContext(AuthContextDispatch);

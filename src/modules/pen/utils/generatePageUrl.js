@@ -1,11 +1,15 @@
-export const getGeneratedPageURL = ({ html = '', css = '', js = '' } = {}) => {
+export const getGeneratedPageURL = ({
+   html = '',
+   css = '',
+   javascript = '',
+} = {}) => {
    const getBlobURL = (code, type) => {
       const blob = new Blob([code], { type });
       return URL.createObjectURL(blob);
    };
 
    const cssURL = getBlobURL(css, 'text/css');
-   const jsURL = getBlobURL(js, 'text/javascript');
+   const jsURL = getBlobURL(javascript, 'text/javascript');
 
    // create document of output iframe
    const source = `
@@ -21,7 +25,7 @@ export const getGeneratedPageURL = ({ html = '', css = '', js = '' } = {}) => {
       </head>
       <body >
         ${html}
-        ${js && `<script src="${jsURL}"></script>`} 
+        ${javascript && `<script src="${jsURL}"></script>`} 
       </body>
     </html>
   `;

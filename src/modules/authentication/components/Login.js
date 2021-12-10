@@ -1,6 +1,13 @@
-import { Container } from '../../../ui/Container';
-import { Divider } from '../../../ui/Divider';
-import { Field, Form, Submit, ErrorMessage, Flex } from '../../../ui';
+import {
+   Field,
+   Form,
+   Submit,
+   ErrorMessage,
+   Container,
+   FieldGroup,
+   Divider,
+} from '../../../ui';
+
 import { useForm } from 'react-hook-form';
 import { useAuthentication } from '../hooks/useAuthentication';
 
@@ -27,7 +34,7 @@ export function Login() {
 
             <Divider />
 
-            <Flex flexDir="column" gap=".5rem">
+            <FieldGroup>
                <label htmlFor="email-field">Email</label>
 
                <Field
@@ -43,9 +50,9 @@ export function Login() {
                   {errors?.email?.type === 'pattern' && VALID_EMAIL}
                   {errors?.email?.type === 'required' && REQUIRED_FIELD}
                </ErrorMessage>
-            </Flex>
+            </FieldGroup>
 
-            <Flex flexDir="column" gap=".5rem">
+            <FieldGroup>
                <label htmlFor="password-field">Password</label>
 
                <Field
@@ -62,7 +69,7 @@ export function Login() {
                   {errors?.password?.type === 'pattern' && SAFE_PASSWORD}
                   {errors?.password?.type === 'required' && REQUIRED_FIELD}
                </ErrorMessage>
-            </Flex>
+            </FieldGroup>
 
             <Submit value="Submit" />
          </Form>

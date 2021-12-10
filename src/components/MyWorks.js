@@ -3,7 +3,6 @@ import {
    Container,
    Divider,
    Dropdown,
-   Flex,
    Spacing,
    Menu,
    MenuItem,
@@ -11,6 +10,7 @@ import {
 import styled from 'styled-components';
 import { Link, useHistory } from 'react-router-dom';
 import { useCustomAlert } from '../modules/alerts/useCustomAlert';
+import { isDesktop, isTablet } from 'react-device-detect';
 
 // icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -29,9 +29,12 @@ import { useLiveQuery } from 'dexie-react-hooks';
 // styles
 const WorksWrapper = styled(Spacing)`
    display: grid;
-   grid-template-columns: 1fr 1fr 1fr;
    grid-auto-rows: 15rem;
    grid-gap: 2.5rem 1.5rem;
+
+   // number rows by device
+   grid-template-columns: ${() =>
+      isDesktop ? '1fr 1fr 1fr' : isTablet ? '1fr 1fr' : '1fr'};
 `;
 
 const WorkLink = styled(Link)`
@@ -45,8 +48,9 @@ const WorkLink = styled(Link)`
    margin-top: -1.5rem;
 `;
 
-const WorkBody = styled(Flex).attrs(() => ({
-   flexDir: 'column',
+const WorkBody = styled(Spacing).attrs(() => ({
+   className: 'flex dir-c',
+   p: '.75rem',
 }))`
    background-color: var(--work-body-bg);
    border-radius: 0.75rem;
@@ -71,14 +75,20 @@ const WorkBody = styled(Flex).attrs(() => ({
    }
 `;
 
-const WorkInfo = styled(Flex)`
+const WorkInfo = styled(Spacing).attrs(() => ({
+   className: 'flex justify-between',
+   px: '.5rem',
+   mt: '.75rem',
+}))`
    & > p {
       font-size: 0.9rem;
       font-weight: 700;
    }
 `;
 
-const AddNewWorkBtn = styled(Flex)`
+const AddNewWorkBtn = styled.div.attrs(() => ({
+   className: 'flex items-center justify-center',
+}))`
    background-color: var(--work-body-bg);
    border-radius: 0.75rem;
    cursor: pointer;
@@ -110,30 +120,23 @@ function Work({ title, imageSrc, id }) {
 
    const DropdownContent = (
       <Menu>
-         <Link to={`/pen/${id}`}>
-            <MenuItem>
-               <FontAwesomeIcon
-                  style={{ marginRight: '.75rem' }}
-                  icon={faCode}
-               />
-               Edit
-            </MenuItem>
-         </Link>
+         <MenuItem as={Link} to={`/pen/${id}`} icon={faCode}>
+            Edit
+         </MenuItem>
 
-         <MenuItem onClick={deleteWork}>
-            <FontAwesomeIcon style={{ marginRight: '.75rem' }} icon={faTrash} />
+         <MenuItem icon={faTrash} onClick={deleteWork}>
             Delete
          </MenuItem>
       </Menu>
    );
 
    return (
-      <WorkBody p=".75rem">
+      <WorkBody>
          <WorkLink to={`pen/${id}`}>
             <img alt={title} src={imageSrc} />
          </WorkLink>
 
-         <WorkInfo px=".5rem" mt=".75rem" justify="space-between">
+         <WorkInfo>
             <p>{title}</p>
 
             <Dropdown openFrom="left" action={DropdownToggleButton}>
@@ -159,12 +162,7 @@ function AddNewWork() {
    }
 
    return (
-      <AddNewWorkBtn
-         onClick={handleAddNewWork}
-         title="Create new pen"
-         items="center"
-         justify="center"
-      >
+      <AddNewWorkBtn onClick={handleAddNewWork} title="Create new pen">
          <FontAwesomeIcon size="4x" icon={faPlus} />
       </AddNewWorkBtn>
    );

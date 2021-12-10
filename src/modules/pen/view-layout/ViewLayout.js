@@ -1,50 +1,33 @@
 import { Resizable } from '../../../ui';
-import Editor from '../components/Editor';
 import Output from '../components/Output';
 import Console from '../../console/components/Console';
 import { useViewLayout } from './ViewLayout.context';
 import { useToggleConsole } from '../../console/contexts/ConsoleToggle-context';
-import { usePen } from '../contexts/pen-context';
+import { isBrowser, isMobile } from 'react-device-detect';
+import MobileEditors from '../components/MobileEditors';
+import DesktopEditors from '../components/DesktopEditors';
+import { useToggleOutput } from '../contexts/toggle-output-context';
 
+// This component layout editors and output window responsively
 function ViewLayout() {
-   const { wrapper, editors } = useViewLayout();
+   const { wrapper } = useViewLayout();
 
-   const { isOpen } = useToggleConsole();
-
-   const { code } = usePen();
+   const { isOpen: consoleOpen } = useToggleConsole();
+   const outputOpen = useToggleOutput();
 
    return (
       <Resizable orientation={wrapper.orientation} minSize={200}>
-         <Resizable orientation={editors.orientation} minSize={38}>
-            <Editor
-               mode="html"
-               name="html-editor"
-               type="html"
-               value={code.html}
-               iconSrc="/static/images/html-5.svg"
-            />
+         {/* Editors section */}
+         {isBrowser && <DesktopEditors />}
+         {isMobile && <MobileEditors />}
 
-            <Editor
-               mode="css"
-               name="css-editor"
-               type="css"
-               value={code.css}
-               iconSrc="/static/images/css-3.svg"
-            />
-
-            <Editor
-               mode="javascript"
-               name="js-editor"
-               type="js"
-               value={code.js}
-               iconSrc="/static/images/javascript.svg"
-            />
-         </Resizable>
-
-         <Resizable orientation="vertical">
-            <Output />
-            {isOpen && <Console />}
-         </Resizable>
+         {/* Output section */}
+         {outputOpen && (
+            <Resizable orientation="vertical">
+               <Output />
+               {consoleOpen && <Console />}
+            </Resizable>
+         )}
       </Resizable>
    );
 }
