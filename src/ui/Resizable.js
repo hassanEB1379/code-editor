@@ -1,5 +1,6 @@
 import { Fragment, Children, useRef, useEffect } from 'react';
 import styled from 'styled-components';
+import { isBrowser } from 'react-device-detect';
 
 // Styles that are necessary for Resizable to work
 const ResizableContainer = styled.div`
@@ -24,6 +25,9 @@ const Resizer = styled.div`
 const StyledResizableItem = styled.div`
    overflow: auto;
    flex-shrink: 1;
+   & > * {
+      height: 100%;
+   }
 `;
 
 function ResizableItem({ children, initialSize, dimension }) {
@@ -163,7 +167,7 @@ export function Resizable({
                   {element}
                </ResizableItem>
 
-               {index !== validElements.length - 1 && (
+               {isBrowser && index !== validElements.length - 1 && (
                   <Resizer
                      orientation={orientation}
                      onMouseDown={resizeStart}
