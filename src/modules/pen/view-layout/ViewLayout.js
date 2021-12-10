@@ -3,13 +3,15 @@ import Output from '../components/Output';
 import Console from '../../console/components/Console';
 import { useViewLayout } from './ViewLayout.context';
 import { useToggleConsole } from '../../console/contexts/ConsoleToggle-context';
-import { isBrowser, isMobile } from 'react-device-detect';
 import MobileEditors from '../components/MobileEditors';
 import DesktopEditors from '../components/DesktopEditors';
 import { useToggleOutput } from '../contexts/toggle-output-context';
+import { useDeviceDetect } from '../../../hooks/useDeviceDetect';
 
 // This component layout editors and output window responsively
 function ViewLayout() {
+   const { isDesktop, isMobile } = useDeviceDetect();
+
    const { wrapper } = useViewLayout();
 
    const { isOpen: consoleOpen } = useToggleConsole();
@@ -18,7 +20,7 @@ function ViewLayout() {
    return (
       <Resizable orientation={wrapper.orientation} minSize={200}>
          {/* Editors section */}
-         {isBrowser && <DesktopEditors />}
+         {isDesktop && <DesktopEditors />}
          {isMobile && <MobileEditors />}
 
          {/* Output section */}

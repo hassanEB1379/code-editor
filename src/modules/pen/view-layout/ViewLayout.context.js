@@ -1,6 +1,6 @@
-import { createContext, useContext, useReducer } from 'react';
+import { createContext, useContext, useEffect, useReducer } from 'react';
 import ViewLayoutIcon from './ViewLayout.icon';
-import { isDesktop, isMobile } from 'react-device-detect';
+import { useDeviceDetect } from '../../../hooks/useDeviceDetect';
 
 const ViewLayoutContext = createContext();
 const ViewLayoutContextDispatch = createContext();
@@ -18,22 +18,6 @@ const initialLayout = {
    },
    icon: <ViewLayoutIcon rotate={-90} />,
 };
-
-function initializer(initial) {
-   if (isDesktop) {
-      return initial;
-   }
-
-   if (isMobile) {
-      return {
-         wrapper: {
-            orientation: 'vertical',
-         },
-      };
-   }
-
-   /* NOTE : change layout feature only available on Desktop */
-}
 
 function viewLayoutReducer(state, action) {
    switch (action.type) {
@@ -56,11 +40,14 @@ function viewLayoutReducer(state, action) {
 }
 
 export function ViewLayoutProvider({ children }) {
-   const [layout, dispatch] = useReducer(
-      viewLayoutReducer,
-      initialLayout,
-      initializer
-   );
+   const [layout, dispatch] = useReducer(viewLayoutReducer, initialLayout);
+
+   const { isMobile } = useDeviceDetect();
+
+   // vertical editor in mobile
+   useEffect(() => {
+      if (isMobile) dispatch({ type: 'vertical' });
+   }, [isMobile]);
 
    return (
       <ViewLayoutContext.Provider value={layout}>

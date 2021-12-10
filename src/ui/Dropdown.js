@@ -43,7 +43,7 @@ const DropdownContent = styled.div`
    }}
 `;
 
-export function Dropdown({ children, action, openFrom }) {
+export function Dropdown({ children, action, openFrom, className }) {
    const nodeRef = useRef();
 
    const [open, setOpen] = useState(false);
@@ -67,7 +67,7 @@ export function Dropdown({ children, action, openFrom }) {
    }, []);
 
    return (
-      <DropdownWrapper className="flex" ref={nodeRef}>
+      <DropdownWrapper className={`flex ${className}`} ref={nodeRef}>
          {cloneElement(action, { onClick: toggle })}
          <DropdownContent openFrom={openFrom} hidden={!open}>
             {children}

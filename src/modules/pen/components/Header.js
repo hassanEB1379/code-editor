@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Transition } from 'react-transition-group';
 import { ChangeViewDropdown } from '../view-layout/ChangeViewDropdown';
-import { isDesktop, isMobile } from 'react-device-detect';
 import { Button, Divider, Dropdown, Menu, MenuItem } from '../../../ui';
 import { useRun } from '../hooks/useRun';
 import { useFullscreen } from '../../../hooks/useFullscreen';
@@ -128,42 +127,40 @@ function ActionButtons() {
 
    const { toggleFullScreen, isFullscreen } = useFullscreen();
 
-   if (isMobile) {
-      // Action buttons in mobile
-      const DropdownToggleButton = (
-         <Button title="Actions">
-            <FontAwesomeIcon icon={faAlignJustify} />
-         </Button>
-      );
+   const DropdownToggleButton = (
+      <Button title="Actions">
+         <FontAwesomeIcon icon={faAlignJustify} />
+      </Button>
+   );
 
-      const DropdownContent = (
-         <Menu>
-            <MenuItem icon={faSave} onClick={save}>
-               Save Ctrl+S
-            </MenuItem>
-            <MenuItem icon={faPlay} onClick={run}>
-               Run Shift+F10
-            </MenuItem>
-            <MenuItem
-               icon={isFullscreen ? faCompress : faExpand}
-               onClick={toggleFullScreen}
-            >
-               Full screen
-            </MenuItem>
-            <MenuItem icon={faArrowRight} component={Link} to="/my-works">
-               Go to works
-            </MenuItem>
-         </Menu>
-      );
-      return (
-         <Dropdown action={DropdownToggleButton}>{DropdownContent}</Dropdown>
-      );
-   }
+   const DropdownContent = (
+      <Menu>
+         <MenuItem icon={faSave} onClick={save}>
+            Save Ctrl+S
+         </MenuItem>
+         <MenuItem icon={faPlay} onClick={run}>
+            Run Shift+F10
+         </MenuItem>
+         <MenuItem
+            icon={isFullscreen ? faCompress : faExpand}
+            onClick={toggleFullScreen}
+         >
+            Full screen
+         </MenuItem>
+         <MenuItem icon={faArrowRight} component={Link} to="/my-works">
+            Go to works
+         </MenuItem>
+      </Menu>
+   );
 
-   if (isDesktop) {
-      // Action buttons in desktop
-      return (
-         <div className="flex gap-2">
+   return (
+      <>
+         {/* Action buttons in mobile */}
+         <Dropdown className="mobile" action={DropdownToggleButton}>
+            {DropdownContent}
+         </Dropdown>
+         {/* Action buttons in desktop and tablet */}
+         <div className="flex gap-2 tablet">
             <SaveButton onClick={save} data-title="Save Ctrl+S" />
 
             <Button onClick={run} data-title="Run Shift+F10">
@@ -186,8 +183,8 @@ function ActionButtons() {
                </Button>
             </Link>
          </div>
-      );
-   }
+      </>
+   );
 }
 
 const Header = () => {

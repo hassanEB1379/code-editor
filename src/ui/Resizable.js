@@ -1,6 +1,5 @@
 import { Fragment, Children, useRef, useEffect } from 'react';
 import styled from 'styled-components';
-import { isBrowser } from 'react-device-detect';
 
 // Styles that are necessary for Resizable to work
 const ResizableContainer = styled.div`
@@ -11,7 +10,9 @@ const ResizableContainer = styled.div`
       orientation === 'vertical' ? 'column' : 'row'};
 `;
 
-const Resizer = styled.div`
+const Resizer = styled.div.attrs(() => ({
+   className: 'tablet',
+}))`
    background-color: var(--dark-bg);
    border: 1px solid var(--dark-border);
    width: ${({ orientation }) =>
@@ -53,6 +54,7 @@ export function Resizable({
    children,
    minSize = 0,
    orientation = 'horizontal',
+   ...rest
 }) {
    let validElements = Children.toArray(children);
 
@@ -157,7 +159,7 @@ export function Resizable({
    }
 
    return (
-      <ResizableContainer orientation={orientation}>
+      <ResizableContainer {...rest} orientation={orientation}>
          {validElements.map((element, index) => (
             <Fragment key={index}>
                <ResizableItem
@@ -167,7 +169,7 @@ export function Resizable({
                   {element}
                </ResizableItem>
 
-               {isBrowser && index !== validElements.length - 1 && (
+               {index !== validElements.length - 1 && (
                   <Resizer
                      orientation={orientation}
                      onMouseDown={resizeStart}
