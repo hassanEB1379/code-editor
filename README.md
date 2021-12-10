@@ -8,6 +8,8 @@ a code editor for web development build with **react** and **styled-components**
 - Console
 - Ability to create multiple projects
 - Dark theme
+- Resize editors
+- Working offline
 
 
 ### File structure
