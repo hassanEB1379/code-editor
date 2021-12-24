@@ -1,7 +1,7 @@
 import { createContext, useContext, useState } from 'react';
 
-const UnsavedChanges = createContext(null);
-const UnsavedChangesDispatch = createContext(null);
+const UnsavedChanges = createContext();
+const UnsavedChangesDispatch = createContext();
 
 export const useUnsavedChangesCount = () => useContext(UnsavedChanges);
 export const useUnsavedChangesDispatch = () =>

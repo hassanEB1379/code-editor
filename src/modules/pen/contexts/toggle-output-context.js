@@ -1,7 +1,7 @@
 import { createContext, useContext, useState } from 'react';
 
-const ToggleOutput = createContext(null);
-const ToggleOutputDispatch = createContext(null);
+const ToggleOutput = createContext();
+const ToggleOutputDispatch = createContext();
 
 export const useToggleOutput = () => useContext(ToggleOutput);
 export const useToggleOutputDispatch = () => useContext(ToggleOutputDispatch);
