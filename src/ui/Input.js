@@ -8,4 +8,7 @@ export const Input = styled.input`
    background-color: var(--input-bg);
 `;
 
-export const SearchInput = styled(Input)``;
+export const SearchInput = styled(Input)`
+   z-index: var(--z-10);
+   box-shadow: var(--shadow);
+`;
