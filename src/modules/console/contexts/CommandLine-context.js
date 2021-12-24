@@ -6,8 +6,8 @@ import { createContext, useContext, useState } from 'react';
  * This context holds this return value
  */
 
-const CommandLineContext = createContext(null);
-const CommandLineContextDispatch = createContext(null);
+const CommandLineContext = createContext();
+const CommandLineContextDispatch = createContext();
 
 // CL ==> Command Line
 export const useCLReturnedValue = () => useContext(CommandLineContext);
