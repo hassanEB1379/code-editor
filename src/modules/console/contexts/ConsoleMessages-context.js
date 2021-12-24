@@ -38,3 +38,7 @@ export function ConsoleLogsProvider({ children }) {
       </ConsoleMessagesContext.Provider>
    );
 }
+
+export function pushMessage(messageType, messageData) {
+   return { type: messageType, payload: messageData };
+}
