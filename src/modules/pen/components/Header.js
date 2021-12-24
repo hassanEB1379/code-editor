@@ -1,12 +1,12 @@
 import styled from 'styled-components';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Transition } from 'react-transition-group';
 import { ChangeViewDropdown } from '../view-layout/ChangeViewDropdown';
-import { Button, Divider, Dropdown, Menu, MenuItem } from '../../../ui';
+import { Button, Divider, Dropdown, Menu, MenuItem, Text } from '../../../ui';
 import { useRun } from '../hooks/useRun';
 import { useFullscreen } from '../../../hooks/useFullscreen';
-import { usePen, usePenDispatch } from '../contexts/pen-context';
+import { changeTitle, usePen, usePenDispatch } from '../contexts/pen-context';
 import { useSave } from '../hooks/useSave';
 import { useUnsavedChangesCount } from '../contexts/unsaved-changes-context';
 
@@ -21,10 +21,12 @@ import {
    faPlay,
    faSave,
 } from '@fortawesome/free-solid-svg-icons';
+import { useHandleShortcuts } from '../hooks/useHandleShortcuts';
 
-const HeaderWrapper = styled.div.attrs(() => ({
-   className: 'flex items-center justify-between',
-}))`
+const HeaderWrapper = styled.div`
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
    height: 4rem;
    padding: 0.5rem 0.75rem;
    border-bottom: 1px solid var(--dark-border);
@@ -35,16 +37,6 @@ const ChangeTitle = styled.input`
    color: inherit;
    font-weight: 700;
    width: 150px;
-`;
-
-const StyledTitle = styled.h1`
-   font-size: 1rem;
-
-   & > svg {
-      margin-left: 0.5rem;
-      font-size: 0.85rem;
-      cursor: pointer;
-   }
 `;
 
 const Indicator = styled.span`
@@ -68,10 +60,7 @@ function SaveButton(props) {
    return (
       <Button {...props}>
          <Transition in={unsavedChanges > 10} timeout={200}>
-            {state => (
-               // state change: exited -> entering -> entered -> exiting -> exited
-               <Indicator state={state} />
-            )}
+            {state => <Indicator state={state} />}
          </Transition>
 
          <FontAwesomeIcon icon={faSave} />
@@ -83,22 +72,22 @@ function Title() {
    const dispatch = usePenDispatch();
    const { title } = usePen();
 
-   const [changeTitle, setChangeTitle] = useState(); // if changeTitle true ==> display form
+   const [displayForm, setDisplayForm] = useState(false);
    const [newTitle, setNewTitle] = useState(title); // handle title input
 
    function activeChangeTitleInput() {
-      setChangeTitle(true);
+      setDisplayForm(true);
    }
    function disableChangeTitleInput() {
-      setChangeTitle(false);
+      setDisplayForm(false);
    }
    function handleChangeTitle(e) {
       e.preventDefault();
-      dispatch({ type: 'name', payload: newTitle });
+      dispatch(changeTitle(newTitle));
       disableChangeTitleInput();
    }
 
-   if (changeTitle) {
+   if (displayForm) {
       return (
          <form onSubmit={handleChangeTitle}>
             <ChangeTitle
@@ -114,14 +103,20 @@ function Title() {
    }
 
    return (
-      <StyledTitle>
-         {title}
-         <FontAwesomeIcon onClick={activeChangeTitleInput} icon={faEdit} />
-      </StyledTitle>
+      <Text as="h1" size="1rem">
+         {title}{' '}
+         <FontAwesomeIcon
+            style={{ cursor: 'pointer' }}
+            size="sm"
+            onClick={activeChangeTitleInput}
+            icon={faEdit}
+         />
+      </Text>
    );
 }
 
-function ActionButtons() {
+// Actions dropdown menu for mobile
+function ActionsDropDown() {
    const run = useRun();
    const save = useSave();
 
@@ -133,82 +128,65 @@ function ActionButtons() {
       </Button>
    );
 
-   const DropdownContent = (
-      <Menu>
-         <MenuItem icon={faSave} onClick={save}>
-            Save Ctrl+S
-         </MenuItem>
-         <MenuItem icon={faPlay} onClick={run}>
-            Run Shift+F10
-         </MenuItem>
-         <MenuItem
-            icon={isFullscreen ? faCompress : faExpand}
-            onClick={toggleFullScreen}
-         >
-            Full screen
-         </MenuItem>
-         <MenuItem icon={faArrowRight} component={Link} to="/my-works">
-            Go to works
-         </MenuItem>
-      </Menu>
+   return (
+      <Dropdown className="mobile" action={DropdownToggleButton}>
+         <Menu>
+            <MenuItem icon={faSave} onClick={save}>
+               Save Ctrl+S
+            </MenuItem>
+            <MenuItem icon={faPlay} onClick={run}>
+               Run Shift+F10
+            </MenuItem>
+            <MenuItem
+               icon={isFullscreen ? faCompress : faExpand}
+               onClick={toggleFullScreen}
+            >
+               Full screen
+            </MenuItem>
+            <MenuItem icon={faArrowRight} component={Link} to="/my-works">
+               Go to works
+            </MenuItem>
+         </Menu>
+      </Dropdown>
    );
+}
+
+// Actions bar for desktop and tablet
+function ActionsBar() {
+   const run = useRun();
+   const save = useSave();
+
+   const { toggleFullScreen, isFullscreen } = useFullscreen();
 
    return (
-      <>
-         {/* Action buttons in mobile */}
-         <Dropdown className="mobile" action={DropdownToggleButton}>
-            {DropdownContent}
-         </Dropdown>
-         {/* Action buttons in desktop and tablet */}
-         <div className="flex gap-2 tablet">
-            <SaveButton onClick={save} data-title="Save Ctrl+S" />
+      <div className="flex gap-2 tablet">
+         <SaveButton onClick={save} title="Save Ctrl+S" />
 
-            <Button onClick={run} data-title="Run Shift+F10">
-               <FontAwesomeIcon color="#37F900" icon={faPlay} />
+         <Button onClick={run} title="Run Shift+F10">
+            <FontAwesomeIcon color="#37F900" icon={faPlay} />
+         </Button>
+
+         <Divider orientation="vertical" />
+
+         <Button onClick={toggleFullScreen} title="Full screen F11">
+            <FontAwesomeIcon icon={isFullscreen ? faCompress : faExpand} />
+         </Button>
+
+         <ChangeViewDropdown />
+
+         <Divider orientation="vertical" />
+
+         <Link to="/my-works">
+            <Button title="Back to my works">
+               <FontAwesomeIcon icon={faArrowRight} />
             </Button>
-
-            <Divider orientation="vertical" />
-
-            <Button onClick={toggleFullScreen} data-title="Full screen F11">
-               <FontAwesomeIcon icon={isFullscreen ? faCompress : faExpand} />
-            </Button>
-
-            <ChangeViewDropdown />
-
-            <Divider orientation="vertical" />
-
-            <Link to="/my-works">
-               <Button data-title="Back to my works">
-                  <FontAwesomeIcon icon={faArrowRight} />
-               </Button>
-            </Link>
-         </div>
-      </>
+         </Link>
+      </div>
    );
 }
 
 const Header = () => {
-   const run = useRun();
-   const save = useSave();
-
-   // This effect handle editor shortcuts
-   useEffect(() => {
-      function handleShortcuts(e) {
-         if (e.ctrlKey && e.keyCode === 83) {
-            // Ctrl + S ==> pen saved
-            e.preventDefault();
-            save();
-         } else if (e.shiftKey && e.keyCode === 121) {
-            // Shift + F10 ==> run code
-            e.preventDefault();
-            run();
-         }
-      }
-      window.addEventListener('keydown', handleShortcuts);
-      return () => {
-         window.removeEventListener('keydown', handleShortcuts);
-      };
-   }, [run, save]);
+   useHandleShortcuts();
 
    return (
       <HeaderWrapper>
@@ -222,8 +200,8 @@ const Header = () => {
             <Title />
          </div>
 
-         {/* Action buttons bar*/}
-         <ActionButtons />
+         <ActionsDropDown />
+         <ActionsBar />
       </HeaderWrapper>
    );
 };
