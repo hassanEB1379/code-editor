@@ -23,6 +23,7 @@ export const Description = styled.p`
    font-style: italic;
    font-size: 0.9rem;
    padding-bottom: 0.5rem;
+   line-height: 1.8;
 
    & > a {
       color: var(--info);

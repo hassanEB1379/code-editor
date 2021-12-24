@@ -5,9 +5,8 @@ import { useState } from 'react';
 import AssetsMenu from './AssetsMenu';
 import Fonts from './Fonts';
 import { Images } from './Images';
-import { Icons } from './Icons';
 
-// This component ( module ) is for managing assets (fonts, icons , ...) and is displayed as a modal
+// This component ( module ) is for managing assets (fonts, images , ...) and is displayed as a modal
 function Assets() {
    const [openSection, setOpenSection] = useState(0);
 
@@ -22,8 +21,7 @@ function Assets() {
 
             <Box h="26rem" px=".5rem" className="f-item m8">
                {openSection === 0 && <Fonts />}
-               {openSection === 1 && <Icons />}
-               {openSection === 2 && <Images />}
+               {openSection === 1 && <Images />}
             </Box>
          </div>
       </ModalContent>

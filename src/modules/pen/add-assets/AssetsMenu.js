@@ -49,15 +49,13 @@ function AssetsMenu({ changeSection }) {
          {/* for mobile */}
          <div className="mobile flex">
             <MobileItem onClick={() => changeSection(0)}>Fonts</MobileItem>
-            <MobileItem onClick={() => changeSection(1)}>Icons</MobileItem>
-            <MobileItem onClick={() => changeSection(2)}>Images</MobileItem>
+            <MobileItem onClick={() => changeSection(1)}>Images</MobileItem>
          </div>
 
          {/* for desktop */}
          <Box as="ul" w="100%" className="tablet">
             <DesktopItem onClick={() => changeSection(0)}>Fonts</DesktopItem>
-            <DesktopItem onClick={() => changeSection(1)}>Icons</DesktopItem>
-            <DesktopItem onClick={() => changeSection(2)}>Images</DesktopItem>
+            <DesktopItem onClick={() => changeSection(1)}>Images</DesktopItem>
          </Box>
       </>
    );
