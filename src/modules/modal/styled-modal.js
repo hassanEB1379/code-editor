@@ -9,11 +9,13 @@ export const ModalWindow = styled(Spacing).attrs(() => ({
    inset: 0;
    z-index: var(--z-999);
    background-color: var(--dark-bg-transparent);
+   // show modal if there is content
+   display: ${({ show }) => !show && 'none'};
 `;
 
-export const ModalContent = styled.div.attrs(() => ({
-   className: 'flex dir-c',
-}))`
+export const ModalContent = styled.div`
+   display: flex;
+   flex-direction: column;
    gap: 0.5rem;
    background-color: var(--paper);
    border: 3px solid var(--paper-border);
