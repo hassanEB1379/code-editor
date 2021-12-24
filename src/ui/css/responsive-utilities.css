@@ -82,6 +82,38 @@
     --gap: 1.5rem;
 }
 
+.flex.gap-y-1 {
+    row-gap: .3rem;
+}
+
+.flex.gap-y-2 {
+    row-gap: .6rem;
+}
+
+.flex.gap-y-3 {
+    row-gap: .9rem;
+}
+
+.flex.gap-y-4 {
+    row-gap: 1.2rem;
+}
+
+.flex.gap-y-5 {
+    row-gap: 1.5rem;
+}
+
+.flex.gap-y-6 {
+    row-gap: 1.8rem;
+}
+
+.flex.gap-y-7 {
+    row-gap: 2.1rem;
+}
+
+.flex.gap-y-8 {
+    row-gap: 2.4rem;
+}
+
 .flex.wrap {
     flex-wrap: wrap;
 }
@@ -141,10 +173,6 @@
 }
 
 @media (min-width: 601px) {
-    .flex {
-        flex-wrap: nowrap;
-    }
-
     .f-item.m1 {
         width: 8.33333%
     }
@@ -208,7 +236,7 @@
     }
 
     .f-item.l4 {
-        width: 33.33333%
+        width: calc(33.3333% - var(--gap));
     }
 
     .f-item.l5 {
@@ -216,7 +244,7 @@
     }
 
     .f-item.l6 {
-        width: 49.99999%
+        width: calc(49.99999% - var(--gap));
     }
 
     .f-item.l7 {
