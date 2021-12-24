@@ -9,3 +9,4 @@ export * from './Spacing';
 export * from './Resizable';
 export * from './Group';
 export * from './Box';
+export * from './Text';
