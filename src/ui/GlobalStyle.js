@@ -2,6 +2,8 @@ import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
   :root {
+    --white: #fff;
+    --black : #000;
     --dark-bg: #060606;
     --dark-bg-transparent: #0606067F;
     --paper: #131417;
@@ -38,6 +40,8 @@ const GlobalStyle = createGlobalStyle`
     --success: #37F900;
     --console-number: #8080ff;
     --console-str: #4bffdb;
+    --input-bg: #e3e4e8;
+    --shadow: 0 0 5px 0 #2b2b2b;
   }
 
   html {
@@ -103,33 +107,6 @@ const GlobalStyle = createGlobalStyle`
     &:focus {
       outline: 0;
     }
-  }
-
-  // create custom title tooltip (using data-title attribute)
-  [data-title] {
-    position: relative;
-  }
-
-  [data-title]:hover:after {
-    opacity: 1;
-    transition: all 0.1s ease 0.3s;
-    visibility: visible;
-  }
-
-  [data-title]:after {
-    content: attr(data-title);
-    font-size: .75rem;
-    position: absolute;
-    top: 110%;
-    right: 0;
-    padding: 4px;
-    border: 2px solid #727272;
-    white-space: nowrap;
-    opacity: 0;
-    z-index: 99999;
-    visibility: hidden;
-    background-color: var(--dark-btn);
-    color: inherit;
   }
 `;
 
