@@ -1,9 +1,10 @@
 import { createContext, isValidElement, useContext, useState } from 'react';
-import { ModalWindow } from './styled-modal';
 
+const modal = createContext(null);
 const controlModalDispatch = createContext(null);
 
-// using this hook for access context value
+// using this hooks for access context value
+export const useModal = () => useContext(modal);
 export const useControlModal = () => useContext(controlModalDispatch);
 
 // This component provide modal container and context for hold modal content
@@ -19,11 +20,7 @@ export function ModalProvider({ children }) {
 
    return (
       <controlModalDispatch.Provider value={{ deleteModal, showModal }}>
-         {/* Show modal if there is content */}
-         {modalContent && <ModalWindow>{modalContent}</ModalWindow>}
-
-         {/* other content */}
-         {children}
+         <modal.Provider value={modalContent}>{children}</modal.Provider>
       </controlModalDispatch.Provider>
    );
 }
