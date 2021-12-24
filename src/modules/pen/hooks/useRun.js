@@ -1,13 +1,13 @@
 import { usePen } from '../contexts/pen-context';
-import { useSourceUrlDispatch } from '../contexts/source-url.context';
+import { useSourceUrlDispatch } from '../contexts/source-url-context';
 import { getGeneratedPageURL } from '../utils/generatePageUrl';
 
 export function useRun() {
-   const { code } = usePen();
+   const { code, libraries } = usePen();
    const setUrl = useSourceUrlDispatch();
 
    function run() {
-      setUrl(getGeneratedPageURL(code));
+      setUrl(getGeneratedPageURL(code, libraries));
    }
 
    return run;
