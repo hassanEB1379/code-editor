@@ -1,13 +1,15 @@
-import { useCallback, useEffect } from 'react';
+import { useEffect } from 'react';
 import Header from './Header';
 import Footer from './Footer';
 import ViewLayout from '../view-layout/ViewLayout';
 import { db } from '../../../indexedDB';
-import { useIDBFetch } from '../../../hooks/useIDBFetch';
 import Page404 from '../../../components/404';
+import Modal from '../../modal/Modal';
+import { useLiveQuery } from 'dexie-react-hooks';
+import { initialize, usePenDispatch } from '../contexts/pen-context';
 
 // context providers
-import { PenProvider, usePenDispatch } from '../contexts/pen-context';
+import { PenProvider } from '../contexts/pen-context';
 import { ViewLayoutProvider } from '../view-layout/ViewLayout.context';
 import { ToggleConsoleProvider } from '../../console/contexts/ConsoleToggle-context';
 import { ConsoleLogsProvider } from '../../console/contexts/ConsoleMessages-context';
@@ -29,30 +31,24 @@ const providers = [
 ];
 
 // This component receives information from IDB and renders the appropriate response
-function PenContent({ id }) {
+function PenContent({ content }) {
    const dispatch = usePenDispatch();
 
-   // get pen info from IDB
-   const query = useCallback(() => db.pens.get(Number(id)), [id]);
-   const { error, pending, response } = useIDBFetch(query);
-
+   // initialize pen
    useEffect(() => {
-      dispatch({ type: 'initialize', payload: response });
-   }, [response, dispatch]);
+      if (content && !content.error) dispatch(initialize(content));
+   }, [content, dispatch]);
 
-   // show nothing when status is pending
-   if (pending) return null;
-
-   // show 404 page if pen not exist
-   if (error) return <Page404 />;
+   // Show the appropriate component if there is no content
+   if (!content) return null;
+   if (content.error) return <Page404 />;
 
    return (
       <div className="flex dir-c">
          <Header />
-
          <ViewLayout />
-
          <Footer />
+         <Modal />
       </div>
    );
 }
@@ -60,9 +56,18 @@ function PenContent({ id }) {
 const Pen = ({ match }) => {
    const id = match.params.id;
 
+   // get pen info from IDB
+   const content = useLiveQuery(async () => {
+      try {
+         return await db.pens.get(Number(id));
+      } catch (error) {
+         return { error: true, message: 'not-found' };
+      }
+   });
+
    return (
       <MultiProvider providers={providers}>
-         <PenContent id={id} />
+         <PenContent content={content} />
       </MultiProvider>
    );
 };
