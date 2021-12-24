@@ -1,8 +1,9 @@
 import { createContext, useContext, useState } from 'react';
 import { getGeneratedPageURL } from '../utils/generatePageUrl';
 
-const SourceUrlContext = createContext(null);
-const SourceUrlContextDispatch = createContext(null);
+// this context hold url of generated document
+const SourceUrlContext = createContext();
+const SourceUrlContextDispatch = createContext();
 
 export const useSourceUrl = () => useContext(SourceUrlContext);
 export const useSourceUrlDispatch = () => useContext(SourceUrlContextDispatch);
