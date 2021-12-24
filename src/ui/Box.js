@@ -4,12 +4,14 @@ export const Box = styled.div`
    position: ${({ pos }) => pos};
    top: ${({ top }) => top};
    left: ${({ left }) => left};
+   right: ${({ right }) => right};
    z-index: ${({ z }) => z};
 
    height: ${({ h }) => h};
    width: ${({ w }) => w};
    max-height: ${({ maxH }) => maxH};
    max-width: ${({ maxW }) => maxW};
+   min-height: ${({ minH }) => minH};
    overflow: ${({ overflow = 'auto' }) => overflow};
 
    border: ${({ border }) => border};
