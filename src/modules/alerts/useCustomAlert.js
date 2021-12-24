@@ -28,7 +28,19 @@ export function useCustomAlert() {
       });
    }
 
+   function showErrorAlert(msg) {
+      showAlert('error', msg, {
+         icon: (
+            <FontAwesomeIcon
+               size="lg"
+               color="#fbc803"
+               icon={faExclamationCircle}
+            />
+         ),
+      });
+   }
+
    // other alert type ...
 
-   return { showSuccessAlert, showWarningAlert };
+   return { showSuccessAlert, showWarningAlert, showErrorAlert };
 }
