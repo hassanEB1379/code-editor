@@ -6,11 +6,11 @@ import {
    Spacing,
    Menu,
    MenuItem,
+   Box,
 } from '../ui';
 import styled from 'styled-components';
 import { Link, useHistory } from 'react-router-dom';
 import { useCustomAlert } from '../modules/alerts/useCustomAlert';
-import { isDesktop, isTablet } from 'react-device-detect';
 
 // icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -27,15 +27,6 @@ import { initialPen } from '../modules/pen/contexts/pen-context';
 import { useLiveQuery } from 'dexie-react-hooks';
 
 // styles
-const WorksWrapper = styled(Spacing)`
-   display: grid;
-   grid-auto-rows: 15rem;
-   grid-gap: 2.5rem 1.5rem;
-
-   // number rows by device
-   grid-template-columns: ${() =>
-      isDesktop ? '1fr 1fr 1fr' : isTablet ? '1fr 1fr' : '1fr'};
-`;
 
 const WorkLink = styled(Link)`
    & > img {
@@ -94,7 +85,7 @@ const AddNewWorkBtn = styled.div.attrs(() => ({
    cursor: pointer;
    opacity: 0.7;
    transition: opacity 0.2s ease 0.1s;
-
+   height: 100%;
    &:hover {
       opacity: 1;
    }
@@ -176,19 +167,22 @@ function MyWorks() {
       <Container maxWidth="70rem" p="4rem 1rem">
          <h1>My works</h1>
          <Divider />
-         <WorksWrapper pt="3rem">
+         <Box py="3rem" className="flex wrap gap-3 gap-y-8">
             {works &&
                works.map(work => (
-                  <Work
-                     key={work.id}
-                     id={work.id}
-                     title={work.title}
-                     imageSrc={work.image}
-                  />
+                  <div key={work.id} className="f-item m6 l4">
+                     <Work
+                        id={work.id}
+                        title={work.title}
+                        imageSrc={work.image}
+                     />
+                  </div>
                ))}
 
-            <AddNewWork />
-         </WorksWrapper>
+            <Box minH="12rem" className="f-item m6 l4">
+               <AddNewWork />
+            </Box>
+         </Box>
       </Container>
    );
 }
