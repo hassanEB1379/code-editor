@@ -10,10 +10,10 @@ import { initialize, usePenDispatch } from '../contexts/pen-context';
 
 // context providers
 import { PenProvider } from '../contexts/pen-context';
-import { ViewLayoutProvider } from '../view-layout/ViewLayout.context';
+import { ViewLayoutProvider } from '../view-layout/ViewLayout-context';
 import { ToggleConsoleProvider } from '../../console/contexts/ConsoleToggle-context';
 import { ConsoleLogsProvider } from '../../console/contexts/ConsoleMessages-context';
-import { SourceUrlProvider } from '../contexts/source-url.context';
+import { SourceUrlProvider } from '../contexts/source-url-context';
 import { CommandLineProvider } from '../../console/contexts/CommandLine-context';
 import { UnsavedChangesProvider } from '../contexts/unsaved-changes-context';
 import MultiProvider from '../../../utils/MultiProvider';
@@ -39,7 +39,7 @@ function PenContent({ content }) {
       if (content && !content.error) dispatch(initialize(content));
    }, [content, dispatch]);
 
-   // Show the appropriate component if there is no content
+   // Show the appropriate response if there is no content
    if (!content) return null;
    if (content.error) return <Page404 />;
 
