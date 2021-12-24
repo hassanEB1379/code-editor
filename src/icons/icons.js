@@ -3,4 +3,4 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 // This file export useful icons
 
-export const CloseIcon = () => <FontAwesomeIcon icon={faTimes} />;
+export const CloseIcon = props => <FontAwesomeIcon {...props} icon={faTimes} />;
