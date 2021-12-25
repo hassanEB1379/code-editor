@@ -9,7 +9,6 @@ export const usePenDispatch = () => useContext(PenContextDispatch);
 
 export const initialPen = {
    title: 'Untitled',
-   image: '/static/images/pumpkin.webp',
    code: { html: '', css: '', javascript: '' },
    libraries: [],
 };
