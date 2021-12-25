@@ -26,7 +26,7 @@ function ViewLayout() {
    // vertical editor in mobile
    useEffect(() => {
       if (isMobile) dispatch(vertical());
-   }, [isMobile]);
+   }, [isMobile, dispatch]);
 
    return (
       <Resizable orientation={wrapper.orientation} minSize={200}>

@@ -26,7 +26,11 @@ function DesktopEditors() {
    return (
       <Resizable orientation={layout.orientation} minSize={38}>
          {editors.map(editorProps => (
-            <Editor {...editorProps} value={code[editorProps.mode]} />
+            <Editor
+               key={Math.random() * 10000}
+               {...editorProps}
+               value={code[editorProps.mode]}
+            />
          ))}
       </Resizable>
    );
