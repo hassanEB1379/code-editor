@@ -27,6 +27,7 @@ import {
 // dexie
 import { db } from '../indexedDB';
 import { useLiveQuery } from 'dexie-react-hooks';
+import { createID } from '../utils/createID';
 
 // styles
 
@@ -144,12 +145,9 @@ function AddNewWork() {
    const history = useHistory();
 
    async function handleAddNewWork() {
-      // create new id
-      const id = Math.floor(Math.random() * 1000000);
-
+      let id = createID();
       // add new pen
       await db.pens.add({ id, ...initialPen });
-
       // redirect to new pen
       return history.push(`/pen/${id}`);
    }
