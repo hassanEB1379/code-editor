@@ -2,6 +2,8 @@ import styled from 'styled-components';
 import { Button, Spacing } from '../ui';
 import { Link } from 'react-router-dom';
 
+import homeImage from '../ui/images/home-img.png';
+
 const HomeWrapper = styled(Spacing).attrs(() => ({
    className: 'flex dir-c gap-5',
    pt: '3rem',
@@ -30,11 +32,7 @@ function HomePage() {
             </div>
          </div>
          <Spacing mx="auto">
-            <img
-               width="1000px"
-               alt="home-page-img"
-               src="/static/images/home-img.png"
-            />
+            <img width="1000px" alt="home-page-img" src={homeImage} />
          </Spacing>
       </HomeWrapper>
    );

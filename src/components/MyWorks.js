@@ -11,6 +11,9 @@ import {
 import styled from 'styled-components';
 import { Link, useHistory } from 'react-router-dom';
 import { useCustomAlert } from '../modules/alerts/useCustomAlert';
+import { initialPen } from '../modules/pen/contexts/pen-context';
+
+import workImage from '../ui/images/pumpkin.webp';
 
 // icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -23,7 +26,6 @@ import {
 
 // dexie
 import { db } from '../indexedDB';
-import { initialPen } from '../modules/pen/contexts/pen-context';
 import { useLiveQuery } from 'dexie-react-hooks';
 
 // styles
@@ -174,7 +176,7 @@ function MyWorks() {
                      <Work
                         id={work.id}
                         title={work.title}
-                        imageSrc={work.image}
+                        imageSrc={workImage}
                      />
                   </div>
                ))}

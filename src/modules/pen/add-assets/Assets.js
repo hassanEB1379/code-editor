@@ -6,7 +6,7 @@ import AssetsMenu from './AssetsMenu';
 import Fonts from './Fonts';
 import { Images } from './Images';
 
-// This component ( module ) is for managing assets (fonts, images , ...) and is displayed as a modal
+// This component ( module ) is for managing images (fonts, images , ...) and is displayed as a modal
 function Assets() {
    const [openSection, setOpenSection] = useState(0);
 

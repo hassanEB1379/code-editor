@@ -1,6 +1,6 @@
 import { Button, Divider } from '../../ui';
 import { useControlModal } from './ModalProvider';
-import { CloseIcon } from '../../icons/icons';
+import { CloseIcon } from '../../ui/icons/icons';
 
 function ModalHeader({ title, onModalClose }) {
    const { deleteModal } = useControlModal();

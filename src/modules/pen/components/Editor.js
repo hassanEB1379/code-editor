@@ -30,7 +30,7 @@ const EditorHeader = styled.div`
    padding: 0.5rem 1rem;
 `;
 
-const Editor = ({ iconSrc, ...rest }) => {
+const Editor = ({ icon, ...rest }) => {
    const unsavedChanges = useUnsavedChangesCount();
    const PenDispatch = usePenDispatch();
    const unsavedChangesDispatch = useUnsavedChangesDispatch();
@@ -50,7 +50,7 @@ const Editor = ({ iconSrc, ...rest }) => {
    return (
       <EditorWrapper>
          <EditorHeader>
-            <img alt="lang-icon" width={20} src={iconSrc} />
+            <img alt="lang-icon" width={20} src={icon} />
             <Text textTransform="uppercase" as="h4">
                {rest.mode === 'javascript' ? 'js' : rest.mode}
             </Text>

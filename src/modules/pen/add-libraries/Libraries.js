@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { useDebounce } from '../../../hooks/useDebounce';
 import { useAddLibrary, useFetchCDNJs } from './Libraries-hooks';
 import { usePen } from '../contexts/pen-context';
-import { CloseIcon } from '../../../icons/icons';
+import { CloseIcon } from '../../../ui/icons/icons';
 import { LibraryListItem } from './LibraryListItem';
 import { useCustomAlert } from '../../alerts/useCustomAlert';
 

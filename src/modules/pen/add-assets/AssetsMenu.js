@@ -42,7 +42,7 @@ const DesktopItem = styled(Box).attrs(() => ({
       transform: scale(12);
    }
 `;
-// This component render assets menu responsively
+// This component render images menu responsively
 function AssetsMenu({ changeSection }) {
    return (
       <>

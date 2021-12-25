@@ -1,18 +1,18 @@
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { HashRouter, Route, Switch } from 'react-router-dom';
 import HomePage from './HomePage';
 import Pen from '../modules/pen/components/Pen';
+import MyWorks from './MyWorks';
+import Page404 from './404';
 import {
    PrivateRoute,
    PublicRoute,
    Login,
    Register,
 } from '../modules/authentication/components';
-import MyWorks from './MyWorks';
-import Page404 from './404';
 
 function App() {
    return (
-      <BrowserRouter>
+      <HashRouter>
          <Switch>
             <PrivateRoute exact path="/my-works" component={MyWorks} />
             <PublicRoute exact restricted path="/login" component={Login} />
@@ -28,7 +28,7 @@ function App() {
             {/* not found page */}
             <Route component={Page404} />
          </Switch>
-      </BrowserRouter>
+      </HashRouter>
    );
 }
 

@@ -10,6 +10,8 @@ import { changeTitle, usePen, usePenDispatch } from '../contexts/pen-context';
 import { useSave } from '../hooks/useSave';
 import { useUnsavedChangesCount } from '../contexts/unsaved-changes-context';
 
+import logo from '../../../ui/images/logo.png';
+
 // icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -191,12 +193,7 @@ const Header = () => {
    return (
       <HeaderWrapper>
          <div className="flex items-center gap-2">
-            <img
-               src="/static/images/logo.png"
-               width="28px"
-               height="28px"
-               alt="website-logo"
-            />
+            <img src={logo} width="28px" height="28px" alt="website-logo" />
             <Title />
          </div>
 

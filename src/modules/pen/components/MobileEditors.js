@@ -4,6 +4,11 @@ import Editor from './Editor';
 import { usePen } from '../contexts/pen-context';
 import { useToggleOutputDispatch } from '../contexts/toggle-output-context';
 
+// icons
+import htmlIcon from '../../../ui/images/html.svg';
+import cssIcon from '../../../ui/images/css.svg';
+import jsIcon from '../../../ui/images/javascript.svg';
+
 function MobileEditors() {
    const [activeEditor, setActiveEditor] = useState('html');
 
@@ -13,6 +18,12 @@ function MobileEditors() {
 
    function toggleResult() {
       setOpenOutput(prev => !prev);
+   }
+
+   function getIcon(activeEditor) {
+      if (activeEditor === 'html') return htmlIcon;
+      if (activeEditor === 'css') return cssIcon;
+      if (activeEditor === 'javascript') return jsIcon;
    }
 
    return (
@@ -34,7 +45,7 @@ function MobileEditors() {
             mode={activeEditor}
             name={activeEditor + 'editor'}
             value={code[activeEditor]}
-            iconSrc={`/static/images/${activeEditor}.svg`}
+            icon={getIcon(activeEditor)}
          />
       </div>
    );
