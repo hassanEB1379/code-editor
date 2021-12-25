@@ -59,7 +59,9 @@ const Pen = ({ match }) => {
    // get pen info from IDB
    const content = useLiveQuery(async () => {
       try {
-         return await db.pens.get(Number(id));
+         let pen = await db.pens.get(id);
+         if (!pen) return { error: true, message: 'not-found' };
+         return pen;
       } catch (error) {
          return { error: true, message: 'not-found' };
       }
