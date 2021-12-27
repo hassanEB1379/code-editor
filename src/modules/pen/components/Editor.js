@@ -8,11 +8,6 @@ import {
    useUnsavedChangesDispatch,
 } from '../contexts/unsaved-changes-context';
 
-import 'ace-builds/src-noconflict/mode-javascript';
-import 'ace-builds/src-noconflict/mode-css';
-import 'ace-builds/src-noconflict/mode-html';
-import 'ace-builds/src-noconflict/theme-twilight';
-
 const EditorWrapper = styled.div`
    height: 100%;
    display: flex;
@@ -32,7 +27,7 @@ const EditorHeader = styled.div`
 
 const Editor = ({ icon, ...rest }) => {
    const unsavedChanges = useUnsavedChangesCount();
-   const PenDispatch = usePenDispatch();
+   const penDispatch = usePenDispatch();
    const unsavedChangesDispatch = useUnsavedChangesDispatch();
    const { showWarningAlert } = useCustomAlert();
 
@@ -44,7 +39,7 @@ const Editor = ({ icon, ...rest }) => {
          showWarningAlert(`There is ${unsavedChanges} unsaved changes`);
       }
       // update pen context with new code
-      PenDispatch(updateCode(rest.mode, code));
+      penDispatch(updateCode(rest.mode, code));
    }
 
    return (

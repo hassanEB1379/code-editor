@@ -30,8 +30,7 @@ export const getGeneratedPageURL = (
     <html lang="en">
       <head>
         <title>Output pen</title>
-        <meta charset="utf-8">      
-        <script src='http://localhost:3000/static/libs/handle-iframe-console.js'></script>
+        <meta charset="utf-8"> 
         
         ${renderedLibs}
         
