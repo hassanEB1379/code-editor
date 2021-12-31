@@ -31,6 +31,7 @@ export const getGeneratedPageURL = (
       <head>
         <title>Output pen</title>
         <meta charset="utf-8"> 
+        <script src="https://cdn.jsdelivr.net/gh/hassanEB1379/code-editor/scripts/handle-iframe-console.js"></script>
         
         ${renderedLibs}
         
