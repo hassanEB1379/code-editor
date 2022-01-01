@@ -1,19 +1,27 @@
-// console message posted to parent
-let post = (msg, type) => ({
-   type: 'console-message',
-   source: 'output-view-iframe',
-   data: {
-      type,
-      array: msg,
-   },
-});
+/*
+ *  This function create object that posted to app
+ * */
+let post = (msg, type) => {
+   if (Array.isArray(msg)) {
+      return {
+         type: 'console-message',
+         source: 'output-view-iframe',
+         data: {
+            type,
+            array: msg,
+         },
+      };
+   }
+};
 
-// handle rendered js error
+/*
+ *   handle runtime iframe errors
+ * */
 window.onerror = message => {
    window.parent.postMessage(post([message], 'error'), '*');
 };
 
-function sendToCustomConsole(type, ...messages) {
+function sendToAppConsole(type, ...messages) {
    try {
       window.parent.postMessage(post(messages, type), '*');
    } catch (err) {
@@ -32,19 +40,19 @@ const originalConsole = window.console;
 const console = {
    warn: function (...message) {
       originalConsole.warn(...message);
-      sendToCustomConsole('warning', ...message);
+      sendToAppConsole('warning', ...message);
    },
    log: function (...message) {
       originalConsole.log(...message);
-      sendToCustomConsole('log', ...message);
+      sendToAppConsole('log', ...message);
    },
    error: function (...message) {
       originalConsole.error(...message);
-      sendToCustomConsole('error', ...message);
+      sendToAppConsole('error', ...message);
    },
    clear: function () {
       originalConsole.clear();
-      sendToCustomConsole('clear');
+      sendToAppConsole('clear');
    },
 };
 
