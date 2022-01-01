@@ -26,23 +26,23 @@ let post = (type, msg = []) => {
  *   handle runtime iframe errors
  * */
 window.onerror = message => {
-   post([message], 'error');
+   post('error', [message]);
 };
 
 const originalConsole = window.console;
 
 const console = {
-   warn: function (...message) {
-      originalConsole.warn(...message);
-      post('warning', ...message);
+   warn: function (...messages) {
+      originalConsole.warn(...messages);
+      post('warning', messages);
    },
-   log: function (...message) {
-      originalConsole.log(...message);
-      post('log', ...message);
+   log: function (...messages) {
+      originalConsole.log(...messages);
+      post('log', messages);
    },
-   error: function (...message) {
-      originalConsole.error(...message);
-      post('error', ...message);
+   error: function (...messages) {
+      originalConsole.error(...messages);
+      post('error', messages);
    },
    clear: function () {
       originalConsole.clear();
