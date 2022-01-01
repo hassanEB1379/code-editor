@@ -1,9 +1,9 @@
 /*
- *  This function create object that posted to app
+ *  This function send iframe messages ( errors , console messages ) to app with postMessage
  * */
-let post = (msg, type) => {
+let post = (type, msg = []) => {
    if (Array.isArray(msg)) {
-      return {
+      let postObject = {
          type: 'console-message',
          source: 'output-view-iframe',
          data: {
@@ -11,6 +11,14 @@ let post = (msg, type) => {
             array: msg,
          },
       };
+
+      try {
+         window.parent.postMessage(postObject, '*');
+      } catch (err) {
+         console.log(
+            'Sorry , this log cannot be shown. using browser console instead'
+         );
+      }
    }
 };
 
@@ -18,45 +26,33 @@ let post = (msg, type) => {
  *   handle runtime iframe errors
  * */
 window.onerror = message => {
-   window.parent.postMessage(post([message], 'error'), '*');
+   post([message], 'error');
 };
-
-function sendToAppConsole(type, ...messages) {
-   try {
-      window.parent.postMessage(post(messages, type), '*');
-   } catch (err) {
-      window.parent.postMessage(
-         post(
-            ['Sorry , this log cannot be shown. using browser console instead'],
-            'log'
-         ),
-         '*'
-      );
-   }
-}
 
 const originalConsole = window.console;
 
 const console = {
    warn: function (...message) {
       originalConsole.warn(...message);
-      sendToAppConsole('warning', ...message);
+      post('warning', ...message);
    },
    log: function (...message) {
       originalConsole.log(...message);
-      sendToAppConsole('log', ...message);
+      post('log', ...message);
    },
    error: function (...message) {
       originalConsole.error(...message);
-      sendToAppConsole('error', ...message);
+      post('error', ...message);
    },
    clear: function () {
       originalConsole.clear();
-      sendToAppConsole('clear');
+      post('clear');
    },
 };
 
-// handle command line
+/*
+ *  handle app console command line
+ * */
 
 function sendReturnedCommandValue(returnedValue) {
    const obj = JSON.parse(
