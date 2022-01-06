@@ -48,7 +48,6 @@ const StyledConsoleMessage = styled.pre`
 const StyledCommandLine = styled.code`
    min-height: 2.2rem;
    line-height: 2.2rem;
-   background-color: var(--command-line-bg);
    padding: 0 0.5rem 0 2rem;
    position: relative;
    &:focus {
@@ -69,7 +68,6 @@ const StyledCommandLine = styled.code`
 const ReturnedValue = styled.pre`
    min-height: 1.5rem;
    line-height: 1.5rem;
-   background-color: var(--command-line-return-bg);
    padding: 0 0.5rem 0 2rem;
    position: relative;
    font-size: 0.75rem;
