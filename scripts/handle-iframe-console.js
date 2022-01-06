@@ -1,52 +1,85 @@
+// in the app, dom elements are identified with this key
+const domKey = '_QEwF5vjI1';
+
+const originalConsole = window.console;
+
 /*
- *  This function send iframe messages ( errors , console messages ) to app with postMessage
+ *   handle runtime iframe errors
  * */
-let post = (type, msg = []) => {
-   if (Array.isArray(msg)) {
+window.onerror = message => {
+   sendToAppConsole('error', [message]);
+};
+
+/*
+ *  This function send iframe error and console messages to app console
+ * */
+function sendToAppConsole(type, messages = []) {
+   if (Array.isArray(messages)) {
       let postObject = {
          type: 'console-message',
          source: 'output-view-iframe',
          data: {
             type,
-            array: msg,
+            array: createValidObject(messages),
          },
       };
 
       try {
          window.parent.postMessage(postObject, '*');
       } catch (err) {
-         console.log(
-            'Sorry , this log cannot be shown. using browser console instead'
-         );
+         sendToAppConsole('log', [
+            'Sorry , this log cannot be shown. using browser console instead',
+         ]);
       }
    }
-};
+}
 
 /*
- *   handle runtime iframe errors
+ *  This function create a cloneable array based on structured clone algorithm:
+ *  1 - convert dom element to string
+ *  2 - convert window and document object to string
+ *  3 - convert functions to string
  * */
-window.onerror = message => {
-   post('error', [message]);
-};
+function createValidObject(obj) {
+   let cloned = Array.isArray(obj) ? [] : {};
 
-const originalConsole = window.console;
+   for (const key in obj) {
+      let value = obj[key];
+
+      if (typeof value === 'object') {
+         if (isDOM(value)) {
+            cloned[key] = value.outerHTML.concat(domKey);
+         } else if (isWindow(value) || isDocument(value)) {
+            cloned[key] = value.toString();
+         } else {
+            cloned[key] = createValidObject(value);
+         }
+      } else if (typeof value === 'function') {
+         cloned[key] = value.toString();
+      } else {
+         cloned[key] = value;
+      }
+   }
+
+   return cloned;
+}
 
 const console = {
    warn: function (...messages) {
-      originalConsole.warn(...messages);
-      post('warning', messages);
+      originalConsole.warn(...messages); // show in browser console
+      sendToAppConsole('warning', messages); // show in app console
    },
    log: function (...messages) {
       originalConsole.log(...messages);
-      post('log', messages);
+      sendToAppConsole('log', messages);
    },
    error: function (...messages) {
       originalConsole.error(...messages);
-      post('error', messages);
+      sendToAppConsole('error', messages);
    },
    clear: function () {
       originalConsole.clear();
-      post('clear');
+      sendToAppConsole('clear');
    },
 };
 
@@ -97,4 +130,20 @@ function runCommand(text) {
    } catch (err) {
       console.error(err.message);
    }
+}
+
+/*
+ *  helper functions
+ * */
+
+function isDOM(element) {
+   return element instanceof HTMLElement;
+}
+
+function isWindow(object) {
+   return object instanceof Window;
+}
+
+function isDocument(object) {
+   return object instanceof Document;
 }
