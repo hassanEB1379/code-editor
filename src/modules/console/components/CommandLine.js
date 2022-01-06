@@ -28,9 +28,11 @@ function CommandLine() {
             onKeyDown={executeRunCommand}
          />
 
-         <ReturnedValue>
-            {JSON.stringify(commandReturnedValue) || 'undefined'}
-         </ReturnedValue>
+         {commandReturnedValue && (
+            <ReturnedValue>
+               {JSON.stringify(commandReturnedValue) || 'undefined'}
+            </ReturnedValue>
+         )}
       </div>
    );
 }
