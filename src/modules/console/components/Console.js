@@ -11,8 +11,7 @@ import CommandLine from './CommandLine';
 import { ConsoleTitle, ConsoleBody } from '../styled/styled-Console';
 
 // icons
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { CloseIcon } from '../../../ui/icons/icons';
 
 function Console() {
    const dispatch = useConsoleMessagesDispatch();
@@ -25,7 +24,7 @@ function Console() {
    }
 
    return (
-      <div className="flex dir-c" style={{ height: '100%' }}>
+      <div className="flex dir-c">
          {/* Console header */}
          <div className="flex items-center justify-between">
             <ConsoleTitle>Console</ConsoleTitle>
@@ -36,7 +35,7 @@ function Console() {
                </Button>
 
                <Button sm onClick={toggle}>
-                  <FontAwesomeIcon icon={faTimes} />
+                  <CloseIcon />
                </Button>
             </Spacing>
          </div>
@@ -45,29 +44,20 @@ function Console() {
             {messages.map((message, index) => (
                <Fragment key={index}>
                   {message.type === 'error' && (
-                     <ConsoleMessage
-                        type="error"
-                        key={index}
-                        dataArray={message.array}
-                     />
+                     <ConsoleMessage type="error" dataArray={message.array} />
                   )}
 
                   {message.type === 'warning' && (
-                     <ConsoleMessage
-                        type="warning"
-                        key={index}
-                        dataArray={message.array}
-                     />
+                     <ConsoleMessage type="warning" dataArray={message.array} />
                   )}
 
                   {message.type === 'log' && (
-                     <ConsoleMessage key={index} dataArray={message.array} />
+                     <ConsoleMessage dataArray={message.array} />
                   )}
                </Fragment>
             ))}
+            <CommandLine />
          </ConsoleBody>
-
-         <CommandLine />
       </div>
    );
 }
