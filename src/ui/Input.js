@@ -5,7 +5,7 @@ export const Input = styled.input`
    min-height: 3rem;
    padding: 0 1rem;
    border-radius: 0.25rem;
-   background-color: var(--input-bg);
+   background-color: var(--white);
 `;
 
 export const SearchInput = styled(Input)`

@@ -1,4 +1,4 @@
-import { Button, Divider } from '../../ui';
+import { Divider, SimpleButton, Text } from '../../ui';
 import { useControlModal } from './ModalProvider';
 import { CloseIcon } from '../../ui/icons/icons';
 
@@ -13,11 +13,13 @@ function ModalHeader({ title, onModalClose }) {
    return (
       <>
          <div className="flex justify-between">
-            <h2>{title}</h2>
+            <Text as="h2" size="2rem">
+               {title}
+            </Text>
 
-            <Button sm onClick={handleClose}>
-               <CloseIcon />
-            </Button>
+            <SimpleButton sm onClick={handleClose}>
+               <CloseIcon size="lg" />
+            </SimpleButton>
          </div>
 
          <Divider />

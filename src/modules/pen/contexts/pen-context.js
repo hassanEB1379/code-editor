@@ -57,7 +57,7 @@ function penReducer(state, action) {
 }
 
 export function PenProvider({ children }) {
-   const [pen, dispatch] = useReducer(penReducer, initialPen);
+   const [pen, dispatch] = useReducer(penReducer, {});
 
    return (
       <PenContext.Provider value={pen}>

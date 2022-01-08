@@ -3,11 +3,11 @@ import styled from 'styled-components';
 export const Button = styled.button`
    position: relative;
    overflow: hidden;
-   background-color: var(--dark-btn);
-   border-radius: 0.3rem;
-   font-size: ${props => (props.sm ? '.7rem' : 'inherit')};
+   background-color: var(--secondary);
+   border-radius: 0.2rem;
+   font-size: ${props => (props.sm ? '.8rem' : 'inherit')};
    &:hover {
-      background-color: var(--dark-bth-hover);
+      background-color: var(--secondary-dark);
    }
 
    &:focus {
@@ -23,4 +23,12 @@ export const Button = styled.button`
          return '.8rem 1.2rem';
       }
    }};
+`;
+
+export const SimpleButton = styled.button`
+   color: var(--white);
+   opacity: 0.5;
+   &:hover {
+      opacity: 1;
+   }
 `;

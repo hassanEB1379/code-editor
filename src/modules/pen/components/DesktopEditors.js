@@ -18,13 +18,21 @@ const editors = [
    },
 ];
 
-function DesktopEditors() {
+function DesktopEditors(props) {
    const { editors: layout } = useViewLayout();
 
    const { code } = usePen();
 
    return (
-      <Resizable orientation={layout.orientation} minSize={38}>
+      <Resizable
+         {...props}
+         resizerStyle={{
+            borderTop: 'var(--border)',
+            backgroundColor: 'var(--primary)',
+         }}
+         orientation={layout.orientation}
+         minSize={38}
+      >
          {editors.map((editorProps, index) => (
             <Editor
                {...editorProps}

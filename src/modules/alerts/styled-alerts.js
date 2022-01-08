@@ -4,7 +4,7 @@ import { Spacing } from '../../ui';
 const StyledAlert = styled(Spacing).attrs(() => ({
    className: 'flex items-center justify-between gap-3',
    p: '.5rem .7rem',
-   as: 'li', // render component as li tag
+   as: 'li',
 }))`
    --selected-color: ${({ variant }) =>
       variant === 'success'
@@ -16,7 +16,7 @@ const StyledAlert = styled(Spacing).attrs(() => ({
          : 'var(--info)'};
 
    border: 3px solid var(--selected-color);
-   background-color: var(--dark-btn);
+   background-color: var(--primary);
    color: var(--contrast-text);
    border-radius: 0.3rem;
    font-size: 0.9rem;

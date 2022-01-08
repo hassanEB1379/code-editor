@@ -2,10 +2,10 @@ import styled from 'styled-components';
 
 // components related to form
 const Form = styled.form`
-   background-color: var(--dark-bg);
+   background-color: var(--primary);
    padding: 1.7rem 1rem;
-   border-radius: 0.5rem;
-   border: 4px solid var(--form-border);
+   border-radius: 2px;
+   border: var(--border);
    display: flex;
    flex-direction: column;
    gap: 1.2rem;
@@ -17,13 +17,7 @@ export const FieldGroup = styled.div.attrs(() => ({
 
 const Field = styled.input`
    padding: 0.3rem;
-   border-radius: 0.3rem;
-   border: 3px solid var(--field-border);
    font-weight: 600;
-
-   &:focus {
-      border: 3px solid var(--field-border-focus);
-   }
 `;
 
 const Submit = styled.input.attrs(() => ({ type: 'submit' }))`
@@ -33,18 +27,13 @@ const Submit = styled.input.attrs(() => ({ type: 'submit' }))`
    border-radius: 0.3rem;
    padding: 0.5rem;
    width: 100%;
-   background-color: var(--form-submit-bg);
-
-   &:disabled {
-      opacity: 0.7;
-      cursor: not-allowed;
-   }
+   background-color: var(--secondary);
 `;
 
 const ErrorMessage = styled.div`
    display: inline-block;
-   color: var(--form-error-text);
-   font-size: 0.8rem;
+   color: var(--error);
+   font-size: 0.9rem;
 `;
 
 export { Form, Field, Submit, ErrorMessage };

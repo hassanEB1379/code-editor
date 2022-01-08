@@ -13,12 +13,10 @@ const ResizableContainer = styled.div`
 const Resizer = styled.div.attrs(() => ({
    className: 'tablet',
 }))`
-   background-color: var(--dark-bg);
-   border: 1px solid var(--dark-border);
    width: ${({ orientation }) =>
-      orientation === 'vertical' ? '100%' : '1rem'};
+      orientation === 'vertical' ? '100%' : '.25rem'};
    height: ${({ orientation }) =>
-      orientation === 'vertical' ? '1rem' : '100%'};
+      orientation === 'vertical' ? '.25rem' : '100%'};
    cursor: ${({ orientation }) =>
       orientation === 'vertical' ? 'row-resize' : 'col-resize'};
 `;
@@ -54,6 +52,7 @@ export function Resizable({
    children,
    minSize = 0,
    orientation = 'horizontal',
+   resizerStyle,
    ...rest
 }) {
    let validElements = Children.toArray(children);
@@ -171,6 +170,7 @@ export function Resizable({
 
                {index !== validElements.length - 1 && (
                   <Resizer
+                     style={resizerStyle}
                      orientation={orientation}
                      onMouseDown={resizeStart}
                   />

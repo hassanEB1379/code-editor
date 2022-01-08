@@ -1,23 +1,27 @@
 import styled, { css } from 'styled-components';
 
 const ConsoleTitle = styled.p`
-   background-color: var(--tab-bg);
    height: 100%;
    font-size: 0.9rem;
    font-weight: 600;
-   color: var(--text-disabled);
-   padding: 0.3rem 1rem 0.6rem;
-   border-top: 0.3rem solid var(--tab-indicator);
+   padding: 6px 1rem 6px 1rem;
+   border-bottom: 3px solid var(--secondary);
+`;
+
+const ConsoleHeader = styled.div`
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   background-color: var(--primary);
+   border-top: var(--border);
 `;
 
 const ConsoleBody = styled.div.attrs(() => ({
    className: 'flex dir-c',
 }))`
-   background-color: var(--tab-bg);
    flex-grow: 1;
    overflow-y: auto;
    height: 100%;
-   font-size: 0.9rem;
 `;
 
 const StyledConsoleMessage = styled.pre`
@@ -61,7 +65,7 @@ const StyledCommandLine = styled.code`
       bottom: 0;
       content: '>';
       font-weight: 700;
-      color: #5c5cff;
+      color: var(--secondary);
    }
 `;
 
@@ -96,4 +100,5 @@ export {
    StyledConsoleMessage,
    StyledCommandLine,
    ReturnedValue,
+   ConsoleHeader,
 };

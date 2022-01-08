@@ -12,17 +12,24 @@ const EditorWrapper = styled.div`
    height: 100%;
    display: flex;
    flex-direction: column;
-   &:not(:last-of-type) {
-      border-bottom: 1px solid var(--dark-border);
-   }
 `;
 
 const EditorHeader = styled.div`
    display: flex;
    align-items: center;
-   gap: 1rem;
-   background-color: var(--dark-bg);
+   gap: 1.5rem;
+   background-color: var(--primary);
    padding: 0.5rem 1rem;
+`;
+
+const StyledAceEditor = styled(AceEditor).attrs(() => ({
+   width: '100%',
+   height: '100%',
+   fontSize: '1.1rem',
+}))`
+   letter-spacing: 1px;
+   line-height: 1.5;
+   background-color: var(--primary-dark);
 `;
 
 const Editor = ({ icon, ...rest }) => {
@@ -45,18 +52,15 @@ const Editor = ({ icon, ...rest }) => {
    return (
       <EditorWrapper>
          <EditorHeader>
-            <img alt="lang-icon" width={20} src={icon} />
+            <img alt="lang-icon" width={17} src={icon} />
             <Text textTransform="uppercase" as="h4">
                {rest.mode === 'javascript' ? 'js' : rest.mode}
             </Text>
          </EditorHeader>
 
-         <AceEditor
+         <StyledAceEditor
             onChange={handleChangeSource}
             theme="twilight"
-            fontSize="1rem"
-            width="100%"
-            height="100%"
             {...rest}
          />
       </EditorWrapper>

@@ -3,27 +3,38 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Transition } from 'react-transition-group';
 import { ChangeViewDropdown } from '../view-layout/ChangeViewDropdown';
-import { Button, Divider, Dropdown, Menu, MenuItem, Text } from '../../../ui';
+import {
+   Button,
+   Divider,
+   Dropdown,
+   Menu,
+   MenuItem,
+   SimpleButton,
+   Text,
+} from '../../../ui';
 import { useRun } from '../hooks/useRun';
 import { useFullscreen } from '../../../hooks/useFullscreen';
 import { changeTitle, usePen, usePenDispatch } from '../contexts/pen-context';
 import { useSave } from '../hooks/useSave';
 import { useUnsavedChangesCount } from '../contexts/unsaved-changes-context';
-
-import logo from '../../../ui/images/logo.png';
+import { useHandleShortcuts } from '../hooks/useHandleShortcuts';
 
 // icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-   faAlignJustify,
    faArrowRight,
    faCompress,
-   faEdit,
    faExpand,
    faPlay,
    faSave,
 } from '@fortawesome/free-solid-svg-icons';
-import { useHandleShortcuts } from '../hooks/useHandleShortcuts';
+import {
+   BackIcon,
+   EditIcon,
+   MenuIcon,
+   PlayIcon,
+   SaveIcon,
+} from '../../../ui/icons/icons';
 
 const HeaderWrapper = styled.div`
    display: flex;
@@ -31,13 +42,16 @@ const HeaderWrapper = styled.div`
    justify-content: space-between;
    height: 4rem;
    padding: 0.5rem 0.75rem;
-   border-bottom: 1px solid var(--dark-border);
+   background-color: var(--primary);
+   border-bottom: 1px solid var(--primary-light);
 `;
 
 const ChangeTitle = styled.input`
    background-color: inherit;
    color: inherit;
    font-weight: 700;
+   font-size: 1.2rem;
+   letter-spacing: 1px;
    width: 150px;
 `;
 
@@ -65,7 +79,7 @@ function SaveButton(props) {
             {state => <Indicator state={state} />}
          </Transition>
 
-         <FontAwesomeIcon icon={faSave} />
+         <SaveIcon />
       </Button>
    );
 }
@@ -75,7 +89,7 @@ function Title() {
    const { title } = usePen();
 
    const [displayForm, setDisplayForm] = useState(false);
-   const [newTitle, setNewTitle] = useState(title); // handle title input
+   const [newTitle, setNewTitle] = useState(title ?? ''); // handle title input
 
    function activeChangeTitleInput() {
       setDisplayForm(true);
@@ -85,8 +99,10 @@ function Title() {
    }
    function handleChangeTitle(e) {
       e.preventDefault();
-      dispatch(changeTitle(newTitle));
-      disableChangeTitleInput();
+      if (newTitle) {
+         dispatch(changeTitle(newTitle));
+         disableChangeTitleInput();
+      }
    }
 
    if (displayForm) {
@@ -105,14 +121,11 @@ function Title() {
    }
 
    return (
-      <Text as="h1" size="1rem">
+      <Text as="h1" size="1.2rem">
          {title}{' '}
-         <FontAwesomeIcon
-            style={{ cursor: 'pointer' }}
-            size="sm"
-            onClick={activeChangeTitleInput}
-            icon={faEdit}
-         />
+         <SimpleButton>
+            <EditIcon onClick={activeChangeTitleInput} />
+         </SimpleButton>
       </Text>
    );
 }
@@ -126,7 +139,7 @@ function ActionsDropDown() {
 
    const DropdownToggleButton = (
       <Button title="Actions">
-         <FontAwesomeIcon icon={faAlignJustify} />
+         <MenuIcon />
       </Button>
    );
 
@@ -165,7 +178,7 @@ function ActionsBar() {
          <SaveButton onClick={save} title="Save Ctrl+S" />
 
          <Button onClick={run} title="Run Shift+F10">
-            <FontAwesomeIcon color="#37F900" icon={faPlay} />
+            <PlayIcon />
          </Button>
 
          <Divider orientation="vertical" />
@@ -180,7 +193,7 @@ function ActionsBar() {
 
          <Link to="/my-works">
             <Button title="Back to my works">
-               <FontAwesomeIcon icon={faArrowRight} />
+               <BackIcon />
             </Button>
          </Link>
       </div>
@@ -192,11 +205,7 @@ const Header = () => {
 
    return (
       <HeaderWrapper>
-         <div className="flex items-center gap-2">
-            <img src={logo} width="28px" height="28px" alt="website-logo" />
-            <Title />
-         </div>
-
+         <Title />
          <ActionsDropDown />
          <ActionsBar />
       </HeaderWrapper>

@@ -19,7 +19,7 @@ function Assets() {
                <AssetsMenu changeSection={setOpenSection} />
             </Box>
 
-            <Box h="26rem" px=".5rem" className="f-item m8">
+            <Box px=".5rem" className="f-item m8">
                {openSection === 0 && <Fonts />}
                {openSection === 1 && <Images />}
             </Box>

@@ -1,42 +1,25 @@
 import { useShowAlert } from './AlertsProvider';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-   faCheckCircle,
-   faExclamationCircle,
-} from '@fortawesome/free-solid-svg-icons';
+
+import { ErrorIcon, SuccessIcon, WarningIcon } from '../../ui/icons/icons';
 
 export function useCustomAlert() {
    const showAlert = useShowAlert();
 
    function showSuccessAlert(msg) {
       showAlert('success', msg, {
-         icon: (
-            <FontAwesomeIcon size="lg" color="#37F900" icon={faCheckCircle} />
-         ),
+         icon: <SuccessIcon size="lg" />,
       });
    }
 
    function showWarningAlert(msg) {
       showAlert('warning', msg, {
-         icon: (
-            <FontAwesomeIcon
-               size="lg"
-               color="#fbc803"
-               icon={faExclamationCircle}
-            />
-         ),
+         icon: <WarningIcon size="lg" />,
       });
    }
 
    function showErrorAlert(msg) {
       showAlert('error', msg, {
-         icon: (
-            <FontAwesomeIcon
-               size="lg"
-               color="#fbc803"
-               icon={faExclamationCircle}
-            />
-         ),
+         icon: <ErrorIcon size="lg" />,
       });
    }
 

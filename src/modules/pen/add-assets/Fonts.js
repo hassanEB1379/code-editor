@@ -1,30 +1,24 @@
 import styled from 'styled-components';
-import { Spacing } from '../../../ui';
+import { Spacing, Text } from '../../../ui';
 import { useCustomAlert } from '../../alerts/useCustomAlert';
 
-const DisplayFont = styled(Spacing).attrs(() => ({
+const DisplayFont = styled(Spacing).attrs(({ font }) => ({
    as: 'li',
    p: '.25rem .5rem',
+   style: {
+      fontFamily: font,
+   },
 }))`
-   background-color: var(--dark-btn);
+   background-color: var(--primary);
    border-radius: 0.2rem;
    cursor: pointer;
    line-height: 1.8;
-
-   &:nth-child(2n + 1) {
-      background-color: transparent;
-   }
-   & > * {
-      font-family: '${({ font }) => font}';
-   }
 `;
 
 export const Description = styled.p`
    font-style: italic;
-   font-size: 0.9rem;
    padding-bottom: 0.5rem;
    line-height: 1.8;
-
    & > a {
       color: var(--info);
    }
@@ -72,8 +66,10 @@ function Fonts() {
                <style>{`@import url(${fonts[font]});`}</style>
 
                {/* show font demo */}
-               <h2>{font}</h2>
-               <p>Lorem ipsum dolor sit amet, consectetur</p>
+               <Text as="h2" size="1.2rem">
+                  {font}
+               </Text>
+               <Text>Lorem ipsum dolor sit amet, consectetur</Text>
             </DisplayFont>
          ))}
       </ul>

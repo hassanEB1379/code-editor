@@ -22,6 +22,7 @@ const StyledListItem = styled(Text).attrs(() => ({
    truncate: true,
    textColor: 'var(--black)',
    lineH: '3rem',
+   size: '1rem',
    style: {
       transform: 'translate3d(0 , 0 , 0)',
    },
@@ -31,7 +32,7 @@ const StyledListItem = styled(Text).attrs(() => ({
    min-height: 3rem;
    padding: 0 2.5rem 0 1rem;
    border-radius: 0.25rem;
-   background-color: var(--input-bg);
+   background-color: var(--white);
    cursor: move;
    user-select: none;
    transition: transform 300ms ease-out;

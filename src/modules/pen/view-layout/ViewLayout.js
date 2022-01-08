@@ -23,14 +23,23 @@ function ViewLayout() {
    const { isOpen: consoleOpen } = useToggleConsole();
    const outputOpen = useToggleOutput();
 
+   const divider = {
+      [wrapper.orientation === 'vertical' ? 'borderBottom' : 'borderRight']:
+         'var(--border)',
+   };
+
    // vertical editor in mobile
    useEffect(() => {
       if (isMobile) dispatch(vertical());
    }, [isMobile, dispatch]);
 
    return (
-      <Resizable orientation={wrapper.orientation} minSize={200}>
-         {isDesktop && <DesktopEditors />}
+      <Resizable
+         resizerStyle={{ backgroundColor: 'var(--primary-dark)' }}
+         orientation={wrapper.orientation}
+         minSize={200}
+      >
+         {isDesktop && <DesktopEditors style={divider} />}
          {isMobile && <MobileEditors />}
 
          {outputOpen && (

@@ -10,8 +10,9 @@ const DropdownContent = styled.div`
 
    position: absolute;
    z-index: var(--z-999);
-   background-color: var(--dropdown-bg);
-   border-radius: 0.5rem;
+   background-color: var(--primary);
+   border: var(--border);
+   border-radius: 2px;
 
    ${({ openFrom }) => {
       switch (openFrom) {

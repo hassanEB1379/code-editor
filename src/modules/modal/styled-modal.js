@@ -8,7 +8,7 @@ export const ModalWindow = styled(Spacing).attrs(() => ({
    position: fixed;
    inset: 0;
    z-index: var(--z-999);
-   background-color: var(--dark-bg-transparent);
+   background-color: var(--primary-dark-transparent);
    // show modal if there is content
    display: ${({ show }) => !show && 'none'};
 `;
@@ -16,11 +16,18 @@ export const ModalWindow = styled(Spacing).attrs(() => ({
 export const ModalContent = styled.div`
    display: flex;
    flex-direction: column;
+   font-size: 1.2rem;
    gap: 0.5rem;
-   background-color: var(--paper);
-   border: 3px solid var(--paper-border);
+   background-color: var(--primary-dark);
+   border: 3px solid var(--primary);
    border-radius: 0.3rem;
    width: 100%;
-   max-width: 50rem;
+   max-width: 65rem;
+   min-height: 85%;
    padding: 0.75rem;
+`;
+
+export const ModalBody = styled.div`
+   flex-grow: 1;
+   padding: 0.5rem 0;
 `;

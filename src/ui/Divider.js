@@ -15,6 +15,6 @@ export const Divider = styled.hr`
    }}
 
    border: none;
-   margin: 0.3rem 0;
-   background-color: var(--divider-bg);
+   margin: 0.5rem 0;
+   background-color: var(--primary-light);
 `;

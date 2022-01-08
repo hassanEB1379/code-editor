@@ -1,4 +1,4 @@
-import { ModalContent } from '../../modal/styled-modal';
+import { ModalBody, ModalContent } from '../../modal/styled-modal';
 import ModalHeader from '../../modal/ModalHeader';
 import { Box, Divider, Text } from '../../../ui';
 import { SearchInput } from '../../../ui/Input';
@@ -20,15 +20,14 @@ const SearchResultList = styled.ul`
    width: 100%;
    top: 100%;
    border-radius: 0 0 0.5rem 0.5rem;
-   max-height: 20rem;
    overflow: auto;
    box-shadow: var(--shadow);
 `;
 
 const StyledResultItem = styled.li`
    color: var(--black);
-   border-bottom: 3px solid var(--text-disabled);
-   height: 5rem;
+   border-bottom: 3px solid var(--primary-light);
+   height: 5.5rem;
    padding: 1rem;
    cursor: pointer;
    &:last-of-type {
@@ -55,13 +54,15 @@ const ClearSearchBox = styled.span`
 function SearchResultItem({ data, onClick }) {
    return (
       <StyledResultItem onClick={onClick}>
-         <Text as="h4">
+         <Text mb=".5rem" as="h2" weight="800" size="1rem">
             {data.name}{' '}
             <Text as="span" textColor="var(--info)">
                {data.version}
             </Text>
          </Text>
-         <Text truncate>{data.description}</Text>
+         <Text size="1rem" truncate>
+            {data.description}
+         </Text>
       </StyledResultItem>
    );
 }
@@ -110,8 +111,10 @@ function AddedLibraries() {
 
    return (
       <Box mt="2rem" className="flex dir-c gap-1">
-         <Text weight="600">List of cdn links </Text>
-         <Text fStyle="italic" size=".9rem">
+         <Text mb=".5rem" size="1.2rem" weight="600">
+            List of cdn links{' '}
+         </Text>
+         <Text fStyle="italic">
             The links are rendered in the order in which they are listed
          </Text>
          <Divider />
@@ -138,15 +141,15 @@ function Libraries() {
             title="Libraries"
             onModalClose={() => showWarningAlert('Save libraries changes')}
          />
-         {/* Modal body */}
-         <Box h="26rem" px=".5rem">
-            <Text as="h3" mb="1rem" size="1rem">
+
+         <ModalBody>
+            <Text mb="1rem">
                Add External libraries and packages from CDNjs
             </Text>
 
             <SearchBox />
             <AddedLibraries />
-         </Box>
+         </ModalBody>
       </ModalContent>
    );
 }

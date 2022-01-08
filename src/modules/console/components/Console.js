@@ -1,5 +1,5 @@
 import { Fragment } from 'react';
-import { Button, Spacing } from '../../../ui';
+import { SimpleButton, Spacing } from '../../../ui';
 import { useToggleConsole } from '../contexts/ConsoleToggle-context';
 import {
    useConsoleMessages,
@@ -8,10 +8,14 @@ import {
 import ConsoleMessage from './ConsoleMessage';
 import CommandLine from './CommandLine';
 
-import { ConsoleTitle, ConsoleBody } from '../styled/styled-Console';
+import {
+   ConsoleTitle,
+   ConsoleBody,
+   ConsoleHeader,
+} from '../styled/styled-Console';
 
 // icons
-import { CloseIcon } from '../../../ui/icons/icons';
+import { ClearIcon, CloseIcon } from '../../../ui/icons/icons';
 
 function Console() {
    const dispatch = useConsoleMessagesDispatch();
@@ -26,19 +30,19 @@ function Console() {
    return (
       <div className="flex dir-c">
          {/* Console header */}
-         <div className="flex items-center justify-between">
+         <ConsoleHeader>
             <ConsoleTitle>Console</ConsoleTitle>
 
-            <Spacing className="flex inline gap-1" mr=".5rem">
-               <Button sm onClick={clearConsole}>
-                  Clear
-               </Button>
+            <Spacing className="flex inline gap-5" mr="1.5rem">
+               <SimpleButton title="Clear" sm onClick={clearConsole}>
+                  <ClearIcon size="lg" />
+               </SimpleButton>
 
-               <Button sm onClick={toggle}>
-                  <CloseIcon />
-               </Button>
+               <SimpleButton title="Close" sm onClick={toggle}>
+                  <CloseIcon size="lg" />
+               </SimpleButton>
             </Spacing>
-         </div>
+         </ConsoleHeader>
 
          <ConsoleBody>
             {messages.map((message, index) => (
