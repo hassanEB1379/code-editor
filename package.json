@@ -32,7 +32,8 @@
     "workbox-google-analytics": "^6.4.2",
     "workbox-navigation-preload": "^6.4.2",
     "workbox-range-requests": "^6.4.2",
-    "workbox-streams": "^6.4.2"
+    "workbox-streams": "^6.4.2",
+    "@hookstate/core": "^3.0.13"
   },
   "scripts": {
     "start": "react-scripts start",
