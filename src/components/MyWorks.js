@@ -12,7 +12,6 @@ import {
 import styled from 'styled-components';
 import { Link, useHistory } from 'react-router-dom';
 import { useCustomAlert } from '../modules/alerts/useCustomAlert';
-import { initialPen } from '../modules/pen/contexts/pen-context';
 
 import workImage from '../ui/images/pumpkin.webp';
 
@@ -30,8 +29,14 @@ import { db } from '../indexedDB';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { createID } from '../utils/createID';
 
-// styles
+// initial pen template
+const initialPen = {
+   title: 'Untitled',
+   code: { html: '', css: '', js: '' },
+   libraries: [],
+};
 
+// styles
 const WorkLink = styled(Link)`
    & > img {
       width: 100%;
