@@ -1,76 +1,43 @@
 import { useEffect } from 'react';
+import { useState } from '@hookstate/core';
+import { db } from '../../../indexedDB';
+import { penState } from '../states';
 import Header from './Header';
 import Footer from './Footer';
 import ViewLayout from '../view-layout/ViewLayout';
-import { db } from '../../../indexedDB';
-import Page404 from '../../../components/404';
 import Modal from '../../modal/Modal';
-import { useLiveQuery } from 'dexie-react-hooks';
-import { initialize, usePenDispatch } from '../contexts/pen-context';
+import Page404 from '../../../components/404';
 
-// context providers
-import { PenProvider } from '../contexts/pen-context';
-import { ViewLayoutProvider } from '../view-layout/ViewLayout-context';
-import { ToggleConsoleProvider } from '../../console/contexts/ConsoleToggle-context';
-import { ConsoleLogsProvider } from '../../console/contexts/ConsoleMessages-context';
-import { SourceUrlProvider } from '../contexts/source-url-context';
-import { CommandLineProvider } from '../../console/contexts/CommandLine-context';
-import { UnsavedChangesProvider } from '../contexts/unsaved-changes-context';
-import MultiProvider from '../../../utils/MultiProvider';
-import { ToggleOutputProvider } from '../contexts/toggle-output-context';
+// get pen info from IDB (return false if pen not defined)
+async function getPen(id) {
+   try {
+      let pen = await db.pens.get(id);
+      if (pen) return pen;
+      else return false;
+   } catch (err) {
+      return false;
+   }
+}
 
-const providers = [
-   <PenProvider />,
-   <UnsavedChangesProvider />,
-   <ViewLayoutProvider />,
-   <ToggleConsoleProvider />,
-   <ConsoleLogsProvider />,
-   <SourceUrlProvider />,
-   <CommandLineProvider />,
-   <ToggleOutputProvider />,
-];
+const Pen = ({ match }) => {
+   const id = match.params.id;
+   const pen = useState(penState);
 
-// This component receives information from IDB and renders the appropriate response
-function PenContent({ content }) {
-   const dispatch = usePenDispatch();
-
-   // initialize pen
+   // initialize pen state
    useEffect(() => {
-      if (content && !content.error) dispatch(initialize(content));
-   }, [content, dispatch]);
+      pen.set(getPen(id));
+   }, [id]);
 
-   // Show the appropriate response if there is no content
-   if (!content) return null;
-   if (content.error) return <Page404 />;
+   if (pen.promised) return null;
+   if (!pen.get() || pen.error) return <Page404 />;
 
    return (
       <div className="flex dir-c">
          <Header />
          <ViewLayout />
          <Footer />
-         <Modal />
+         {/*<Modal />*/}
       </div>
-   );
-}
-
-const Pen = ({ match }) => {
-   const id = match.params.id;
-
-   // get pen info from IDB
-   const content = useLiveQuery(async () => {
-      try {
-         let pen = await db.pens.get(id);
-         if (!pen) return { error: true, message: 'not-found' };
-         return pen;
-      } catch (error) {
-         return { error: true, message: 'not-found' };
-      }
-   });
-
-   return (
-      <MultiProvider providers={providers}>
-         <PenContent content={content} />
-      </MultiProvider>
    );
 };
 

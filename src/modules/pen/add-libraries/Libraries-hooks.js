@@ -1,32 +1,18 @@
 import { useEffect, useState } from 'react';
-import { usePen, usePenDispatch } from '../contexts/pen-context';
 import { useCustomAlert } from '../../alerts/useCustomAlert';
+import { penState } from '../states';
 
 /*
  * add cdn url of library to cdn array and show success alert
  * */
 
 export function useAddLibrary() {
-   const dispatch = usePenDispatch();
+   const pen = useState(penState);
    const { showSuccessAlert } = useCustomAlert();
 
    return function add(library) {
-      dispatch({ type: 'add-library', payload: library });
+      pen.libraries.merge([library]);
       showSuccessAlert(`${library.name} added successfully`);
-   };
-}
-
-/*
- * remove library
- * */
-
-export function useRemoveLibrary() {
-   const dispatch = usePenDispatch();
-   const { showSuccessAlert } = useCustomAlert();
-
-   return function remove(library) {
-      dispatch({ type: 'remove-library', payload: library });
-      showSuccessAlert(`${library.name} removed`);
    };
 }
 

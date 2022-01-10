@@ -1,24 +1,24 @@
+import { useState } from '@hookstate/core';
+import { penState, unsavedChangesState } from '../states';
 import { db } from '../../../indexedDB';
-import { usePen } from '../contexts/pen-context';
 import { useCustomAlert } from '../../alerts/useCustomAlert';
-import { useUnsavedChangesDispatch } from '../contexts/unsaved-changes-context';
 
 export function useSave() {
-   const pen = usePen();
-   const { showSuccessAlert } = useCustomAlert();
-   const unsavedChangesDispatch = useUnsavedChangesDispatch();
+   const pen = useState(penState);
+   const unsavedChanges = useState(unsavedChangesState);
+
+   const { showSuccessAlert, showErrorAlert } = useCustomAlert();
 
    return function () {
       // update pen
       db.pens
-         .update(pen.id, pen)
+         .update(pen.id.get(), pen.get())
          .then(() => {
-            // show success alert
             showSuccessAlert('Pen saved');
-            // set unsaved changes to 0 after save
-            unsavedChangesDispatch(0);
+            unsavedChanges.set(0);
          })
          .catch(err => {
+            showErrorAlert('Saving process failed');
             console.log(err);
          });
    };

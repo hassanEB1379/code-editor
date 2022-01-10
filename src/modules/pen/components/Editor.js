@@ -1,12 +1,9 @@
 import styled from 'styled-components';
 import { Text } from '../../../ui';
 import AceEditor from 'react-ace';
-import { updateCode, usePenDispatch } from '../contexts/pen-context';
 import { useCustomAlert } from '../../alerts/useCustomAlert';
-import {
-   useUnsavedChangesCount,
-   useUnsavedChangesDispatch,
-} from '../contexts/unsaved-changes-context';
+import { useState } from '@hookstate/core';
+import { penState, unsavedChangesState } from '../states';
 
 const EditorWrapper = styled.div`
    height: 100%;
@@ -33,20 +30,20 @@ const StyledAceEditor = styled(AceEditor).attrs(() => ({
 `;
 
 const Editor = ({ icon, ...rest }) => {
-   const unsavedChanges = useUnsavedChangesCount();
-   const penDispatch = usePenDispatch();
-   const unsavedChangesDispatch = useUnsavedChangesDispatch();
+   const unsavedChanges = useState(unsavedChangesState);
+   const pen = useState(penState);
+
    const { showWarningAlert } = useCustomAlert();
 
    function handleChangeSource(code) {
       // increment unsaved changes
-      unsavedChangesDispatch(prev => prev + 1);
+      unsavedChanges.set(p => p + 1);
       // show warning alert for saving
-      if (unsavedChanges % 50 === 0 && unsavedChanges !== 0) {
-         showWarningAlert(`There is ${unsavedChanges} unsaved changes`);
+      if (unsavedChanges.get() % 50 === 0 && unsavedChanges.get() !== 0) {
+         showWarningAlert(`There is ${unsavedChanges.get()} unsaved changes`);
       }
       // update pen context with new code
-      penDispatch(updateCode(rest.mode, code));
+      pen.code.merge({ [rest.mode]: code });
    }
 
    return (

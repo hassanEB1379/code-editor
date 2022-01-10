@@ -1,29 +1,24 @@
-import {
-   horizontal,
-   useViewLayout,
-   useViewLayoutDispatch,
-   vertical,
-} from './ViewLayout-context';
 import { Button, ButtonGroup, Dropdown, Spacing } from '../../../ui';
 import ViewLayoutIcon from './ViewLayout-icon';
+import { useState } from '@hookstate/core';
+import { viewLayoutState } from '../states';
+import { horizontalTemplate, verticalTemplate } from './ViewLayout-templates';
 
 // This component change editors and output layout (vertical or horizontal).
 // This features available on Desktop
 export function ChangeViewDropdown() {
-   const dispatch = useViewLayoutDispatch();
-
-   const { icon } = useViewLayout();
+   const layout = useState(viewLayoutState);
 
    return (
-      <Dropdown action={<Button>{icon}</Button>}>
+      <Dropdown action={<Button>{layout.icon.get()}</Button>}>
          <Spacing className="flex dir-c gap-2" p=".5rem">
             <h4>Change view</h4>
             <ButtonGroup>
-               <Button wide onClick={() => dispatch(horizontal())}>
+               <Button wide onClick={() => layout.set(horizontalTemplate)}>
                   <ViewLayoutIcon rotate={-90} />
                </Button>
 
-               <Button wide onClick={() => dispatch(vertical())}>
+               <Button wide onClick={() => layout.set(verticalTemplate)}>
                   <ViewLayoutIcon />
                </Button>
             </ButtonGroup>

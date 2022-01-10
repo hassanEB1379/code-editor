@@ -1,14 +1,11 @@
-import {
-   pushMessage,
-   useConsoleMessagesDispatch,
-} from '../../console/contexts/ConsoleMessages-context';
-import { useCLReturnedValueDispatch } from '../../console/contexts/CommandLine-context';
 import { useEffect } from 'react';
+import { useState } from '@hookstate/core';
+import { cmdReturnedValueState, consoleMessagesState } from '../states';
 
 // this hook get messages from iframe and set relative context
 export function useHandleIframeMessages() {
-   const consoleDispatch = useConsoleMessagesDispatch();
-   const setCommandReturnedValue = useCLReturnedValueDispatch();
+   const consoleMessage = useState(consoleMessagesState);
+   const cmdReturnedValue = useState(cmdReturnedValueState);
 
    useEffect(() => {
       function handleIframeMessages(e) {
@@ -22,9 +19,9 @@ export function useHandleIframeMessages() {
                // type of console message. "log" , "warning", "error" and ...
                let messageType = data.type;
                // Send a new message to Context and display in the custom console
-               consoleDispatch(pushMessage(messageType, data));
+               consoleMessage.merge([data]);
             } else if (type === 'command-line-return-value') {
-               setCommandReturnedValue(data);
+               cmdReturnedValue.set(data);
             }
          }
       }
@@ -33,5 +30,5 @@ export function useHandleIframeMessages() {
       return () => {
          window.removeEventListener('message', handleIframeMessages);
       };
-   }, [consoleDispatch, setCommandReturnedValue]);
+   }, [consoleMessage, cmdReturnedValue]);
 }

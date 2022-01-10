@@ -1,6 +1,7 @@
 import styled from 'styled-components';
-import { useSourceUrl } from '../contexts/source-url-context';
 import { useHandleIframeMessages } from '../hooks/useHandleIframeMessages';
+import { useState } from '@hookstate/core';
+import { sourceUrlState } from '../states';
 
 const OutputWrapper = styled.div`
    flex-grow: 1;
@@ -16,15 +17,14 @@ const Iframe = styled.iframe`
 `;
 
 const Output = () => {
-   // generated document url ( using in src attribute )
-   const url = useSourceUrl();
+   const sourceUrl = useState(sourceUrlState);
 
    useHandleIframeMessages();
 
    return (
       <OutputWrapper>
          <Iframe
-            src={url}
+            src={sourceUrl.get()}
             title="output-window"
             sandbox="allow-downloads allow-forms allow-modals allow-pointer-lock allow-popups allow-presentation allow-same-origin allow-scripts allow-top-navigation-by-user-activation"
          />

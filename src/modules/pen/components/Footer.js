@@ -1,5 +1,6 @@
+import { useState } from '@hookstate/core';
+import { openConsoleState } from '../states';
 import { Box, Button, Text } from '../../../ui';
-import { useToggleConsole } from '../../console/contexts/ConsoleToggle-context';
 import { useLogout } from '../../authentication/hooks/useLogout';
 import { useControlModal } from '../../modal/ModalProvider';
 
@@ -8,9 +9,11 @@ import Assets from '../add-assets/Assets';
 import Libraries from '../add-libraries/Libraries';
 
 const Footer = () => {
-   const { toggle } = useToggleConsole();
+   const openConsole = useState(openConsoleState);
    const { showModal } = useControlModal();
    const logout = useLogout();
+
+   const toggleConsole = () => openConsole.set(p => !p);
 
    return (
       <footer style={{ backgroundColor: 'var(--primary)' }}>
@@ -21,7 +24,7 @@ const Footer = () => {
             className="flex justify-between items-center"
          >
             <div className="flex gap-1">
-               <Button sm onClick={toggle}>
+               <Button sm onClick={toggleConsole}>
                   Console
                </Button>
                <Button sm onClick={() => showModal(<Assets />)}>

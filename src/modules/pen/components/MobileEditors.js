@@ -1,8 +1,7 @@
 import { Button, ButtonGroup, Divider, Spacing } from '../../../ui';
-import { useState } from 'react';
 import Editor from './Editor';
-import { usePen } from '../contexts/pen-context';
-import { useToggleOutputDispatch } from '../contexts/toggle-output-context';
+import { openOutputState, penState } from '../states';
+import { useState } from '@hookstate/core';
 
 // icons
 import htmlIcon from '../../../ui/images/html.svg';
@@ -10,14 +9,13 @@ import cssIcon from '../../../ui/images/css.svg';
 import jsIcon from '../../../ui/images/javascript.svg';
 
 function MobileEditors() {
-   const [activeEditor, setActiveEditor] = useState('html');
+   const pen = useState(penState);
+   const openOutput = useState(openOutputState);
 
-   const setOpenOutput = useToggleOutputDispatch();
-
-   const { code } = usePen();
+   const activeEditor = useState('html');
 
    function toggleResult() {
-      setOpenOutput(prev => !prev);
+      openOutput.set(prev => !prev);
    }
 
    function getIcon(activeEditor) {
@@ -31,9 +29,11 @@ function MobileEditors() {
          <Spacing className="flex items-center justify-between" p=".5rem">
             {/* Select editor buttons */}
             <ButtonGroup>
-               <Button onClick={() => setActiveEditor('html')}>HTML</Button>
-               <Button onClick={() => setActiveEditor('css')}>CSS</Button>
-               <Button onClick={() => setActiveEditor('javascript')}>JS</Button>
+               <Button onClick={() => activeEditor.set('html')}>HTML</Button>
+               <Button onClick={() => activeEditor.set('css')}>CSS</Button>
+               <Button onClick={() => activeEditor.set('javascript')}>
+                  JS
+               </Button>
                <Button onClick={toggleResult}>Result</Button>
             </ButtonGroup>
          </Spacing>
@@ -42,10 +42,10 @@ function MobileEditors() {
 
          {/*  Selected Editor */}
          <Editor
-            mode={activeEditor}
-            name={activeEditor + 'editor'}
-            value={code[activeEditor]}
-            icon={getIcon(activeEditor)}
+            mode={activeEditor.get()}
+            name={activeEditor.get() + 'editor'}
+            value={pen.code.get()[activeEditor]}
+            icon={getIcon(activeEditor.get())}
          />
       </div>
    );

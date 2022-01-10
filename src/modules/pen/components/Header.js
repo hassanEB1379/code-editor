@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useState } from '@hookstate/core';
 import { Link } from 'react-router-dom';
 import { Transition } from 'react-transition-group';
 import { ChangeViewDropdown } from '../view-layout/ChangeViewDropdown';
@@ -14,10 +14,11 @@ import {
 } from '../../../ui';
 import { useRun } from '../hooks/useRun';
 import { useFullscreen } from '../../../hooks/useFullscreen';
-import { changeTitle, usePen, usePenDispatch } from '../contexts/pen-context';
 import { useSave } from '../hooks/useSave';
-import { useUnsavedChangesCount } from '../contexts/unsaved-changes-context';
 import { useHandleShortcuts } from '../hooks/useHandleShortcuts';
+
+// states
+import { penState, unsavedChangesState } from '../states';
 
 // icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -71,11 +72,11 @@ const Indicator = styled.span`
 `;
 
 function SaveButton(props) {
-   const unsavedChanges = useUnsavedChangesCount();
+   const unsavedChanges = useState(unsavedChangesState);
 
    return (
       <Button {...props}>
-         <Transition in={unsavedChanges > 10} timeout={200}>
+         <Transition in={unsavedChanges.get() > 10} timeout={200}>
             {state => <Indicator state={state} />}
          </Transition>
 
@@ -85,35 +86,29 @@ function SaveButton(props) {
 }
 
 function Title() {
-   const dispatch = usePenDispatch();
-   const { title } = usePen();
+   const pen = useState(penState);
 
-   const [displayForm, setDisplayForm] = useState(false);
-   const [newTitle, setNewTitle] = useState(title ?? ''); // handle title input
+   const displayForm = useState(false);
+   const newTitle = useState(pen.title); // handle title input
 
-   function activeChangeTitleInput() {
-      setDisplayForm(true);
-   }
-   function disableChangeTitleInput() {
-      setDisplayForm(false);
-   }
+   const activeInput = () => displayForm.set(true);
+   const disableInput = () => displayForm.set(false);
+
    function handleChangeTitle(e) {
       e.preventDefault();
-      if (newTitle) {
-         dispatch(changeTitle(newTitle));
-         disableChangeTitleInput();
-      }
+      pen.title.set(newTitle.get());
+      disableInput();
    }
 
-   if (displayForm) {
+   if (displayForm.get()) {
       return (
          <form onSubmit={handleChangeTitle}>
             <ChangeTitle
                autoFocus
                onBlur={handleChangeTitle}
                type="text"
-               value={newTitle}
-               onChange={e => setNewTitle(e.target.value)}
+               value={newTitle.get()}
+               onChange={e => newTitle.set(e.target.value)}
                spellCheck="false"
             />
          </form>
@@ -122,9 +117,9 @@ function Title() {
 
    return (
       <Text as="h1" size="1.2rem">
-         {title}{' '}
+         {pen.title.get()}{' '}
          <SimpleButton>
-            <EditIcon onClick={activeChangeTitleInput} />
+            <EditIcon onClick={activeInput} />
          </SimpleButton>
       </Text>
    );
@@ -146,12 +141,8 @@ function ActionsDropDown() {
    return (
       <Dropdown className="mobile" action={DropdownToggleButton}>
          <Menu>
-            <MenuItem icon={faSave} onClick={save}>
-               Save Ctrl+S
-            </MenuItem>
-            <MenuItem icon={faPlay} onClick={run}>
-               Run Shift+F10
-            </MenuItem>
+            <MenuItem icon={faSave}>Save Ctrl+S</MenuItem>
+            <MenuItem icon={faPlay}>Run Shift+F10</MenuItem>
             <MenuItem
                icon={isFullscreen ? faCompress : faExpand}
                onClick={toggleFullScreen}
@@ -175,9 +166,9 @@ function ActionsBar() {
 
    return (
       <div className="flex gap-2 tablet">
-         <SaveButton onClick={save} title="Save Ctrl+S" />
+         <SaveButton title="Save Ctrl+S" onClick={save} />
 
-         <Button onClick={run} title="Run Shift+F10">
+         <Button title="Run Shift+F10" onClick={run}>
             <PlayIcon />
          </Button>
 
@@ -187,7 +178,7 @@ function ActionsBar() {
             <FontAwesomeIcon icon={isFullscreen ? faCompress : faExpand} />
          </Button>
 
-         <ChangeViewDropdown />
+         {/*<ChangeViewDropdown />*/}
 
          <Divider orientation="vertical" />
 

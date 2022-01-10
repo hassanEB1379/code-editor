@@ -1,6 +1,13 @@
 import { FormattedObject } from './FormattedObject';
-import { StyledNumber, StyledString } from '../styled/styled-StyleByDataType';
 import StyledDOMElement from './StyledDOMElement';
+import styled from 'styled-components';
+
+const StyledNumber = styled.code`
+   color: var(--console-number);
+`;
+const StyledString = styled.code`
+   color: var(--console-str);
+`;
 
 export function StyleByDataType({ data }) {
    let dataType = typeof data;

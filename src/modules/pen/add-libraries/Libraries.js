@@ -6,10 +6,10 @@ import styled from 'styled-components';
 import { useState } from 'react';
 import { useDebounce } from '../../../hooks/useDebounce';
 import { useAddLibrary, useFetchCDNJs } from './Libraries-hooks';
-import { usePen } from '../contexts/pen-context';
 import { CloseIcon } from '../../../ui/icons/icons';
 import { LibraryListItem } from './LibraryListItem';
 import { useCustomAlert } from '../../alerts/useCustomAlert';
+import { penState } from '../states';
 
 // styled components
 const SearchResultList = styled.ul`
@@ -107,7 +107,7 @@ function SearchBox() {
 }
 
 function AddedLibraries() {
-   const { libraries } = usePen();
+   const pen = useState(penState);
 
    return (
       <Box mt="2rem" className="flex dir-c gap-1">
@@ -119,9 +119,9 @@ function AddedLibraries() {
          </Text>
          <Divider />
 
-         {libraries.map((lib, i) => (
+         {pen.libraries.map((lib, i) => (
             <LibraryListItem
-               length={libraries.length}
+               length={pen.libraries.length.get()}
                index={i}
                key={Math.random() * 10000}
                library={lib}

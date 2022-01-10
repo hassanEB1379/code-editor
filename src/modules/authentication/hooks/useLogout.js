@@ -1,9 +1,10 @@
-import { logout, useAuthDataDispatch } from '../contexts/auth-context';
+import { useState } from '@hookstate/core';
+import { authState, basicState } from '../states';
 
 export function useLogout() {
-   const dispatch = useAuthDataDispatch();
+   const auth = useState(authState);
 
    return function () {
-      dispatch(logout());
+      auth.set(basicState);
    };
 }

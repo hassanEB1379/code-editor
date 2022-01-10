@@ -1,6 +1,7 @@
 import styled from 'styled-components';
+import { none, useState as useHookState } from '@hookstate/core';
 import { useRef, useState } from 'react';
-import { useChangeOrder, useRemoveLibrary } from './Libraries-hooks';
+import { useChangeOrder } from './Libraries-hooks';
 import { Box, Text } from '../../../ui';
 import { Transition } from 'react-transition-group';
 import { getTranslateValues } from '../../../utils/getTranslateValue';
@@ -165,11 +166,10 @@ function ChangeOrder({ index, length }) {
 }
 
 export function LibraryListItem({ library, length, index }) {
+   const libraryState = useHookState(library);
    const [removeEffect, setRemoveEffect] = useState(true);
 
    const flagRef = useRef();
-
-   const remove = useRemoveLibrary();
 
    function updateFlagOpacity(movement) {
       let elm = flagRef.current;
@@ -182,7 +182,7 @@ export function LibraryListItem({ library, length, index }) {
    }
 
    function removeLibrary() {
-      remove(library);
+      libraryState.set(none);
    }
 
    return (
@@ -205,7 +205,7 @@ export function LibraryListItem({ library, length, index }) {
             onSwipeEnd={startRemoveEffect}
             onSwipe={updateFlagOpacity}
          >
-            {library['latest']}
+            {libraryState.get()['latest']}
             <ChangeOrder index={index} length={length} />
          </Swipeable>
       </Box>

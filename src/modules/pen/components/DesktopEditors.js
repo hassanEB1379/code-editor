@@ -1,7 +1,7 @@
+import { useState } from '@hookstate/core';
+import { penState, viewLayoutState } from '../states';
 import Editor from './Editor';
 import { Resizable } from '../../../ui';
-import { useViewLayout } from '../view-layout/ViewLayout-context';
-import { usePen } from '../contexts/pen-context';
 
 // icons
 import htmlIcon from '../../../ui/images/html.svg';
@@ -19,9 +19,8 @@ const editors = [
 ];
 
 function DesktopEditors(props) {
-   const { editors: layout } = useViewLayout();
-
-   const { code } = usePen();
+   const layout = useState(viewLayoutState);
+   const pen = useState(penState);
 
    return (
       <Resizable
@@ -30,14 +29,14 @@ function DesktopEditors(props) {
             borderTop: 'var(--border)',
             backgroundColor: 'var(--primary)',
          }}
-         orientation={layout.orientation}
+         orientation={layout.editors.orientation.get()}
          minSize={38}
       >
          {editors.map((editorProps, index) => (
             <Editor
                {...editorProps}
                key={index}
-               defaultValue={code[editorProps.mode]}
+               defaultValue={pen.code.get()[editorProps.mode]}
             />
          ))}
       </Resizable>

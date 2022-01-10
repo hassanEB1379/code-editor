@@ -1,13 +1,13 @@
-import { usePen } from '../contexts/pen-context';
-import { useSourceUrlDispatch } from '../contexts/source-url-context';
 import { getGeneratedPageURL } from '../utils/generatePageUrl';
+import { useState } from '@hookstate/core';
+import { penState, sourceUrlState } from '../states';
 
 export function useRun() {
-   const { code, libraries } = usePen();
-   const setUrl = useSourceUrlDispatch();
+   const pen = useState(penState);
+   const sourceUrl = useState(sourceUrlState);
 
    function run() {
-      setUrl(getGeneratedPageURL(code, libraries));
+      sourceUrl.set(getGeneratedPageURL(pen.code.get(), pen.libraries.get()));
    }
 
    return run;
