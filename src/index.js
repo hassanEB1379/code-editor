@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import App from './components/App';
+import AlertsContainer from './modules/alerts/AlertsContainer';
 import { db, stores } from './indexedDB';
 
 // ace-editor required imports
@@ -15,23 +16,14 @@ import 'ace-builds/src-noconflict/theme-twilight';
 import GlobalStyle from './ui/GlobalStyle';
 import './ui/css/responsive-utilities.css';
 
-// context providers
-import { AuthDataProvider } from './modules/authentication/contexts/auth-context';
-import { AlertsProvider } from './modules/alerts/AlertsProvider';
-import { ModalProvider } from './modules/modal/ModalProvider';
-import MultiProvider from './utils/MultiProvider';
-
-const providers = [<AuthDataProvider />, <AlertsProvider />, <ModalProvider />];
-
 // config dexie
 db.version(1).stores(stores);
 
 ReactDOM.render(
    <React.StrictMode>
       <GlobalStyle />
-      <MultiProvider providers={providers}>
-         <App />
-      </MultiProvider>
+      <AlertsContainer />
+      <App />
    </React.StrictMode>,
    document.getElementById('root')
 );

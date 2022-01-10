@@ -1,6 +1,5 @@
-import { useShowAlert } from './AlertsProvider';
-
 import { ErrorIcon, SuccessIcon, WarningIcon } from '../../ui/icons/icons';
+import { useShowAlert } from './useShowAlert';
 
 export function useCustomAlert() {
    const showAlert = useShowAlert();

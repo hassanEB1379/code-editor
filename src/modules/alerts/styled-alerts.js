@@ -46,7 +46,7 @@ const StyledAlertWithEffect = styled(StyledAlert)`
    );
 `;
 
-const AlertsContainer = styled.div`
+const StyledAlertsContainer = styled.div`
    position: fixed;
    left: 50%;
    transform: translateX(-50%);
@@ -62,4 +62,4 @@ const AlertsContainer = styled.div`
    }
 `;
 
-export { AlertsContainer, StyledAlertWithEffect };
+export { StyledAlertsContainer, StyledAlertWithEffect };
