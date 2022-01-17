@@ -7,24 +7,25 @@ import {
    Container,
    FieldGroup,
 } from '../../../ui';
-
+import { useState } from '@hookstate/core';
+import { authState } from '../states';
+import { authApi } from '../api/auth-api';
 import { useForm } from 'react-hook-form';
-import { useAuthentication } from '../hooks/useAuthentication';
 
 // messages
 import { REQUIRED_FIELD, SAFE_PASSWORD, VALID_EMAIL } from '../utils/constants';
 
 export function Register() {
+   const auth = useState(authState);
+
    const {
       register,
       handleSubmit,
       formState: { errors },
    } = useForm();
 
-   const authentication = useAuthentication();
-
    function onSubmit(data) {
-      authentication(data);
+      auth.set(authApi(data));
    }
 
    return (

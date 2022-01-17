@@ -1,13 +1,13 @@
 import { Redirect, Route } from 'react-router-dom';
-import { useAuthData } from '../contexts/auth-context';
+import { useState } from '@hookstate/core';
+import { authState } from '../states';
 
 export const PublicRoute = props => {
+   const auth = useState(authState);
    const { component: Component, restricted = false, ...rest } = props;
 
-   const { isAuthenticated } = useAuthData();
-
    const render = renderProps => {
-      if (isAuthenticated && restricted) {
+      if (!auth.promised && auth.isAuthenticated.get() && restricted) {
          // return user to editor if user authenticated
          return <Redirect to="/my-works" />;
       } else {
