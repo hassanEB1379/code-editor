@@ -9,10 +9,21 @@ export function useSave() {
 
    const { showSuccessAlert, showErrorAlert } = useCustomAlert();
 
+   // Copy target of proxy to normal object
+   let target = Object.assign(
+      {},
+      {
+         id: pen.id.get(),
+         title: pen.title.get(),
+         code: Object.assign({}, pen.code.get()),
+         libraries: Object.assign([], pen.libraries.get()),
+      }
+   );
+
    return function () {
       // update pen
       db.pens
-         .update(pen.id.get(), pen.get())
+         .update(pen.id.get(), target)
          .then(() => {
             showSuccessAlert('Pen saved');
             unsavedChanges.set(0);
