@@ -33,7 +33,8 @@
     "workbox-navigation-preload": "^6.4.2",
     "workbox-range-requests": "^6.4.2",
     "workbox-streams": "^6.4.2",
-    "@hookstate/core": "^3.0.13"
+    "@hookstate/core": "^3.0.13",
+    "@hookstate/persistence": "^3.0.0"
   },
   "scripts": {
     "start": "react-scripts start",
