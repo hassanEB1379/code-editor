@@ -1,7 +1,7 @@
 import { createContext, isValidElement, useContext, useState } from 'react';
 
-const modal = createContext(null);
-const controlModalDispatch = createContext(null);
+const modal = createContext();
+const controlModalDispatch = createContext();
 
 // using this hooks for access context value
 export const useModal = () => useContext(modal);
