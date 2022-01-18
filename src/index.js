@@ -2,8 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import App from './components/App';
-import AlertsContainer from './modules/alerts/AlertsContainer';
 import { db, stores } from './indexedDB';
+
+// context providers
+import { ModalProvider } from './modules/modal/ModalProvider';
+import { AlertsProvider } from './modules/alerts/AlertProvider';
 
 // ace-editor required imports
 import 'ace-builds/webpack-resolver';
@@ -22,8 +25,11 @@ db.version(1).stores(stores);
 ReactDOM.render(
    <React.StrictMode>
       <GlobalStyle />
-      <AlertsContainer />
-      <App />
+      <AlertsProvider>
+         <ModalProvider>
+            <App />
+         </ModalProvider>
+      </AlertsProvider>
    </React.StrictMode>,
    document.getElementById('root')
 );
