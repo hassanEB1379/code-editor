@@ -1,28 +1,27 @@
 import { StyledAlertsContainer } from './styled-alerts';
-import { createState, none, useState } from '@hookstate/core';
 import { Transition, TransitionGroup } from 'react-transition-group';
 import { Alert } from './Alert';
 
-export const alertsState = createState([]);
-
-function AlertsContainer() {
-   const alerts = useState(alertsState);
-
-   const removeAlert = alert => alerts[alert].set(none);
+function AlertsContainer({ alerts, setAlerts }) {
+   function removeAlert(id) {
+      setAlerts(prev => {
+         return prev.filter(item => item.id !== id);
+      });
+   }
 
    return (
       <StyledAlertsContainer>
          <TransitionGroup component="ul">
-            {alerts.map((alert, index) => (
-               <Transition key={index} timeout={200}>
+            {alerts.map(alert => (
+               <Transition key={alert.id} timeout={200}>
                   {state => (
                      <Alert
-                        variant={alert.variant.get()}
+                        variant={alert.variant}
                         state={state}
-                        icon={alert.options.icon.get()}
-                        removeHandler={() => removeAlert(alert)}
+                        icon={alert.options.icon}
+                        removeHandler={() => removeAlert(alert.id)}
                      >
-                        {alert.message.get()}
+                        {alert.message}
                      </Alert>
                   )}
                </Transition>
