@@ -1,5 +1,3 @@
-import ViewLayoutIcon from './ViewLayout-icon';
-
 export const horizontalTemplate = {
    wrapper: {
       orientation: 'horizontal',
@@ -7,7 +5,9 @@ export const horizontalTemplate = {
    editors: {
       orientation: 'vertical',
    },
-   icon: <ViewLayoutIcon rotate={-90} />,
+   iconProps: {
+      rotate: -90,
+   },
 };
 
 export const verticalTemplate = {
@@ -17,5 +17,5 @@ export const verticalTemplate = {
    editors: {
       orientation: 'horizontal',
    },
-   icon: <ViewLayoutIcon />,
+   icon: {},
 };
