@@ -141,8 +141,12 @@ function ActionsDropDown() {
    return (
       <Dropdown className="mobile" action={DropdownToggleButton}>
          <Menu>
-            <MenuItem icon={faSave}>Save Ctrl+S</MenuItem>
-            <MenuItem icon={faPlay}>Run Shift+F10</MenuItem>
+            <MenuItem onClick={save} icon={faSave}>
+               Save Ctrl+S
+            </MenuItem>
+            <MenuItem onClick={run} icon={faPlay}>
+               Run Shift+F10
+            </MenuItem>
             <MenuItem
                icon={isFullscreen ? faCompress : faExpand}
                onClick={toggleFullScreen}
@@ -178,7 +182,7 @@ function ActionsBar() {
             <FontAwesomeIcon icon={isFullscreen ? faCompress : faExpand} />
          </Button>
 
-         {/*<ChangeViewDropdown />*/}
+         <ChangeViewDropdown />
 
          <Divider orientation="vertical" />
 

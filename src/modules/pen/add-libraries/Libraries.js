@@ -1,15 +1,16 @@
-import { ModalBody, ModalContent } from '../../modal/styled-modal';
-import ModalHeader from '../../modal/ModalHeader';
-import { Box, Divider, Text } from '../../../ui';
-import { SearchInput } from '../../../ui/Input';
-import styled from 'styled-components';
 import { useState } from 'react';
+import { useState as useHookState } from '@hookstate/core';
+import { penState } from '../states';
+import styled from 'styled-components';
+
+import { ModalHeader, ModalContent, ModalBody } from '../../modal';
+import { Box, Divider, Text, SearchInput } from '../../../ui';
+import { LibraryListItem } from './LibraryListItem';
+import { CloseIcon } from '../../../ui/icons/icons';
+
 import { useDebounce } from '../../../hooks/useDebounce';
 import { useAddLibrary, useFetchCDNJs } from './Libraries-hooks';
-import { CloseIcon } from '../../../ui/icons/icons';
-import { LibraryListItem } from './LibraryListItem';
 import { useCustomAlert } from '../../alerts/useCustomAlert';
-import { penState } from '../states';
 
 // styled components
 const SearchResultList = styled.ul`
@@ -73,7 +74,6 @@ function SearchBox() {
    const debouncedText = useDebounce(searchText, 1000);
    const results = useFetchCDNJs(debouncedText);
 
-   // add library to pen context when click on item
    const add = useAddLibrary();
 
    function clearInput() {
@@ -107,7 +107,7 @@ function SearchBox() {
 }
 
 function AddedLibraries() {
-   const pen = useState(penState);
+   const pen = useHookState(penState);
 
    return (
       <Box mt="2rem" className="flex dir-c gap-1">
@@ -121,7 +121,7 @@ function AddedLibraries() {
 
          {pen.libraries.map((lib, i) => (
             <LibraryListItem
-               length={pen.libraries.length.get()}
+               length={pen.libraries.get().length}
                index={i}
                key={Math.random() * 10000}
                library={lib}

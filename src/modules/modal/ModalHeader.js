@@ -1,8 +1,8 @@
 import { Divider, SimpleButton, Text } from '../../ui';
-import { useControlModal } from './ModalProvider';
 import { CloseIcon } from '../../ui/icons/icons';
+import { useControlModal } from './ModalProvider';
 
-function ModalHeader({ title, onModalClose }) {
+export function ModalHeader({ title, onModalClose }) {
    const { deleteModal } = useControlModal();
 
    function handleClose() {
@@ -26,5 +26,3 @@ function ModalHeader({ title, onModalClose }) {
       </>
    );
 }
-
-export default ModalHeader;
