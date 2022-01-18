@@ -2,11 +2,12 @@ import { useEffect } from 'react';
 import { useState } from '@hookstate/core';
 import { db } from '../../../indexedDB';
 import { penState } from '../states';
+
 import Header from './Header';
 import Footer from './Footer';
 import ViewLayout from '../view-layout/ViewLayout';
-import Modal from '../../modal/Modal';
 import Page404 from '../../../components/404';
+import { ModalContainer } from '../../modal';
 
 // get pen info from IDB (return false if pen not defined)
 async function getPen(id) {
@@ -36,7 +37,7 @@ const Pen = ({ match }) => {
          <Header />
          <ViewLayout />
          <Footer />
-         {/*<Modal />*/}
+         <ModalContainer />
       </div>
    );
 };
