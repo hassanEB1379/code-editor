@@ -1,5 +1,4 @@
-import { ModalContent } from '../../modal/styled-modal';
-import ModalHeader from '../../modal/ModalHeader';
+import { ModalContent, ModalHeader } from '../../modal';
 import { Box } from '../../../ui';
 import { useState } from 'react';
 import AssetsMenu from './AssetsMenu';
