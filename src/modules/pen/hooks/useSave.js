@@ -9,16 +9,11 @@ export function useSave() {
 
    const { showSuccessAlert, showErrorAlert } = useCustomAlert();
 
-   // Copy target of proxy to normal object
-   let target = Object.assign(
-      {},
-      {
-         id: pen.id.get(),
-         title: pen.title.get(),
-         code: Object.assign({}, pen.code.get()),
-         libraries: Object.assign([], pen.libraries.get()),
-      }
-   );
+   /*
+    * indexedDB does not support store proxies
+    * thus convert it to normal object with JSON methods
+    *  */
+   const target = JSON.parse(JSON.stringify(pen.value));
 
    return function () {
       // update pen
