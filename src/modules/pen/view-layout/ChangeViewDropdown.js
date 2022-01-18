@@ -10,7 +10,13 @@ export function ChangeViewDropdown() {
    const layout = useState(viewLayoutState);
 
    return (
-      <Dropdown action={<Button>{layout.icon.get()}</Button>}>
+      <Dropdown
+         action={
+            <Button>
+               <ViewLayoutIcon {...layout.iconProps.get()} />
+            </Button>
+         }
+      >
          <Spacing className="flex dir-c gap-2" p=".5rem">
             <h4>Change view</h4>
             <ButtonGroup>
