@@ -1,36 +1,19 @@
 import { useEffect, useState } from 'react';
-import { useCustomAlert } from '../../alerts/useCustomAlert';
+import { useState as useHookState } from '@hookstate/core';
 import { penState } from '../states';
+import { useCustomAlert } from '../../alerts/useCustomAlert';
 
 /*
  * add cdn url of library to cdn array and show success alert
  * */
 
 export function useAddLibrary() {
-   const pen = useState(penState);
+   const pen = useHookState(penState);
    const { showSuccessAlert } = useCustomAlert();
 
    return function add(library) {
       pen.libraries.merge([library]);
       showSuccessAlert(`${library.name} added successfully`);
-   };
-}
-
-/*
- * change order of libraries
- */
-
-export function useChangeOrder() {
-   const dispatch = usePenDispatch();
-   const { libraries } = usePen();
-
-   return function changeOrder(a, b) {
-      // swap elements
-      let tmp = libraries[a];
-      libraries[a] = libraries[b];
-      libraries[b] = tmp;
-      // dispatch new array
-      dispatch({ type: 'update-libraries', payload: libraries });
    };
 }
 

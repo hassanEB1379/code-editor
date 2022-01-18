@@ -1,7 +1,7 @@
+import { useRef, useState } from 'react';
 import styled from 'styled-components';
 import { none, useState as useHookState } from '@hookstate/core';
-import { useRef, useState } from 'react';
-import { useChangeOrder } from './Libraries-hooks';
+import { penState } from '../states';
 import { Box, Text } from '../../../ui';
 import { Transition } from 'react-transition-group';
 import { getTranslateValues } from '../../../utils/getTranslateValue';
@@ -142,15 +142,21 @@ function Swipeable({ onSwipe, onSwipeEnd, children, component: Component }) {
 }
 
 function ChangeOrder({ index, length }) {
-   const changeOrder = useChangeOrder();
+   const pen = useHookState(penState);
 
    // handle change order of libraries
    function goUp() {
-      changeOrder(index, index - 1);
+      pen.libraries.merge(p => ({
+         [index - 1]: p[index],
+         [index]: p[index - 1],
+      }));
    }
 
    function goDown() {
-      changeOrder(index, index + 1);
+      pen.libraries.merge(p => ({
+         [index + 1]: p[index],
+         [index]: p[index + 1],
+      }));
    }
 
    return (
