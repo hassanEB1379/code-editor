@@ -14,11 +14,13 @@ import { useCustomAlert } from '../../alerts/useCustomAlert';
 
 // styled components
 const SearchResultList = styled.ul`
+   --item-height: 5.5rem;
    position: absolute;
    background-color: var(--white);
    margin-top: -5px;
    padding-top: 5px;
    width: 100%;
+   max-height: calc(6 * var(--item-height));
    top: 100%;
    border-radius: 0 0 0.5rem 0.5rem;
    overflow: auto;
@@ -28,7 +30,7 @@ const SearchResultList = styled.ul`
 const StyledResultItem = styled.li`
    color: var(--black);
    border-bottom: 3px solid var(--primary-light);
-   height: 5.5rem;
+   height: var(--item-height); // variable inherites from SearchResultList
    padding: 1rem;
    cursor: pointer;
    &:last-of-type {
