@@ -89,14 +89,21 @@ function Title() {
    const pen = useState(penState);
 
    const displayForm = useState(false);
-   const newTitle = useState(pen.title.get()); // handle title input
+   const newTitle = useState(pen.title.get());
 
    const activeInput = () => displayForm.set(true);
    const disableInput = () => displayForm.set(false);
 
    function handleChangeTitle(e) {
       e.preventDefault();
-      pen.title.set(p => newTitle.get() ?? p);
+
+      if (newTitle.get()) {
+         pen.title.set(newTitle.get());
+      } else {
+         // reset default value if input is empty
+         newTitle.set(pen.title.get());
+      }
+
       disableInput();
    }
 
