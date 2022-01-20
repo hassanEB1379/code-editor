@@ -17,24 +17,14 @@ function ViewLayout() {
 
    const { isDesktop, isMobile } = useDeviceDetect();
 
-   const divider = {
-      [layout.wrapper.get().orientation === 'vertical'
-         ? 'borderBottom'
-         : 'borderRight']: 'var(--border)',
-   };
-
    // vertical editor in mobile
    useEffect(() => {
       if (isMobile) layout.set(verticalTemplate);
    }, [isMobile]);
 
    return (
-      <Resizable
-         resizerStyle={{ backgroundColor: 'var(--primary-dark)' }}
-         orientation={layout.wrapper.orientation.get()}
-         minSize={200}
-      >
-         {isDesktop && <DesktopEditors style={divider} />}
+      <Resizable orientation={layout.wrapper.orientation.get()} minSize={200}>
+         {isDesktop && <DesktopEditors />}
          {isMobile && <MobileEditors />}
 
          {openOutput.get() && (

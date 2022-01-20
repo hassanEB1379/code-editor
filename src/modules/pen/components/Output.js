@@ -10,7 +10,7 @@ const OutputWrapper = styled.div`
 `;
 
 const Iframe = styled.iframe`
-   background-color: var(--primary-dark);
+   background-color: var(--white);
    border: none;
    width: 100%;
    height: 100%;
