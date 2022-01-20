@@ -10,15 +10,26 @@ const ResizableContainer = styled.div`
       orientation === 'vertical' ? 'column' : 'row'};
 `;
 
-const Resizer = styled.div.attrs(() => ({
+const HorizontalResizer = styled.div.attrs(() => ({
    className: 'tablet',
 }))`
-   width: ${({ orientation }) =>
-      orientation === 'vertical' ? '100%' : '.25rem'};
-   height: ${({ orientation }) =>
-      orientation === 'vertical' ? '.25rem' : '100%'};
-   cursor: ${({ orientation }) =>
-      orientation === 'vertical' ? 'row-resize' : 'col-resize'};
+   z-index: var(--z-999);
+   cursor: row-resize;
+   width: 100%;
+   height: 0.25rem;
+   margin-bottom: -0.25rem;
+   border-top: var(--border);
+`;
+
+const VerticalResizer = styled.div.attrs(() => ({
+   className: 'tablet',
+}))`
+   z-index: var(--z-999);
+   cursor: col-resize;
+   width: 0.25rem;
+   height: 100%;
+   margin-left: -0.25rem;
+   border-right: var(--border);
 `;
 
 const StyledResizableItem = styled.div`
@@ -28,6 +39,16 @@ const StyledResizableItem = styled.div`
       height: 100%;
    }
 `;
+
+function GetResizer({ orientation, ...rest }) {
+   if (orientation === 'vertical') {
+      return <HorizontalResizer {...rest} />;
+   }
+
+   if (orientation === 'horizontal') {
+      return <VerticalResizer {...rest} />;
+   }
+}
 
 function ResizableItem({ children, initialSize, dimension }) {
    const ref = useRef();
@@ -52,7 +73,6 @@ export function Resizable({
    children,
    minSize = 0,
    orientation = 'horizontal',
-   resizerStyle,
    ...rest
 }) {
    let validElements = Children.toArray(children);
@@ -169,8 +189,7 @@ export function Resizable({
                </ResizableItem>
 
                {index !== validElements.length - 1 && (
-                  <Resizer
-                     style={resizerStyle}
+                  <GetResizer
                      orientation={orientation}
                      onMouseDown={resizeStart}
                   />
