@@ -1,40 +1,48 @@
 import styled from 'styled-components';
-import { Button, Spacing } from '../ui';
+import { Box, Button, Text } from '../ui';
 import { Link } from 'react-router-dom';
 
-import homeImage from '../ui/images/home-img.png';
+import homeBackground from '../ui/images/oce-background-image-minified.jpg';
 
-const HomeWrapper = styled(Spacing).attrs(() => ({
-   className: 'flex dir-c gap-5',
-   pt: '3rem',
-}))`
-   max-width: 80rem;
-   margin: 0 auto;
+const HomeBackground = styled.div`
+   background-image: url(${homeBackground});
+   background-position: bottom;
+   background-size: cover;
+   background-repeat: no-repeat;
+`;
+
+const HomeWrapper = styled.main`
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+   min-height: 100vh;
+   text-align: center;
+   background-color: var(--primary-dark-transparent);
+   backdrop-filter: blur(2px);
 `;
 
 function HomePage() {
    return (
-      <HomeWrapper>
-         <div className="flex items-center justify-between">
-            <div className="flex inline dir-c">
-               <h1>Online code editor</h1>
-               <p>online code editor for web development</p>
-            </div>
+      <HomeBackground>
+         <HomeWrapper>
+            <Text as="h1" size="3rem">
+               Online code editor
+            </Text>
+            <Text mt="1rem" as="h2" size="1.5rem">
+               A fast and easy to use editor for web development
+            </Text>
 
-            <div className="flex gap-3">
+            <Box mt="3rem" className="flex gap-3">
                <Link to="/login">
                   <Button>Login</Button>
                </Link>
-
                <Link to="/register">
                   <Button>Register</Button>
                </Link>
-            </div>
-         </div>
-         <Spacing mx="auto">
-            <img width="1000px" alt="home-page-img" src={homeImage} />
-         </Spacing>
-      </HomeWrapper>
+            </Box>
+         </HomeWrapper>
+      </HomeBackground>
    );
 }
 
