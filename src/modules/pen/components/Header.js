@@ -153,7 +153,7 @@ function ActionsDropDown() {
             >
                Full screen
             </MenuItem>
-            <MenuItem icon={faArrowRight} component={Link} to="/my-works">
+            <MenuItem icon={faArrowRight} as={Link} to="/my-works">
                Go to works
             </MenuItem>
          </Menu>
