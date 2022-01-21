@@ -2,6 +2,7 @@ import { useState } from '@hookstate/core';
 import { penState, unsavedChangesState } from '../states';
 import { db } from '../../../indexedDB';
 import { useCustomAlert } from '../../alerts/useCustomAlert';
+import { calcTime } from '../utils/calcTime';
 
 export function useSave() {
    const pen = useState(penState);
@@ -14,6 +15,7 @@ export function useSave() {
     * thus convert it to normal object with JSON methods
     *  */
    const target = JSON.parse(JSON.stringify(pen.value));
+   target.last_save = calcTime(new Date());
 
    return function () {
       // update pen

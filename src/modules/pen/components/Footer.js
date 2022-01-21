@@ -2,6 +2,7 @@ import { useState } from '@hookstate/core';
 import { openConsoleState } from '../states';
 import { Box, Button, Text } from '../../../ui';
 import { useLogout } from '../../authentication/hooks/useLogout';
+import { useLastSaveTime } from '../hooks/useLastSaveTime';
 import { useControlModal } from '../../modal/ModalProvider';
 
 // components displayed in modal
@@ -10,6 +11,8 @@ import Libraries from '../add-libraries/Libraries';
 
 const Footer = () => {
    const openConsole = useState(openConsoleState);
+
+   const lastSave = useLastSaveTime();
    const { showModal } = useControlModal();
    const logout = useLogout();
 
@@ -41,7 +44,7 @@ const Footer = () => {
          </Box>
 
          <Text weight="300" size=".8rem" p=".5rem">
-            Last save at 10 : 34
+            Last save at {lastSave}
          </Text>
       </footer>
    );
