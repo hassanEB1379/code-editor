@@ -5,4 +5,4 @@ import Dexie from 'dexie';
 export const db = new Dexie('codeEditor');
 
 // object stores
-export const stores = { pens: 'id,title,code,libraries' };
+export const stores = { pens: 'id,title,last_save,code,libraries' };

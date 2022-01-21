@@ -20,7 +20,7 @@ import GlobalStyle from './ui/GlobalStyle';
 import './ui/css/responsive-utilities.css';
 
 // config dexie
-db.version(1).stores(stores);
+db.version(2).stores(stores);
 
 ReactDOM.render(
    <React.StrictMode>
