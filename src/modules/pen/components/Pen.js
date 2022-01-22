@@ -5,7 +5,7 @@ import { penState } from '../states';
 
 import Header from './Header';
 import Footer from './Footer';
-import ViewLayout from '../view-layout/ViewLayout';
+import ViewLayout from './ViewLayout';
 import Page404 from '../../../components/404';
 import { ModalContainer } from '../../modal';
 
