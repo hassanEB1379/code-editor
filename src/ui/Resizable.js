@@ -73,9 +73,11 @@ export function Resizable({
    children,
    minSize = 0,
    orientation = 'horizontal',
+   reverse,
    ...rest
 }) {
    let validElements = Children.toArray(children);
+   if (reverse) validElements.reverse();
 
    // This function returns attribute names based on orientation.
    let ifVertical = (ifTrue, ifFalse) =>
