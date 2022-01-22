@@ -6,7 +6,7 @@ export function ChangeFontSize({ size }) {
          '--static-font-size',
          size.get()
       );
-   }, [size.get()]);
+   }, [size]);
 
    return (
       <>
