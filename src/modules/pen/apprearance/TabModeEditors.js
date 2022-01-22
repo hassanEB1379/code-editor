@@ -47,9 +47,9 @@ export function TabModeEditors() {
    return (
       <Box className="flex dir-c">
          <Box className="flex">
-            <Tab {...getTabProps('html', htmlIcon)}>HTML</Tab>
-            <Tab {...getTabProps('css', cssIcon)}>CSS</Tab>
-            <Tab {...getTabProps('javascript', jsIcon)}>JS</Tab>
+            <Tab {...getTabProps('html', htmlIcon)}>html</Tab>
+            <Tab {...getTabProps('css', cssIcon)}>css</Tab>
+            <Tab {...getTabProps('javascript', jsIcon)}>javascript</Tab>
          </Box>
 
          <Editor
