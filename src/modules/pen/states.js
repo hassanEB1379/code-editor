@@ -1,6 +1,5 @@
 import { createState } from '@hookstate/core';
 import { getGeneratedPageURL } from './utils/generatePageUrl';
-import { horizontalTemplate } from './view-layout/ViewLayout-templates';
 import { Persistence } from '@hookstate/persistence';
 
 export const penState = createState({});
@@ -8,8 +7,6 @@ export const penState = createState({});
 export const unsavedChangesState = createState(0);
 
 export const sourceUrlState = createState(getGeneratedPageURL());
-
-export const viewLayoutState = createState(horizontalTemplate);
 
 export const openConsoleState = createState(false);
 
