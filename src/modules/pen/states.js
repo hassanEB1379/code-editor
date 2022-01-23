@@ -18,7 +18,7 @@ export const cmdReturnedValueState = createState('');
 
 export const appearanceState = createState({
    direction: 'ltr',
-   fontSize: '100%',
+   fontSize: '8px',
    editorMode: 'window-mode',
 });
 appearanceState.attach(Persistence('appearance-settings'));
