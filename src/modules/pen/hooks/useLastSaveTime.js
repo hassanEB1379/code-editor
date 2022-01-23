@@ -1,12 +1,11 @@
-import { useState } from '@hookstate/core';
-import { penState } from '../states';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { db } from '../../../indexedDB';
+import { useParams } from 'react-router-dom';
 
 export function useLastSaveTime() {
-   const pen = useState(penState);
+   const params = useParams();
    return useLiveQuery(async () => {
-      let getPen = await db.pens.get(pen.id.get());
-      if (getPen) return getPen.last_save;
+      let pen = await db.pens.get(params.id);
+      if (pen) return pen.last_save;
    });
 }
