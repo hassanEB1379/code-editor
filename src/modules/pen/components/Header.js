@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { useState } from '@hookstate/core';
 import { Link } from 'react-router-dom';
 import { Transition } from 'react-transition-group';
-import { ChangeViewDropdown } from '../view-layout/ChangeViewDropdown';
+import { AppearanceMenu } from '../apprearance/AppearanceMenu';
 import {
    Button,
    Divider,
@@ -189,7 +189,7 @@ function ActionsBar() {
             <FontAwesomeIcon icon={isFullscreen ? faCompress : faExpand} />
          </Button>
 
-         <ChangeViewDropdown />
+         <AppearanceMenu />
 
          <Divider orientation="vertical" />
 

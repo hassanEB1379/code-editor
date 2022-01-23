@@ -1,31 +1,27 @@
-import { useEffect } from 'react';
 import { Resizable } from '../../../ui';
-import Output from '../components/Output';
+import Output from './Output';
 import Console from '../console/Console';
-import MobileEditors from '../components/MobileEditors';
-import DesktopEditors from '../components/DesktopEditors';
 import { useDeviceDetect } from '../../../hooks/useDeviceDetect';
 import { useState } from '@hookstate/core';
-import { openConsoleState, openOutputState, viewLayoutState } from '../states';
-import { verticalTemplate } from './ViewLayout-templates';
+import { appearanceState, openConsoleState, openOutputState } from '../states';
+import { EditorFactory } from '../apprearance/EditorFactory';
 
 // This component layout editors and output window responsively
 function ViewLayout() {
-   const layout = useState(viewLayoutState);
+   const appearance = useState(appearanceState);
    const openConsole = useState(openConsoleState);
    const openOutput = useState(openOutputState);
 
    const { isDesktop, isMobile } = useDeviceDetect();
 
-   // vertical editor in mobile
-   useEffect(() => {
-      if (isMobile) layout.set(verticalTemplate);
-   }, [isMobile]);
-
    return (
-      <Resizable orientation={layout.wrapper.orientation.get()} minSize={200}>
-         {isDesktop && <DesktopEditors />}
-         {isMobile && <MobileEditors />}
+      <Resizable
+         orientation={isDesktop ? 'horizontal' : 'vertical'}
+         reverse={isDesktop && appearance.direction.get() === 'rtl'}
+         minSize={200}
+      >
+         {isMobile && <EditorFactory manual="tab-mode" />}
+         {isDesktop && <EditorFactory />}
 
          {openOutput.get() && (
             <Resizable orientation="vertical">

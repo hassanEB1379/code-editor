@@ -4,6 +4,7 @@ import {
    faBan,
    faCheckCircle,
    faExclamationCircle,
+   faPalette,
    faPenAlt,
    faPlay,
    faSave,
@@ -54,3 +55,7 @@ export const BackIcon = props => (
 );
 
 export const SaveIcon = props => <FontAwesomeIcon {...props} icon={faSave} />;
+
+export const AppearanceIcon = props => (
+   <FontAwesomeIcon {...props} icon={faPalette} />
+);

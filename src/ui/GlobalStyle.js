@@ -35,8 +35,9 @@ const GlobalStyle = createGlobalStyle`
   }
 
   html {
+    --static-font-size: 8px;
     box-sizing: border-box;
-    font-size: calc(8px + 0.7vmin);
+    font-size: calc(var(--static-font-size) + 0.7vmin);
   }
 
   *, *:after, *:before {
