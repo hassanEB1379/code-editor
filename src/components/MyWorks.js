@@ -19,6 +19,7 @@ import workImage from '../ui/images/pumpkin.webp';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
    faCode,
+   faCopy,
    faEllipsisH,
    faPlus,
    faTrash,
@@ -104,8 +105,41 @@ const AddNewWorkBtn = styled.div.attrs(() => ({
    }
 `;
 
+/*
+ * this hook creates pen if id not passed
+ * and duplicate pen if its id passed to hook
+ */
+function useAddWork(id) {
+   const { showErrorAlert } = useCustomAlert();
+   const history = useHistory();
+
+   return async function () {
+      let pen = {};
+      let newID = createID();
+
+      try {
+         if (id) {
+            pen = await db.pens.get(id);
+            pen.title = pen.title + '(copy)';
+         } else {
+            pen = Object.assign(pen, initialPen);
+         }
+
+         pen.id = newID;
+
+         await db.pens.add(pen);
+
+         return history.push(`/pen/${newID}`);
+      } catch (e) {
+         return showErrorAlert('Duplicate failed');
+      }
+   };
+}
+
 function Work({ title, imageSrc, id }) {
    const { showSuccessAlert } = useCustomAlert();
+
+   const duplicate = useAddWork(id);
 
    async function deleteWork() {
       await db.pens.delete(id);
@@ -120,6 +154,10 @@ function Work({ title, imageSrc, id }) {
 
    const DropdownContent = (
       <Menu>
+         <MenuItem icon={faCopy} onClick={duplicate}>
+            Duplicate
+         </MenuItem>
+
          <MenuItem as={Link} to={`/pen/${id}`} icon={faCode}>
             Edit
          </MenuItem>
@@ -148,18 +186,10 @@ function Work({ title, imageSrc, id }) {
 }
 
 function AddNewWork() {
-   const history = useHistory();
-
-   async function handleAddNewWork() {
-      let id = createID();
-      // add new pen
-      await db.pens.add({ id, ...initialPen });
-      // redirect to new pen
-      return history.push(`/pen/${id}`);
-   }
+   const add = useAddWork();
 
    return (
-      <AddNewWorkBtn onClick={handleAddNewWork} title="Create new pen">
+      <AddNewWorkBtn onClick={add} title="Create new pen">
          <FontAwesomeIcon size="4x" icon={faPlus} />
       </AddNewWorkBtn>
    );
